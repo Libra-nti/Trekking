@@ -20,6 +20,26 @@ const xmlBodyParser = require('express-xml-bodyparser');
 const fs = require('fs');
 const xml2js = require('xml2js');
 
+const { SitemapStream, streamToPromise } = require('sitemap');
+
+const sitemap = new SitemapStream({ hostname: 'https://viaggiditony.onrender.com' });
+
+// Aggiungi le pagine del sito
+sitemap.write({ url: '/', changefreq: 'daily', priority: 1.0 });
+sitemap.write({ url: '/trekking', changefreq: 'weekly', priority: 0.8 });
+sitemap.write({ url: '/contatti', changefreq: 'monthly', priority: 0.5 });
+sitemap.end();
+
+streamToPromise(sitemap).then((data) => {
+  fs.writeFileSync('./public/sitemap.xml', data.toString());
+  console.log('Sitemap generata!');
+});
+
+
+app.use('/sitemap.xml', express.static(__dirname + '/public/sitemap.xml'));
+
+
+
 // Connessione a MongoDB
 let db, bucket;
 mongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })

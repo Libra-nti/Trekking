@@ -2,8 +2,10 @@ let trekkingData = [];
 let filteredTrekking = [];
 var J=0
 
+var url = "https://trekking-qwju.onrender.com"
+
 var src = []
-  fetch('https://trekking-qwju.onrender.com/all', {
+  fetch(url+'/all', {
     method: 'GET',
     headeheaders: {
       "Content-Type": "application/json",  // Tipo di contenuto accettato in risposta

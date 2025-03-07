@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /gpx.index
+Sitemap: https://iltuosito.com/sitemap.xml

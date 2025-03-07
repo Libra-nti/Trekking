@@ -2,11 +2,13 @@ id = new URLSearchParams(window.location.search).get('id')
 var trekking
 var xmlGPX
 let marker
-const url = 'https://trekking-qwju.onrender.com/trekGPX/'+id; // URL del tuo file XML binario
+var url = "https://trekking-qwju.onrender.com"
+//var url = "http://localhost:3100"
+const urlGPX = 'https://trekking-qwju.onrender.com/trekGPX/'+id; // URL del tuo file XML binario
 
-async function fetchAndConvertToXML(url) {
+async function fetchAndConvertToXML(urlGPX) {
     // Effettua la fetch per ottenere i dati binari
-    const response = await fetch(url);
+    const response = await fetch(urlGPX);
     console.log(response)
     // Recupera il dato binario come ArrayBuffer
     const binaryData = await response.arrayBuffer();
@@ -57,7 +59,7 @@ window.addEventListener("load", () => {
 
     function fetchData() {
         
-            fetch("https://trekking-qwju.onrender.com/trek/"+id, {
+            fetch(url+"/trek/"+id, {
                 method: 'GET',
                 headers: {"Content-Type": "application/json"},
             })
@@ -103,7 +105,7 @@ window.addEventListener("load", () => {
             }
             )
 
-            fetchAndConvertToXML(url)
+            fetchAndConvertToXML(urlGPX)
     .then(xmlContent => {
         //console.log(xmlContent); 
         const result = xmlContent.slice(1, -1);
