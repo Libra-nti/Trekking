@@ -11,6 +11,22 @@
   <script src="https://unpkg.com/leaflet-omnivore@0.3.0/leaflet-omnivore.min.js"></script>
 </head>
 <body>
+  <div class="container my-4">
+    <div class="card rounded-3 shadow-sm">
+        <div class="card-header text-center bg-success text-white rounded-top-3">
+            <h5>Informazioni del Percorso</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Partenza: </strong> <a href="" id="trekking-parking"></a></li>
+                <li class="list-group-item" ><strong>Durata: </strong><span id="trekking-duration"></span></li>
+                <li class="list-group-item"><strong>Dislivello: </strong> <span id="trekking-elevation"> </span></li>
+                <li class="list-group-item"><strong>Distanza: </strong> <span id="trekking-distance"></span></span></li>
+                <li class="list-group-item"><strong>Difficoltà: </strong> <span id="trekking-difficulty"></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
   <form>
     <!-- Nome -->
     <label for="nome" class="block mb-2 text-lg font-medium">Nome</label>
@@ -27,6 +43,15 @@
     <!-- Durata -->
     <label for="durata" class="block mb-2 text-lg font-medium">Durata (hh:mm)</label>
     <input type="time" id="durata" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
+
+    <label for="youtube" class="block mb-2 text-lg font-medium">Link Youtube</label>
+    <input type="text" id="youtube" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
+
+    <label for="relive" class="block mb-2 text-lg font-medium">Link Relive</label>
+    <input type="text" id="relive" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
+
+    <label for="parking" class="block mb-2 text-lg font-medium">Parking</label>
+    <input type="text" id="parking" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
   
     <!-- Distanza -->
     <label for="distanza" class="block mb-2 text-lg font-medium">Distanza (km)</label>
@@ -47,7 +72,6 @@
   <h2>Carica un'immagine:</h2>
 <input type="file" id="fileInput">
 <button onclick="uploadFile()">Carica</button>
-<button onclick="uploadFileBin()">CaricaBin</button>
 
 <button onclick="ottieni()">ottieni</button>
 <img id="image" style="display: none; max-width: 300px; margin-top: 10px;">
@@ -84,14 +108,6 @@ var imageURL
             console.error("Errore:", error);
         }
   }
-
-
-  async function uploadFileBin() {
-    console.log("binGPX")
-        fetch("http://localhost:3100/imgBin/Laghi Azzurri", {
-          method: "PUT",
-        })
-    }
 
 
 
@@ -150,7 +166,11 @@ var imageURL
             difficulty: document.getElementById("difficoltà").value,
             distance: document.getElementById("distanza").value,
             gpx: "",
-            imgId: imageURL
+            imgId: imageURL,
+            parking: document.getElementById("parking").value,
+            relive: document.getElementById("relive").value,
+            youtube: document.getElementById("youtube").value
+
         }
         fetch("http://localhost:3100/saveGPX2", {
             method: 'POST',

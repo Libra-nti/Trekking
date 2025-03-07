@@ -2,7 +2,7 @@ let trekkingData = [];
 let filteredTrekking = [];
 var J=0
 
-var url = "https://trekking-qwju.onrender.com"
+var url = "https://viaggiditony.onrender.com"
 
 var src = []
   fetch(url+'/all', {

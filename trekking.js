@@ -2,9 +2,9 @@ id = new URLSearchParams(window.location.search).get('id')
 var trekking
 var xmlGPX
 let marker
-var url = "https://trekking-qwju.onrender.com"
+var url = "https://viaggiditony.onrender.com"
 //var url = "http://localhost:3100"
-const urlGPX = 'https://trekking-qwju.onrender.com/trekGPX/'+id; // URL del tuo file XML binario
+const urlGPX = 'https://viaggiditony.onrender.com/trekGPX/'+id; // URL del tuo file XML binario
 
 async function fetchAndConvertToXML(urlGPX) {
     // Effettua la fetch per ottenere i dati binari
