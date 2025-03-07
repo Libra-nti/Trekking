@@ -42,7 +42,7 @@ app.use('/sitemap.xml', express.static(__dirname + '/public/sitemap.xml'));
 
 // Connessione a MongoDB
 let db, bucket;
-mongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoClient.connect(uri)
     .then(client => {
         db = client.db("trekking");
         bucket = new GridFSBucket(db, { bucketName: 'uploads' });
