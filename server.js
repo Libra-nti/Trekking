@@ -10,7 +10,7 @@ const Grid = require('gridfs-stream');
 var cors = require('cors')
 const express = require('express') //modulo utilizzato con nodejs per semplificare la comunicazione server 
 const path = require('path');
-const uri = ""
+
 //const multer = require('multer');
 const app = express() //una specie di costruttore che inizializza express e che ci permette di utilizzare tutti i metodi
 app.use(cors())
@@ -42,60 +42,8 @@ app.use('/sitemap.xml', express.static(__dirname + '/public/sitemap.xml'));
 
 // Connessione a MongoDB
 let db, bucket;
-mongoClient.connect(uri)
-    .then(client => {
-        db = client.db("trekking");
-        bucket = new GridFSBucket(db, { bucketName: 'uploads' });
-        console.log("Connesso a MongoDB");
-    })
-    .catch(err => console.error("Errore di connessione:", err));
 
-
-    // Configurazione Multer per l'upload dei file
-    const storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, 'uploads/'); // Cartella temporanea per salvare i file
-        },
-        filename: (req, file, cb) => {
-            cb(null, `${file.originalname}`);
-        }
-    });
     
-    const upload = multer({ storage });
-    
-    // Crea la cartella 'uploads' se non esiste
-    if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
-
-
-    async function saveImageToMongo(imageName, data) {
-        const client = new mongoClient(uri)
-      console.log("bin")
-        try {
-          await client.connect();
-          const database = client.db('trekking'); // nome del database
-          const treksCollection = database.collection('treks'); // nome della collezione
-      
-          // Leggi il file immagine
-          const imagePath = path.join(__dirname, imageName+'.jpg');
-          const imageBuffer = fs.readFileSync(imagePath); // Legge il file immagine in un buffer
-      
-          // Crea un oggetto BinData per MongoDB
-          const binaryImage = new Binary(imageBuffer);
-      
-          // Salva l'immagine come campo binario nel documento del trek
-          await treksCollection.updateOne(
-            { date: data }, // Criterio di selezione del documento
-            { $set: { image: binaryImage } }
-          );
-      
-          console.log('Immagine salvata con successo nel database!');
-        } catch (err) {
-          console.error('Errore:', err);
-        } finally {
-          await client.close();
-        }
-      }
-
     app.post('/upload',  (req, res) => {
         const filePath = path.join(__dirname, 'uploads', req.file.filename);
         const uploadStream = bucket.openUploadStream(req.file.filename);
