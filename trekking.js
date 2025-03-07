@@ -137,13 +137,26 @@ function createElevationChart(distances, elevations) {
                 label: 'Dislivello (m)',
                 data: elevations,
                 borderColor: 'rgb(51, 136, 255)',
-                borderWidth: 2,
-                fill: false
+                fill: {
+                    target: 'origin',
+                    above: 'rgb(140, 176, 238)',
+                }
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    enabled: true,
+                    intersect: false ,
+                    mode: 'index',
+                    axis: 'x',
+                }
+            },
+            hover: {
+                intersect: false  // Permette di ottenere l'indice anche sotto il grafico
+            },
             scales: {
                 x: { 
                     title: { display: true, text: 'Distanza (km)' } 
@@ -152,17 +165,35 @@ function createElevationChart(distances, elevations) {
                     title: { display: true, text: 'Altitudine (m)' }
                 }
             },
-            onHover: (event, chartElements) => {
+            onHover: (event) => {
+                const chartElements = chart.getElementsAtEventForMode(event, 'index', { intersect: false }, true);
                 if (chartElements.length > 0) {
+                    console.log(chartElements)
+                    console.log(gpxDataGraph)
                     const index = chartElements[0].index;
                     const point = gpxDataGraph[index];
+                  //  const datasetIndex = chartElements[0].datasetIndex;
+                //const value = chart.data.datasets[datasetIndex].gpxDataGraph[index];  // Valore verticale (Y)
+
                     marker.setLatLng([point.lat, point.lon]);
                     //map.panTo([point.lat, point.lon], { animate: true });
                 }
             }
 
-        }
+        },
+        plugins: [{
+            id: 'myEventCatcher',
+            beforeEvent(chart, args, pluginOptions) {
+              const event = args.event;
+              console.log(args)
+              if (event.type === 'mousemove') {
+                // process the event
+                console.log("fuori")
+              }
+            }
+          }]
     });
+    console.log(chart)
 }
 
 

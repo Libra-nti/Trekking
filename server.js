@@ -10,7 +10,7 @@ const Grid = require('gridfs-stream');
 var cors = require('cors')
 const express = require('express') //modulo utilizzato con nodejs per semplificare la comunicazione server 
 const path = require('path');
-const uri = "mongodb+srv://Libra:Antonio21@spotify.ejpf1th.mongodb.net/?retryWrites=true&w=majority"
+const uri = ""
 //const multer = require('multer');
 const app = express() //una specie di costruttore che inizializza express e che ci permette di utilizzare tutti i metodi
 app.use(cors())
