@@ -2,7 +2,7 @@ id = new URLSearchParams(window.location.search).get('id')
 var trekking
 var xmlGPX
 let marker
-const url = 'http://localhost:3100/trekGPX/'+id; // URL del tuo file XML binario
+const url = 'https://trekking-qwju.onrender.com/trekGPX/'+id; // URL del tuo file XML binario
 
 async function fetchAndConvertToXML(url) {
     // Effettua la fetch per ottenere i dati binari
@@ -57,7 +57,7 @@ window.addEventListener("load", () => {
 
     function fetchData() {
         
-            fetch("http://localhost:3100/trek/"+id, {
+            fetch("https://trekking-qwju.onrender.com/trek/"+id, {
                 method: 'GET',
                 headers: {"Content-Type": "application/json"},
             })

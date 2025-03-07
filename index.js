@@ -3,7 +3,7 @@ let filteredTrekking = [];
 var J=0
 
 var src = []
-  fetch('http://localhost:3100/all')
+  fetch('https://trekking-qwju.onrender.com/all')
     .then(response => response.json())
     .then(data => {
       console.log(data)
