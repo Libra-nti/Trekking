@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizza GPX su Mappa</title>
+  <!-- Includi Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="server.js"></script>
+  <!-- Includi il plugin Leaflet Omnivore per il GPX -->
+  <script src="https://unpkg.com/leaflet-omnivore@0.3.0/leaflet-omnivore.min.js"></script>
+</head>
+<body>
+  <form>
+    <!-- Nome -->
+    <label for="nome" class="block mb-2 text-lg font-medium">Nome</label>
+    <input type="text" id="nome" name="nome" placeholder="Nome del percorso" class="w-full mb-4 p-2 border rounded-md" required>
+  
+    <!-- Data -->
+    <label for="data" class="block mb-2 text-lg font-medium">Data</label>
+    <input type="date" id="data" name="data" class="w-full mb-4 p-2 border rounded-md" required>
+  
+    <!-- Dislivello -->
+    <label for="dislivello" class="block mb-2 text-lg font-medium">Dislivello (m)</label>
+    <input type="number" id="dislivello" name="dislivello" placeholder="Es. 1200" class="w-full mb-4 p-2 border rounded-md" min="0" required>
+  
+    <!-- Durata -->
+    <label for="durata" class="block mb-2 text-lg font-medium">Durata (hh:mm)</label>
+    <input type="time" id="durata" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
+  
+    <!-- Distanza -->
+    <label for="distanza" class="block mb-2 text-lg font-medium">Distanza (km)</label>
+    <input type="number" step="0.01" id="distanza" name="distanza" placeholder="Es. 10.5" class="w-full mb-4 p-2 border rounded-md" step="0.1" min="0" required>
+  
+    <!-- Descrizione -->
+    <label for="descrizione" class="block mb-2 text-lg font-medium">Descrizione</label>
+    <textarea id="descrizione" name="descrizione" rows="4" placeholder="Descrivi il percorso..." class="w-full mb-4 p-2 border rounded-md"></textarea>
+  
+
+    <label for="difficoltà" class="block mb-2 text-lg font-medium">Difficoltà</label>
+    <textarea id="difficoltà" name="difficoltà" rows="4" placeholder="Difficoltà" class="w-full mb-4 p-2 border rounded-md"></textarea>
+    <!-- Pulsante di invio -->
+    <button type="button" onclick="send()" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Invia</button>
+  </form>
+
+
+  <h2>Carica un'immagine:</h2>
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">Carica</button>
+<button onclick="uploadFileBin()">CaricaBin</button>
+
+<button onclick="ottieni()">ottieni</button>
+<img id="image" style="display: none; max-width: 300px; margin-top: 10px;">
+
+<h2>Carica il tuo file GPX e visualizza il percorso</h2>
+<input type="file" id="file-input" accept=".gpx" />
+<div id="map" style="height: 600px; width: 100%;"></div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+  // Inizializzazione della mappa
+  const map = L.map('map').setView([51.505, -0.09], 13); // Imposta una vista iniziale
+
+  // Aggiungi un layer di tile della mappa (OpenStreetMap)
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  
+  }).addTo(map);
+var imageURL
+  async function ottieni(){
+    const img = document.getElementById("image")
+    try {
+            const response = await fetch("http://localhost:3100/image/space.jpg", {
+                method: "GET",
+            });
+
+            const result = await response;
+             const blob = await response.blob();
+             imageURL = URL.createObjectURL(blob);
+            img.src = imageURL;
+            img.style.display = "block";
+            status.textContent = "";
+        } catch (error) {
+            console.error("Errore:", error);
+        }
+  }
+
+
+  async function uploadFileBin() {
+    console.log("binGPX")
+        fetch("http://localhost:3100/imgBin/Laghi Azzurri", {
+          method: "PUT",
+        })
+    }
+
+
+
+
+  async function uploadFile() {
+        const fileInput = document.getElementById("fileInput");
+        const status = document.getElementById("status");
+
+        if (fileInput.files.length === 0) {
+            status.textContent = "Seleziona un file prima!";
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);  // Aggiunge il file al FormData
+
+        try {
+            const response = await fetch("http://localhost:3100/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.text();
+        } catch (error) {
+            console.error("Errore:", error);
+        }
+    }
+
+
+
+
+  // Funzione per caricare il file GPX
+
+
+
+
+  document.getElementById('file-input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    filePath = document.getElementById("file-input").value
+    console.log(filePath)
+    if (file) {
+        
+        
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        console.log(file)
+        const gpxData = e.target.result;
+        console.log(gpxData)
+        var data = {
+            name: document.getElementById("nome").value,
+            filegpx: file.name,
+            description: document.getElementById("descrizione").value,
+            elevation: document.getElementById("dislivello").value,
+            duration: document.getElementById("durata").value,
+            date: document.getElementById("data").value,
+            difficulty: document.getElementById("difficoltà").value,
+            distance: document.getElementById("distanza").value,
+            gpx: "",
+            imgId: imageURL
+        }
+        fetch("http://localhost:3100/saveGPX2", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(logged_user => {
+            //console.log(logged_user.success);
+            if (logged_user.success == false) {
+                alert("Email o password errati")
+            } else {
+                //var play = JSON.stringify(logged_user.playlists)
+                //console.log(logged_user.url)
+                localStorage.setItem("profile_pic", logged_user.url)
+                localStorage.setItem("user_id", logged_user._id)
+                window.location.href = "home.html"
+            }
+
+
+        })
+        // Carica il file GPX nella mappa utilizzando Omnivore
+        const gpxLayer = omnivore.gpx.parse(gpxData);
+        
+        // Aggiungi il layer GPX alla mappa
+        gpxLayer.addTo(map);
+
+        // Adatta la vista della mappa per includere l'intero percorso
+        map.fitBounds(gpxLayer.getBounds());
+      };
+      reader.readAsText(file);
+    }
+  });
+</script>
+
+</body>
+</html>

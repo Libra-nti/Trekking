@@ -1,0 +1,82 @@
+.card:hover{
+    opacity: 0.8;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: #87CEEB; /* Cielo azzurro chiaro */
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Montagna principale */
+  .mountain {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background-color: #6b6b6b; /* Grigio scuro */
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+
+  /* Neve sulla montagna */
+  .mountain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #fff;
+    clip-path: polygon(50% 0%, 30% 50%, 70% 50%);
+  }
+
+  /* Montagna intermedia */
+  .mountain-2 {
+    position: absolute;
+    bottom: 0;
+    left: 60%;
+    width: 250px;
+    height: 250px;
+    background-color: #8b8b8b; /* Grigio medio */
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+
+  /* Montagna sullo sfondo */
+  .mountain-3 {
+    position: absolute;
+    bottom: 0;
+    left: 40%;
+    width: 200px;
+    height: 200px;
+    background-color: #a9a9a9; /* Grigio chiaro */
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+
+  /* Effetto parallax durante lo scroll */
+  .mountain, .mountain-2, .mountain-3 {
+    will-change: transform;
+  }
+
+  /* Animazione di scroll */
+  @keyframes scroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100vh); }
+  }
+
+  /* Contenuto del gioco */
+  .game-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: #333;
+  }
+
+  .game-content h1 {
+    margin-top: 20px;
+    font-size: 2em;
+  }
