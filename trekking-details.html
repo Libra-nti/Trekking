@@ -48,6 +48,7 @@
                 <li class="list-group-item"><strong>Dislivello: </strong> <span id="trekking-elevation"> </span></li>
                 <li class="list-group-item"><strong>Distanza: </strong> <span id="trekking-distance"></span></span></li>
                 <li class="list-group-item"><strong>Difficoltà: </strong> <span id="trekking-difficulty"></span></li>
+                <li class="list-group-item"><strong>Stagione: </strong> <span id="trekking-season"></span></li>
             </ul>
         </div>
     </div>
@@ -55,6 +56,68 @@
   <div class="container mt-4">
     <div class="row">
       <span class="mb-3" id="trekking-description" style="font-family: Consolas; padding: 30px;"></span>
+    </div>
+    <div class="row">
+
+<div class="container mb-5">
+    <div class="accordion" id="accordionAttrezzatura">
+
+        <!-- Sezione Abbigliamento 
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingAbbigliamento">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAbbigliamento" aria-expanded="true" aria-controls="collapseAbbigliamento">
+                    <strong> 🧥 Abbigliamento</strong>
+                </button>
+            </h2>
+            <div id="collapseAbbigliamento" class="accordion-collapse collapse show" aria-labelledby="headingAbbigliamento" data-bs-parent="#accordionAttrezzatura">
+                <div class="accordion-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">Giacca impermeabile</li>
+                        <li class="list-group-item">Pile termico</li>
+                        <li class="list-group-item">Pantaloni tecnici</li>
+                        <li class="list-group-item">Guanti e cappello</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingCalzature">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCalzature" aria-expanded="false" aria-controls="collapseCalzature">
+                    <strong>🥾 Calzature</strong>
+                </button>
+            </h2>
+            <div id="collapseCalzature" class="accordion-collapse collapse" aria-labelledby="headingCalzature" data-bs-parent="#accordionAttrezzatura">
+                <div class="accordion-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">Scarponi da trekking</li>
+                        <li class="list-group-item">Calze tecniche</li>
+                        <li class="list-group-item">Ghette (opzionali)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+ -->
+        <!-- Sezione Equipaggiamento Tecnico -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingEquipaggiamento">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEquipaggiamento" aria-expanded="false" aria-controls="collapseEquipaggiamento">
+                    <strong>⛏️ Equipaggiamento Necessario</strong>
+                </button>
+            </h2>
+            <div id="collapseEquipaggiamento" class="accordion-collapse collapse" aria-labelledby="headingEquipaggiamento" data-bs-parent="#accordionAttrezzatura">
+                <div class="accordion-body">
+                    <ul class="list-group" id="equipaggiamento">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
     </div>
     <div class="row">
         <div class="col-12">
@@ -90,5 +153,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet-elevation/dist/leaflet-elevation.min.css">
 <script src="https://unpkg.com/leaflet-elevation/dist/leaflet-elevation.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 </body>
 </html>

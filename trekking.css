@@ -48,8 +48,3 @@ body {
 #content {
     display: none;
 }
-
-#elevationChart {
-  overflow: auto;         /* Permette lo scroll interno all'elemento */
-  touch-action: none;
-}
