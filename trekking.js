@@ -32,7 +32,7 @@ const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // Funzione per mostrare il contenuto dopo il caricamento
 const mostraContenuto = async () => {
     await fetchData();  // Attendi la fine della fetch
-   // await wait(500);  
+   await wait(1000);  
     document.getElementById("loader").style.display = "none";  // Nascondi il loader
     document.getElementById("content").style.display = "block";  // Mostra il contenuto
     //removeFooter()
