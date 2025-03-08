@@ -5,7 +5,11 @@ var J = 0
 var url = "https://trekking-qwju.onrender.com"
 
 var src = []
-fetch(url + '/all', {
+
+
+
+async function loading(){
+ await fetch(url + '/all', {
         method: 'GET',
         headeheaders: {
             "Content-Type": "application/json", // Tipo di contenuto accettato in risposta
@@ -20,7 +24,8 @@ fetch(url + '/all', {
         console.log(filteredTrekking)
 
     })
-
+    document.getElementById("loader").style.display = "none"
+  }
 
 
 // Funzione per filtrare i trekking in base ai criteri
