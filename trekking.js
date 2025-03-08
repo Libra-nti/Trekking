@@ -56,6 +56,7 @@ async function mostraContenuto() {
     .then(response =>  response.json()
       ); // Attendi la fine della fetch
     console.log(trek)
+    trekking = trek
      document.getElementById('trekking-name').innerText = trek.name;
      document.getElementById('trekking-duration').innerText = trek.duration;
      document.getElementById('trekking-elevation').innerText = trek.elevation + " mt";
@@ -89,7 +90,7 @@ async function mostraContenuto() {
     // Adatta la vista della mappa per includere l'intero percorso
     map.fitBounds(gpxLayer.getBounds());
     //wait(1000);  
-
+    carosello()
     document.getElementById("loader").style.display = "none"; // Nascondi il loader
     
     document.getElementById("content").style.display = "block"; // Mostra il contenuto
@@ -382,4 +383,31 @@ function updateMapWithPosition(lat, lon) {
     //consol.log(marker)
     marker.setLatLng([lat, lon], 15); // 'map' è l'oggetto Leaflet della tua mappa
     //map.setView([lat, lon],15, {animate: true});  // Aggiungi un marker alla mappa
+}
+
+
+function carosello(){
+    for(var i =1 ; i<trekking.numFoto+1;i++){
+        var button = document.createElement("button")
+        var carouselIndicator = document.getElementById("indicator")
+        button.type = "button"
+        button.setAttribute('data-bs-target', '#carouselExampleIndicators');
+        button.setAttribute('data-bs-slide-to', i-1);
+        var image = document.createElement("img")
+        var carousel = document.createElement("div")
+        
+        if(i==1){
+            button.classList = "active"
+            carousel.classList = "carousel-item active"
+        }
+        else{
+            carousel.classList = "carousel-item"
+        }
+        image.src= "public/"+trekking.name+"/"+i+".jpg"
+        image.classList ="d-block"
+        carousel.appendChild(image)
+        var node = document.getElementById("carosello")
+        node.appendChild(carousel)
+        carouselIndicator.appendChild(button)
+    }
 }
