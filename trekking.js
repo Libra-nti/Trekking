@@ -2,9 +2,10 @@ id = new URLSearchParams(window.location.search).get('id')
 var trekking
 var xmlGPX
 let marker
+var map // Imposta una vista iniziale
 var url = "https://trekking-qwju.onrender.com"
 //var url = "http://localhost:3100"
-const urlGPX = 'https://trekking-qwju.onrender.com/trekGPX/'+id; // URL del tuo file XML binario
+const urlGPX = 'https://trekking-qwju.onrender.com/trekGPX/' + id; // URL del tuo file XML binario
 
 async function fetchAndConvertToXML(urlGPX) {
     // Effettua la fetch per ottenere i dati binari
@@ -16,121 +17,154 @@ async function fetchAndConvertToXML(urlGPX) {
     // Usa TextDecoder per decodificare i dati binari in una stringa XML
     const decoder = new TextDecoder('utf-8');
     const xml = decoder.decode(binaryData);
-    
+
     //consol.log(xml)
     // Ora xmlString contiene il contenuto XML decodificato
     return xml;
 }
 
-function removeFooter(){
+function removeFooter() {
     document.getElementsByClassName("video-footer")[0].remove()
 }
 
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-
+function XML(){
+fetchAndConvertToXML(urlGPX)
+        .then(xmlContent => {
+            ////consol.log(xmlContent); 
+            const result = xmlContent.slice(1, -1);
+            //consol.log(result); 
+            extractDataAndPlot(result)
+            xmlGPX = xmlContent // Questo stamperà l'XML decodificato
+            // Puoi anche fare un parsing aggiuntivo con un parser XML se necessario
+        })
+    }
 // Funzione per mostrare il contenuto dopo il caricamento
-const mostraContenuto = async () => {
-    await fetchData();  // Attendi la fine della fetch
-   await wait(1000);  
-    document.getElementById("loader").style.display = "none";  // Nascondi il loader
-    document.getElementById("content").style.display = "block";  // Mostra il contenuto
+async function mostraContenuto() {
+    try{
+        var mappa = await fetchAndConvertToXML(urlGPX)
+        mappa = mappa.slice(1,-1);
+        extractDataAndPlot(mappa)
+        xmlGPX = mappa
+    const trek = await fetch(url + "/trek/" + id, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+    .then(response =>  response.json()
+      ); // Attendi la fine della fetch
+    console.log(trek)
+     document.getElementById('trekking-name').innerText = trek.name;
+     document.getElementById('trekking-duration').innerText = trek.duration;
+     document.getElementById('trekking-elevation').innerText = trek.elevation + " mt";
+     document.getElementById('trekking-distance').innerText = trek.distance + " km";
+     document.getElementById('trekking-difficulty').innerText = trek.difficulty;
+     document.getElementById('trekking-description').innerText = trek.description;
+     document.getElementById('youtube').innerHTML = trek.youtube;
+     document.getElementById('relive').innerHTML = trek.relive
+     document.getElementById('trekking-parking').innerText = trek.parking
+     document.getElementById('trekking-parking').href = "https://www.google.com/maps/place/" + trek.parking
+     document.getElementById('trekking-season').innerText = trek.season
+     for (var i = 0; i < trek.equipment.length; i++) {
+        ////consol.log("dentro")
+        var father = document.getElementById("equipaggiamento")
+        //consol.log(father)
+        var clone = document.createElement("li")
+
+        clone.classList = "list-group-item"
+        //consol.log(clone)
+        clone.innerHTML = trek.equipment[i]
+        father.appendChild(clone)
+    }
+
+    // Aggiungi un layer di tile della mappa (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    const gpxLayer = omnivore.gpx.parse(trek.gpx);
+    // Aggiungi il layer GPX alla mappa
+    gpxLayer.addTo(map);
+    // Adatta la vista della mappa per includere l'intero percorso
+    map.fitBounds(gpxLayer.getBounds());
+    //wait(1000);  
+
+    document.getElementById("loader").style.display = "none"; // Nascondi il loader
+    
+    document.getElementById("content").style.display = "block"; // Mostra il contenuto
+
     //removeFooter()
     if (window.map) {
-        setTimeout(() => {
-            window.map.invalidateSize();  // Risistema le dimensioni della mappa
-        }, 0);
+        window.map.invalidateSize(); // Risistema le dimensioni della mappa
+        map.fitBounds(gpxLayer.getBounds());
+
     } else {
         // Inizializza la mappa se non l'hai già fatto
         window.map = L.map('map').setView([45.931055, 9.432543], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(window.map);
-        //chart.redraw()
+        //char
+        // t.redraw()
     }
+}
+catch(e){
+    console.log(e)
+}
 };
 
-var map // Imposta una vista iniziale
+
 // Esegui la funzione quando la pagina è completamente caricata
 window.addEventListener("load", () => {
-    map = L.map('map').setView([51.505, -0.09], 13); 
+    map = L.map('map').setView([51.505, -0.09], 13);
     mostraContenuto();
 });
-    
-    
 
-    function fetchData() {
-        
-            fetch(url+"/trek/"+id, {
-                method: 'GET',
-                headers: {"Content-Type": "application/json"},
-            })
-            .then(response => response.json()).
-            then(data => {
-                trekking = data
-                if (trekking) {
-                    document.getElementById('trekking-name').innerText = trekking.name;
-                    document.getElementById('trekking-duration').innerText = trekking.duration;
-                    document.getElementById('trekking-elevation').innerText = trekking.elevation +" mt";
-                    document.getElementById('trekking-distance').innerText = trekking.distance +" km";
-                    document.getElementById('trekking-difficulty').innerText = trekking.difficulty;
-                    document.getElementById('trekking-description').innerText = trekking.description;
-                    document.getElementById('youtube').innerHTML = trekking.youtube;
-                    document.getElementById('relive').innerHTML = trekking.relive
-                    document.getElementById('trekking-parking').innerText = trekking.parking
-                    document.getElementById('trekking-parking').href = "https://www.google.com/maps/place/"+trekking.parking
-                    document.getElementById('trekking-season').innerText = trekking.season
-                   
-                    for(var i = 0; i< data.equipment.length;i++){
-                        ////consol.log("dentro")
-                        var father = document.getElementById("equipaggiamento")
-                        //consol.log(father)
-                        var clone = document.createElement("li")
-                        
-                        clone.classList = "list-group-item"
-                        //consol.log(clone)
-                        clone.innerHTML = data.equipment[i]
-                        father.appendChild(clone)
-                    }
+
+
+async function fetchData() {
+
+    fetch(url + "/trek/" + id, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+        .then(response =>  response.json()
+          ).
+    then(data => {
+        trekking = data
+        if (trekking) {
             
-              // Aggiungi un layer di tile della mappa (OpenStreetMap)
-              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              }).addTo(map);
-            
-            
-              //var binaryData = Buffer.from(data.gpx); // Esempio di dati binari di MongoDB
-             
-                // Usa TextDecoder per decodificare i dati binari in una stringa XML
-                //const decoder = new TextDecoder('utf-8');
-                //const xmlGPX = decoder.decode(binaryData);
-               //const xmlGPX = binaryToXML(data.gpx);
-               //consol.log("trell")
-               //consol.log(data.gpx)
-               const gpxLayer = omnivore.gpx.parse(data.gpx);
-                    
-               // Aggiungi il layer GPX alla mappa
-               gpxLayer.addTo(map);
-            
-               // Adatta la vista della mappa per includere l'intero percorso
-               map.fitBounds(gpxLayer.getBounds());
-                }
+
+            for (var i = 0; i < data.equipment.length; i++) {
+                ////consol.log("dentro")
+                var father = document.getElementById("equipaggiamento")
+                //consol.log(father)
+                var clone = document.createElement("li")
+
+                clone.classList = "list-group-item"
+                //consol.log(clone)
+                clone.innerHTML = data.equipment[i]
+                father.appendChild(clone)
             }
-            )
 
-            fetchAndConvertToXML(urlGPX)
-    .then(xmlContent => {
-        ////consol.log(xmlContent); 
-        const result = xmlContent.slice(1, -1);
-        //consol.log(result); 
-        extractDataAndPlot(result)
-        xmlGPX = xmlContent// Questo stamperà l'XML decodificato
-        // Puoi anche fare un parsing aggiuntivo con un parser XML se necessario
+            // Aggiungi un layer di tile della mappa (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            const gpxLayer = omnivore.gpx.parse(data.gpx);
+            // Aggiungi il layer GPX alla mappa
+            gpxLayer.addTo(map);
+            // Adatta la vista della mappa per includere l'intero percorso
+            map.fitBounds(gpxLayer.getBounds());
+            
+        }
     })
-    .catch(error => {
-        //consol.error('Errore nel recupero del file:', error);
-    });
+
+    
     //consol.log("finito")
-          
-    };
+
+};
 
 
 
@@ -142,7 +176,7 @@ function createElevationChart(distances, elevations) {
     //consol.log(distances)
     //consol.log(elevations)
     const ctx = document.getElementById('elevationChart').getContext('2d');
-     chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: distances,
@@ -162,63 +196,72 @@ function createElevationChart(distances, elevations) {
             plugins: {
                 tooltip: {
                     enabled: true,
-                    intersect: false ,
+                    intersect: false,
                     mode: 'index',
                     axis: 'x',
                     callbacks: {
                         label: function(context) {
                             const index = context.dataIndex;
-                            const prevIndex = index -1
+                            const prevIndex = index - 1
                             const data = context.dataset.data;
                             const label = context.dataset.label || '';
                             const y = context.parsed.y;
                             const x = context.label
                             //consol.log(context)
                             // Calcolo inclinazione tra il punto corrente e il precedente
-                            let inclinazione = 'N/A';  // Default se non c'è punto precedente
+                            let inclinazione = 'N/A'; // Default se non c'è punto precedente
                             if (index > 0) {
                                 //consol.log(context.label)
                                 const prevValueY = data[index - 1];
-                                const prevValueX = distances[index-1];
+                                const prevValueX = distances[index - 1];
                                 const deltaY = y - prevValueY;
-                                var deltaX = x*1000 - prevValueX*1000;  // Assumendo distanze uguali tra i punti
+                                var deltaX = x * 1000 - prevValueX * 1000; // Assumendo distanze uguali tra i punti
                                 //consol.log(x)
                                 //consol.log(prevValueX)
                                 //consol.log(deltaX)
-                                if(deltaX==0){
+                                if (deltaX == 0) {
                                     deltaX = 1
                                 }
-                                const inclinazionePercent = ((deltaY / deltaX) *100 ).toFixed(2);
+                                const inclinazionePercent = ((deltaY / deltaX) * 100).toFixed(2);
                                 inclinazione = `${inclinazionePercent}%`;
                             }
-    
+
                             // Mostra il valore e l'inclinazione nel tooltip
                             return [`${label}: ${y}`,
-                            `Inclinazione: ${inclinazione}`];
+                                `Inclinazione: ${inclinazione}`
+                            ];
                         }
                     }
                 }
             },
             hover: {
-                intersect: false  // Permette di ottenere l'indice anche sotto il grafico
+                intersect: false // Permette di ottenere l'indice anche sotto il grafico
             },
             scales: {
-                x: { 
-                    title: { display: true, text: 'Distanza (km)' } 
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Distanza (km)'
+                    }
                 },
-                y: { 
-                    title: { display: true, text: 'Altitudine (m)' }
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Altitudine (m)'
+                    }
                 }
             },
             onHover: (event) => {
-                const chartElements = chart.getElementsAtEventForMode(event, 'index', { intersect: false }, true);
+                const chartElements = chart.getElementsAtEventForMode(event, 'index', {
+                    intersect: false
+                }, true);
                 if (chartElements.length > 0) {
                     //consol.log(chartElements)
                     //consol.log(gpxDataGraph)
                     const index = chartElements[0].index;
                     const point = gpxDataGraph[index];
-                  //  const datasetIndex = chartElements[0].datasetIndex;
-                //const value = chart.data.datasets[datasetIndex].gpxDataGraph[index];  // Valore verticale (Y)
+                    //  const datasetIndex = chartElements[0].datasetIndex;
+                    //const value = chart.data.datasets[datasetIndex].gpxDataGraph[index];  // Valore verticale (Y)
 
                     marker.setLatLng([point.lat, point.lon]);
                     //map.panTo([point.lat, point.lon], { animate: true });
@@ -236,9 +279,9 @@ function haversine(lat1, lon1, lat2, lon2) {
     const R = 6371; // Raggio della Terra in km
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = 
+    const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; // Distanza in km
@@ -247,6 +290,7 @@ function haversine(lat1, lon1, lat2, lon2) {
 
 var gpxDataGraph = []
 var totalDistance
+
 function extractDataAndPlot(gpxText) {
     //gpxText = gpxText.text()
     //const cleanGpxText = gpxText.replace(/\\"/g, '"');
@@ -258,7 +302,7 @@ function extractDataAndPlot(gpxText) {
     const trkpts = xmlDoc.getElementsByTagName('trkpt');
     let distances = [];
     let elevations = [];
-     totalDistance = 0;
+    totalDistance = 0;
     let previousLat = null;
     let previousLon = null;
 
@@ -266,7 +310,11 @@ function extractDataAndPlot(gpxText) {
         const lat = parseFloat(trkpts[i].getAttribute('lat'));
         const lon = parseFloat(trkpts[i].getAttribute('lon'));
         const ele = parseFloat(trkpts[i].getElementsByTagName('ele')[0].textContent);
-        gpxDataGraph[i] = {lat: lat, lon: lon, ele: ele}
+        gpxDataGraph[i] = {
+            lat: lat,
+            lon: lon,
+            ele: ele
+        }
 
         if (previousLat !== null && previousLon !== null) {
             const d = haversine(previousLat, previousLon, lat, lon);
@@ -279,14 +327,14 @@ function extractDataAndPlot(gpxText) {
         previousLon = lon;
     }
     //consol.log(distances)
-   marker = L.marker([gpxDataGraph[0].lat, gpxDataGraph[0].lon]).addTo(map);
+    marker = L.marker([gpxDataGraph[0].lat, gpxDataGraph[0].lon]).addTo(map);
     //consol.log(gpxDataGraph)
     createElevationChart(distances, elevations);
 }
 
 
 
-const graph = document.getElementById('elevationChart');  // Il canvas o l'elemento del grafico
+const graph = document.getElementById('elevationChart'); // Il canvas o l'elemento del grafico
 
 /* graph.addEventListener('mousemove', function(event) {
     //consol.log(event)
@@ -300,9 +348,9 @@ const graph = document.getElementById('elevationChart');  // Il canvas o l'eleme
 
 function updateMapPosition(cursorX) {
     // Supponiamo che il grafico sia lungo 1000px
-    const graphWidth = graph.offsetWidth;  
-      // Distanza totale in km dal GPX
-    const distanceAtCursor = (cursorX / graphWidth) * totalDistance;  // Distanza percorsa in km
+    const graphWidth = graph.offsetWidth;
+    // Distanza totale in km dal GPX
+    const distanceAtCursor = (cursorX / graphWidth) * totalDistance; // Distanza percorsa in km
     //consol.log(distanceAtCursor)
     // Trova il punto GPS più vicino alla distanza percorsa
     let closestPoint = findClosestPoint(distanceAtCursor);
@@ -311,7 +359,7 @@ function updateMapPosition(cursorX) {
     function findClosestPoint(distance) {
         let closest = gpxDataGraph[0];
         let minDiff = Math.abs(distance - closest.ele);
-        
+
         for (let i = 1; i < gpxDataGraph.length; i++) {
             const diff = Math.abs(distance - gpxDataGraph[i].ele);
             if (diff < minDiff) {
@@ -321,8 +369,8 @@ function updateMapPosition(cursorX) {
         }
         //consol.log(closest)
         return closest;
-    } 
-    
+    }
+
     // Ora hai il punto GPS corrispondente, aggiornando la mappa:
     updateMapWithPosition(closest.lat, closest.lon);
 }
@@ -332,7 +380,6 @@ function updateMapPosition(cursorX) {
 function updateMapWithPosition(lat, lon) {
     // Centra la mappa sulla posizione GPS
     //consol.log(marker)
-    marker.setLatLng([lat, lon], 15);  // 'map' è l'oggetto Leaflet della tua mappa
+    marker.setLatLng([lat, lon], 15); // 'map' è l'oggetto Leaflet della tua mappa
     //map.setView([lat, lon],15, {animate: true});  // Aggiungi un marker alla mappa
 }
-
