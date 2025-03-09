@@ -35,6 +35,7 @@ function filterTrekking() {
     const distance = document.getElementById('distance').value;
     const elevation = document.getElementById('elevation').value;
     const date = document.getElementById('date').value;
+    const season = document.getElementById('season').value;
 
     filteredTrekking = trekkingData.filter(trekking => {
         console.log(trekking.distance - distance)
@@ -43,7 +44,8 @@ function filterTrekking() {
             (difficulty ? trekking.difficulty === difficulty : true) &&
             (distance ? trekking.distance - distance <= 0 : true) &&
             (elevation ? trekking.elevation - elevation <= 0 : true) &&
-            (date ? trekking.date == date : true)
+            (date ? trekking.date == date : true) && 
+            (season ? trekking.season === season : true)
         );
     });
     console.log(filteredTrekking)

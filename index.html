@@ -27,29 +27,44 @@
 <div class="mountain-3"></div>
     <div id="filtri" class="container" style="display: none;">
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1">↑</span>
+      <span class="input-group-text" id="basic-addon1">
+        <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-ruler-measure-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19.875c0 .621 -.512 1.125 -1.143 1.125h-5.714a1.134 1.134 0 0 1 -1.143 -1.125v-15.875a1 1 0 0 1 1 -1h5.857c.631 0 1.143 .504 1.143 1.125z" /><path d="M12 9h-2" /><path d="M12 6h-3" /><path d="M12 12h-3" /><path d="M12 18h-3" /><path d="M12 15h-2" /><path d="M21 3h-4" /><path d="M19 3v18" /><path d="M21 21h-4" /></svg>
+      </span>
       <input id="elevation" type="text" class="form-control" placeholder="Dislivello" aria-describedby="basic-addon1">
       <span class="input-group-text">mt</span>
     </div>
     
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon2">↔</span>
+      <span class="input-group-text" id="basic-addon2">
+        <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-ruler-measure"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.875 12c.621 0 1.125 .512 1.125 1.143v5.714c0 .631 -.504 1.143 -1.125 1.143h-15.875a1 1 0 0 1 -1 -1v-5.857c0 -.631 .504 -1.143 1.125 -1.143h15.75z" /><path d="M9 12v2" /><path d="M6 12v3" /><path d="M12 12v3" /><path d="M18 12v3" /><path d="M15 12v2" /><path d="M3 3v4" /><path d="M3 5h18" /><path d="M21 3v4" /></svg>
+      </span>
       <input id="distance" type="text" class="form-control" placeholder="Distanza" aria-describedby="basic-addon2">
       <span class="input-group-text">km</span>
 
     </div>
     
     <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon2"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg></span>
       <input id="date" type="date" placeholder="Data" class="form-control" id="basic-url" aria-describedby="basic-addon3">
     </div>
     
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon2">D</span>
+      <span class="input-group-text" id="basic-addon2"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /><path d="M12 16h.01" /></svg></span>
         <input id="difficulty" type="text" class="form-control dropdown-toggle" placeholder="Difficoltà" data-bs-toggle="dropdown" aria-expanded="false" >
         <ul class="dropdown-menu" aria-labelledby="dropdownInput">
             <li><a class="dropdown-item" href="#" onclick="difficulty('Facile')">Facile</a></li>
             <li><a class="dropdown-item" href="#" onclick="difficulty('Media')">Media</a></li>
             <li><a class="dropdown-item" href="#" onclick="difficulty('Difficile')">Difficile</a></li>
+        </ul>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon2"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-temperature-sun"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 1 0 -4 0v8.5" /><path d="M4 9h4" /><path d="M13 16a4 4 0 1 0 0 -8a4.07 4.07 0 0 0 -1 .124" /><path d="M13 3v1" /><path d="M21 12h1" /><path d="M13 20v1" /><path d="M19.4 5.6l-.7 .7" /><path d="M18.7 17.7l.7 .7" /></svg></span>
+        <input id="season" type="text" class="form-control dropdown-toggle" placeholder="Stagione" data-bs-toggle="dropdown" aria-expanded="false" >
+        <ul class="dropdown-menu" aria-labelledby="dropdownInput">
+            <li><a class="dropdown-item" href="#" onclick="season('Estate')">Estate</a></li>
+            <li><a class="dropdown-item" href="#" onclick="season('Autunno')">Autunno</a></li>
+            <li><a class="dropdown-item" href="#" onclick="season('Inverno')">Inverno</a></li>
+            <li><a class="dropdown-item" href="#" onclick="season('Primavera')">Primavera</a></li>
         </ul>
     </div>
     <div class="input-group mb-2">
@@ -80,6 +95,10 @@
 
     function difficulty(difficoltà){
       document.getElementById("difficulty").value = difficoltà
+    }
+
+    function season(stagione){
+      document.getElementById("season").value = stagione
     }
 
     function show(){
