@@ -403,7 +403,7 @@ function carosello(){
         else{
             carousel.classList = "carousel-item"
         }
-        image.src= "public/"+trekking.name+"/"+i+".jpg"
+        image.src= "public/"+trekking.name+"-"+trekking.date+"/"+i+".jpg"
         image.classList ="d-block"
         carousel.appendChild(image)
         var node = document.getElementById("carosello")
