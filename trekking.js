@@ -411,3 +411,20 @@ function carosello(){
         carouselIndicator.appendChild(button)
     }
 }
+
+
+function download(){
+    console.log(xmlGPX)
+    const cleanGpxText = xmlGPX.replace(/\\n/g, '').replace(/\\/g, '');
+    console.log(cleanGpxText)
+    const blob = new Blob([cleanGpxText], { type: 'application/gpx+xml' });
+  const url = URL.createObjectURL(blob);
+  
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = trekking.name+'.gpx';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url); 
+}
