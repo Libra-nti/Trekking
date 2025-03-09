@@ -255,7 +255,7 @@ function createElevationChart(distances, elevations) {
             onHover: (event) => {
                 const chartElements = chart.getElementsAtEventForMode(event, 'index', {
                     intersect: false
-                }, true);
+                }, false);
                 if (chartElements.length > 0) {
                     //consol.log(chartElements)
                     //consol.log(gpxDataGraph)
@@ -263,7 +263,11 @@ function createElevationChart(distances, elevations) {
                     const point = gpxDataGraph[index];
                     //  const datasetIndex = chartElements[0].datasetIndex;
                     //const value = chart.data.datasets[datasetIndex].gpxDataGraph[index];  // Valore verticale (Y)
-
+                    //console.log(point.lat, point.lon)
+                    marker._icon.style.transition = 'none'
+                    //marker._icon.shadowUrl = "null"
+                    console.log(marker._shadow)
+                    marker._shadow.remove()
                     marker.setLatLng([point.lat, point.lon]);
                     //map.panTo([point.lat, point.lon], { animate: true });
                 }
