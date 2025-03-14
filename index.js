@@ -22,6 +22,7 @@ async function loading(){
         filteredTrekking = data;
         renderTrekkingList(filteredTrekking)
         console.log(filteredTrekking)
+        newest()
 
     })
     document.getElementById("loader").style.display = "none"
@@ -89,3 +90,22 @@ function renderTrekkingList(trekkingList) {
 }
 
 // Funzione per caricare i dettagli di un trekking
+
+
+function newest(){
+    var  newest = "1999-01-01"
+    var ind
+    for(var i=0;i<trekkingData.length;i++){
+        if(newest<trekkingData[i].date){
+            newest = trekkingData[i].date
+            ind = i
+        }
+    }
+    console.log(ind)
+    var t = document.getElementsByClassName("card-body")[ind]
+    var newLogo = document.createElement("img")
+    newLogo.src = "newLogo.png"
+    newLogo.style.width="100%"
+    t.appendChild(newLogo)
+    
+}

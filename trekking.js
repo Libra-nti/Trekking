@@ -68,6 +68,7 @@ async function mostraContenuto() {
      document.getElementById('trekking-parking').innerText = trek.parking
      document.getElementById('trekking-parking').href = "https://www.google.com/maps/place/" + trek.parking
      document.getElementById('trekking-season').innerText = trek.season
+     generateStars(trek.stars)
      for (var i = 0; i < trek.equipment.length; i++) {
         ////consol.log("dentro")
         var father = document.getElementById("equipaggiamento")
@@ -431,4 +432,36 @@ function download(){
   link.click();
   document.body.removeChild(link);
   URL.revokeObjectURL(url); 
+}
+
+
+
+function generateStars(rating) {
+    const fullStar = '&#9733;';
+    const halfStar = '&#9733;';
+    const emptyStar = '&#9733;';
+    const container = document.getElementById('rating');
+
+    // Calcoliamo il numero di stelle piene, metà stella e vuote
+    let fullStars = Math.floor(rating);
+    let halfStars = (rating % 1 >= 0.5) ? 1 : 0;
+    let emptyStars = 5 - fullStars - halfStars;
+
+    // Ricostruiamo la valutazione con le stelle
+    container.innerHTML = '';
+
+    // Stelle piene
+    for (let i = 0; i < fullStars; i++) {
+        container.innerHTML += `<span class="star">${fullStar}</span>`;
+    }
+
+    // Mezza stella
+    if (halfStars) {
+        container.innerHTML += `<span class="star-half">${halfStar}</span>`;
+    }
+
+    // Stelle vuote
+    for (let i = 0; i < emptyStars; i++) {
+        container.innerHTML += `<span class="star-empty">${emptyStar}</span>`;
+    }
 }

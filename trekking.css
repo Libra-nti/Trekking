@@ -63,3 +63,18 @@ img {
   object-fit: contain; /* Mantiene le proporzioni senza tagliare le immagini */
   transition: transform 0.5s ease;
 }
+
+.stars {
+  font-size: 30px;
+}
+.star {
+  color: gold;
+}
+.star-empty {
+  color: lightgray;
+}
+.star-half {
+  background: linear-gradient(to right, gold 50%, lightgray 50%);
+  -webkit-background-clip: text;
+  color: transparent;
+}
