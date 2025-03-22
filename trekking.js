@@ -55,7 +55,7 @@ async function mostraContenuto() {
     })
     .then(response =>  response.json()
       ); // Attendi la fine della fetch
-    console.log(trek)
+    //console.log(trek)
     trekking = trek
      document.getElementById('trekking-name').innerText = trek.name;
      document.getElementById('trekking-duration').innerText = trek.duration;
@@ -171,17 +171,25 @@ async function fetchData() {
 
 
 var chart
+var distanceDecimal = []
+
+function toDecimal(distances){
+    for(var i=0;i<distances.length;i++){
+        distanceDecimal[i] = distances[i].toFixed(2)
+    }
+}
 
 
 
 function createElevationChart(distances, elevations) {
     //consol.log(distances)
     //consol.log(elevations)
+    toDecimal(distances)
     const ctx = document.getElementById('elevationChart').getContext('2d');
     chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: distances,
+            labels: distanceDecimal,
             datasets: [{
                 label: 'Dislivello (m)',
                 data: elevations,
@@ -193,6 +201,13 @@ function createElevationChart(distances, elevations) {
             }]
         },
         options: {
+            elements: {
+                point:{
+                    pointStyle: "line",
+                    radius: 1,
+                    borderWidth: 0
+                }
+            },
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
@@ -208,7 +223,9 @@ function createElevationChart(distances, elevations) {
                             const data = context.dataset.data;
                             const label = context.dataset.label || '';
                             const y = context.parsed.y;
-                            const x = context.label
+                            const x = distances[index]
+                            
+                            
                             //consol.log(context)
                             // Calcolo inclinazione tra il punto corrente e il precedente
                             let inclinazione = 'N/A'; // Default se non c'è punto precedente
@@ -217,11 +234,11 @@ function createElevationChart(distances, elevations) {
                                 const prevValueY = data[index - 1];
                                 const prevValueX = distances[index - 1];
                                 const deltaY = y - prevValueY;
+                                
                                 var deltaX = x * 1000 - prevValueX * 1000; // Assumendo distanze uguali tra i punti
                                 //consol.log(x)
                                 //consol.log(prevValueX)
-                                //consol.log(deltaX)
-                                if (deltaX == 0) {
+                                if (deltaX <= 1) {
                                     deltaX = 1
                                 }
                                 const inclinazionePercent = ((deltaY / deltaX) * 100).toFixed(2);
@@ -229,7 +246,7 @@ function createElevationChart(distances, elevations) {
                             }
 
                             // Mostra il valore e l'inclinazione nel tooltip
-                            return [`${label}: ${y}`,
+                            return [`Dislivello (m): ${y}`,
                                 `Inclinazione: ${inclinazione}`
                             ];
                         }
@@ -267,7 +284,7 @@ function createElevationChart(distances, elevations) {
                     //console.log(point.lat, point.lon)
                     marker._icon.style.transition = 'none'
                     //marker._icon.shadowUrl = "null"
-                    console.log(marker._shadow)
+                    //console.log(marker._shadow)
                     marker._shadow.remove()
                     marker.setLatLng([point.lat, point.lon]);
                     //map.panTo([point.lat, point.lon], { animate: true });
@@ -298,6 +315,7 @@ var gpxDataGraph = []
 var totalDistance
 
 function extractDataAndPlot(gpxText) {
+    //console.log(gpxText)
     //gpxText = gpxText.text()
     //const cleanGpxText = gpxText.replace(/\\"/g, '"');
     const cleanGpxText = gpxText.replace(/\\n/g, '').replace(/\\"/g, '"');
@@ -327,7 +345,7 @@ function extractDataAndPlot(gpxText) {
             totalDistance += d;
         }
 
-        distances.push(totalDistance.toFixed(2));
+        distances.push(totalDistance);
         elevations.push(ele);
         previousLat = lat;
         previousLon = lon;
@@ -419,9 +437,9 @@ function carosello(){
 
 
 function download(){
-    console.log(xmlGPX)
+    //console.log(xmlGPX)
     const cleanGpxText = xmlGPX.replace(/\\n/g, '').replace(/\\/g, '');
-    console.log(cleanGpxText)
+    //console.log(cleanGpxText)
     const blob = new Blob([cleanGpxText], { type: 'application/gpx+xml' });
   const url = URL.createObjectURL(blob);
   
