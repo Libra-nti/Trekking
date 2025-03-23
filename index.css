@@ -103,3 +103,10 @@ body, html {
   margin-left: auto;
   margin-right: auto;
 }
+
+#newLogo{
+  position: absolute;
+  margin-top: -280px;
+  margin-left: -18px;
+  opacity: 0.9;
+}

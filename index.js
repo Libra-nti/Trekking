@@ -105,7 +105,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekkingList[pagesI].name}</h5>
        <p class="card-text">${trekkingList[pagesI].date}</p>
-       <img src="newLogo.png" style="width:100%"></img>
+       <img id="newLogo" src="newLogo.png" style="width:100%"></img>
       </div>
       </div>
     `;
