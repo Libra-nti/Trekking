@@ -22,6 +22,7 @@ async function loading(){
         filteredTrekking = data;
         newest()
        renderTrekkingList(filteredTrekking, 1)
+       cronological()
         
 
         //console.log(filteredTrekking)
@@ -56,10 +57,13 @@ function filterTrekking() {
     console.log(filteredTrekking)
 
     renderTrekkingList(filteredTrekking, 1);
+    cronological()
 }
 
+var cards = []
 // Funzione per visualizzare i trekking
 function renderTrekkingList(trekkingList, pageSelected) {
+    cards = []
     var c = 0
     console.log(trekkingList)
     const listContainer = document.getElementById('trekking-list');
@@ -111,9 +115,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
     newLogo.style.width="100%"
     t.appendChild(newLogo) */
     }
-        card.onclick = () => {
-            window.location.href = `trekking-details.html?id=${trekkingList[pagesI]._id}`;
-        };
+        cards.push(card)
         row.appendChild(card)
         H = H + 1
 
@@ -184,4 +186,29 @@ function prev(){
 
 function move(idTrek){
     window.location.href = "trekking-details.html?id="+idTrek
+}
+
+
+function cronological(){
+    var temp
+    var c =-1
+    console.log(cards)
+    for(var i = 0;i<trekkingData.length-1;i++){
+        if(cards[i].childNodes[1].children[1].children[1].innerText<cards[i+1].childNodes[1].children[1].children[1].innerText){
+            temp = cards[i]
+            cards[i]=cards[i+1]
+            cards[i+1]=temp
+            i=-1
+
+        }
+    }
+    console.log(cards)
+    for(var i=0; i<cards.length;i++){
+        if(i%6==0){
+            c++
+        }
+            document.getElementsByClassName("row")[c].appendChild(cards[i])
+    
+    }
+    
 }
