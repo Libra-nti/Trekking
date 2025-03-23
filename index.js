@@ -20,11 +20,12 @@ async function loading(){
         console.log(data)
         trekkingData = data;
         filteredTrekking = data;
+        newest()
        renderTrekkingList(filteredTrekking, 1)
         
 
         //console.log(filteredTrekking)
-        //newest()
+        
 
     })
     document.getElementById("loader").style.display = "none"
@@ -91,6 +92,24 @@ function renderTrekkingList(trekkingList, pageSelected) {
       </div>
       </div>
     `;
+    if(trekkingList[pagesI].date == dataNewest){
+        //console.log("qui")
+        card.innerHTML = `
+    <div class="card h-100" style="width: auto">
+      <img src='${trekkingList[pagesI].url}' class="card-img-top">
+       <div class="card-body bottom-0">
+       <h5 class="card-title">${trekkingList[pagesI].name}</h5>
+       <p class="card-text">${trekkingList[pagesI].date}</p>
+       <img src="newLogo.png" style="width:100%"></img>
+      </div>
+      </div>
+    `;
+        /* var t = document.getElementsByClassName("card-body")[pagesI]
+    var newLogo = document.createElement("img")
+    newLogo.src = "newLogo.png"
+    newLogo.style.width="100%"
+    t.appendChild(newLogo) */
+    }
         card.onclick = () => {
             window.location.href = `trekking-details.html?id=${trekkingList[pagesI]._id}`;
         };
@@ -105,26 +124,21 @@ function renderTrekkingList(trekkingList, pageSelected) {
 
 // Funzione per caricare i dettagli di un trekking
 
-/* 
+var dataNewest
 function newest(){
     var  newest = "1999-01-01"
-    var ind
+    
     for(var i=0;i<trekkingData.length;i++){
         if(newest<trekkingData[i].date){
             newest = trekkingData[i].date
-            ind = i
+            indiceNewest = i
         }
     }
-    console.log(ind)
-    var t = document.getElementsByClassName("card-body")[ind]
-    var newLogo = document.createElement("img")
-    newLogo.src = "newLogo.png"
-    newLogo.style.width="100%"
-    t.appendChild(newLogo)
+    //console.log(ind)
+    dataNewest = newest
+    
     
 }
-
- */
 
 function next(){
     var items
