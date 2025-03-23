@@ -45,7 +45,7 @@ function filterTrekking() {
     filteredTrekking = trekkingData.filter(trekking => {
         console.log(trekking.distance - distance)
         return (
-            (trekking.name.toLowerCase().includes(search)) &&
+            (trekking.name.toLowerCase().includes(search) || trekking.description.toLowerCase().includes(search)) &&
             (difficulty ? trekking.difficulty === difficulty : true) &&
             (distance ? trekking.distance - distance <= 0 : true) &&
             (elevation ? trekking.elevation - elevation <= 0 : true) &&
@@ -84,7 +84,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
         const card = document.createElement('div');
         card.className = "col-sm-4 col-lg-2 col-6 mb-3"
         card.innerHTML = `
-    <div class="card h-100" style="width: auto">
+    <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto">
       <img src='${trekkingList[pagesI].url}' class="card-img-top">
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekkingList[pagesI].name}</h5>
@@ -92,10 +92,11 @@ function renderTrekkingList(trekkingList, pageSelected) {
       </div>
       </div>
     `;
+    
     if(trekkingList[pagesI].date == dataNewest){
         //console.log("qui")
         card.innerHTML = `
-    <div class="card h-100" style="width: auto">
+    <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto">
       <img src='${trekkingList[pagesI].url}' class="card-img-top">
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekkingList[pagesI].name}</h5>
@@ -179,4 +180,8 @@ function prev(){
         renderTrekkingList(items, pagesEl.innerText)
     }
 
+}
+
+function move(idTrek){
+    window.location.href = "trekking-details.html?id="+idTrek
 }
