@@ -2,7 +2,7 @@ let trekkingData = [];
 let filteredTrekking = [];
 var J = 0
 
-var url = "api/data"
+var url = "https://trekkingbackend.onrender.com"
 
 var src = []
 var pages
