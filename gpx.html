@@ -122,7 +122,7 @@ var imageURL
         formData.append("file", fileInput.files[0]);  // Aggiunge il file al FormData
 
         try {
-            const response = await fetch("http://trekkingbackend.onrender.com/upload", {
+            const response = await fetch("https://trekkingbackend.onrender.com/upload", {
                 method: "POST",
                 body: formData
             });
@@ -170,7 +170,8 @@ var imageURL
             url: document.getElementById("url").value,
 
         }
-        fetch("http://trekkingbackend.onrender.com/saveGPX2", {
+        console.log("eseguo fetch")
+        fetch("https://trekkingbackend.onrender.com/saveGPX2", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -178,17 +179,9 @@ var imageURL
             body: JSON.stringify(data)
         })
         .then(response => response.json())
-        .then(logged_user => {
-            //console.log(logged_user.success);
-            if (logged_user.success == false) {
-                alert("Email o password errati")
-            } else {
-                //var play = JSON.stringify(logged_user.playlists)
-                //console.log(logged_user.url)
-                localStorage.setItem("profile_pic", logged_user.url)
-                localStorage.setItem("user_id", logged_user._id)
-                window.location.href = "home.html"
-            }
+        .then(json =>{
+
+        console.log(json)
 
 
         })
