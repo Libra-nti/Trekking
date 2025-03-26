@@ -2,7 +2,7 @@ let trekkingData = [];
 let filteredTrekking = [];
 var J = 0
 
-var url = "https://trekking-qwju.onrender.com"
+var url = "api/data"
 
 var src = []
 var pages
