@@ -3,9 +3,9 @@ var trekking
 var xmlGPX
 let marker
 var map // Imposta una vista iniziale
-var url = "https://trekking-qwju.onrender.com"
+var url = "https://trekkingbackend.onrender.com"
 //var url = "http://localhost:3100"
-const urlGPX = 'https://trekking-qwju.onrender.com/trekGPX/' + id; // URL del tuo file XML binario
+const urlGPX = 'https://trekkingbackend.onrender.com/trekGPX/' + id; // URL del tuo file XML binario
 
 async function fetchAndConvertToXML(urlGPX) {
     // Effettua la fetch per ottenere i dati binari
