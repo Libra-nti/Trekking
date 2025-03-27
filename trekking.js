@@ -68,6 +68,7 @@ async function mostraContenuto() {
      document.getElementById('trekking-parking').innerText = trek.parking
      document.getElementById('trekking-parking').href = "https://www.google.com/maps/place/" + trek.parking
      document.getElementById('trekking-season').innerText = trek.season
+     document.getElementById('trekking-tipo').innerText = trek.tipo
      generateStars(trek.stars)
      for (var i = 0; i < trek.equipment.length; i++) {
         ////consol.log("dentro")
