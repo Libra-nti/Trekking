@@ -46,14 +46,22 @@
       <span class="input-group-text" id="basic-addon2"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg></span>
       <input id="date" type="date" placeholder="Data" class="form-control" id="basic-url" aria-describedby="basic-addon3">
     </div>
-    
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon2"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /><path d="M12 16h.01" /></svg></span>
-        <input id="difficulty" type="text" class="form-control dropdown-toggle" placeholder="Difficoltà" data-bs-toggle="dropdown" aria-expanded="false" >
+
+     <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon2"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-walk"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M7 21l3 -4" /><path d="M16 21l-2 -4l-3 -3l1 -6" /><path d="M6 12l2 -3l4 -1l3 3l3 1" /></svg>
+      </span>
+        <input id="tipo" type="text" class="form-control dropdown-toggle" placeholder="Tipo" data-bs-toggle="dropdown" aria-expanded="false" >
         <ul class="dropdown-menu" aria-labelledby="dropdownInput">
-            <li><a class="dropdown-item" href="#" onclick="difficulty('Facile')">Facile</a></li>
-            <li><a class="dropdown-item" href="#" onclick="difficulty('Media')">Media</a></li>
-            <li><a class="dropdown-item" href="#" onclick="difficulty('Difficile')">Difficile</a></li>
+            <li><a class="dropdown-item" href="#" onclick="tipo('Escursionismo')">Escursionismo</a></li>
+            <li><a class="dropdown-item" href="#" onclick="tipo('Ferrata')">Ferrata</a></li>
+            <li><a class="dropdown-item" href="#" onclick="tipo('Alpinismo')">Alpinismo</a></li>
+        </ul>
+    </div>
+    
+    <div class="input-group mb-3"  id="divDifficulty">
+      <span class="input-group-text" id="basic-addon2"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /><path d="M12 16h.01" /></svg></span>
+        <input id="difficulty" type="text" class="form-control dropdown-toggle "  disabled placeholder="Difficoltà" data-bs-toggle="dropdown" aria-expanded="false" >
+        <ul id="ulDifficulty" class="dropdown-menu" aria-labelledby="dropdownInput">
         </ul>
     </div>
     <div class="input-group mb-3">
@@ -109,10 +117,7 @@
 
     
 
-    function difficulty(difficoltà){
-      document.getElementById("difficulty").value = difficoltà
-    }
-
+    
     function season(stagione){
       document.getElementById("season").value = stagione
     }

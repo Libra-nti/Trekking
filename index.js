@@ -40,6 +40,7 @@ function filterTrekking() {
     const difficulty = document.getElementById('difficulty').value;
     const distance = document.getElementById('distance').value;
     const elevation = document.getElementById('elevation').value;
+    const tipo = document.getElementById("tipo").value;
     const date = document.getElementById('date').value;
     const season = document.getElementById('season').value;
 
@@ -51,7 +52,8 @@ function filterTrekking() {
             (distance ? trekking.distance - distance <= 0 : true) &&
             (elevation ? trekking.elevation - elevation <= 0 : true) &&
             (date ? trekking.date == date : true) && 
-            (season ? trekking.season === season : true)
+            (season ? trekking.season === season : true)&& 
+            (tipo ? trekking.tipo === tipo : true)
         );
     });
     console.log(filteredTrekking)
@@ -212,3 +214,157 @@ function cronological(){
     }
     
 }
+
+
+function tipo(tipo){
+    document.getElementById("difficulty").removeAttribute("disabled");
+    document.getElementById("tipo").value = tipo
+    
+    var ul = document.getElementById("ulDifficulty")
+    lis = ul.getElementsByTagName("li")
+    Array.from(lis).forEach(el => el.remove());
+
+    if(tipo == "Ferrata"){
+        for (let i = 1; i <= 3; i++) {
+            let li = document.createElement("li");
+            let a = document.createElement("a")
+            a.classList = "dropdown-item"
+            if(i==1){
+            a.innerText="EEA - F"
+            a.onclick = function() {
+                difficulty("EEA - F")
+            }
+        }
+            else if(i==2){
+                a.innerText="EEA - PD"
+            a.onclick = function() {
+                difficulty("EEA - PD")
+            }
+        }
+            else if(i==3){
+                a.innerText="EEA - D"
+            a.onclick = function() {
+                difficulty("EEA - D")
+
+            }
+            }
+            // Aggiunge il bottone al container
+            li.appendChild(a)
+            ul.appendChild(li);
+        }
+
+    }
+    else if(tipo == "Escursionismo"){
+        for (let i = 1; i <= 5; i++) {
+            let li = document.createElement("li");
+            let a = document.createElement("a")
+            a.classList = "dropdown-item"
+            if(i==1){
+            a.innerText="T"
+            a.onclick = function() {
+                difficulty("T")
+            }
+        }
+            else if(i==2){
+                a.innerText="E"
+            a.onclick = function() {
+                difficulty("E")
+            }
+        }
+            else if(i==3){
+                a.innerText="EE"
+            a.onclick = function() {
+                difficulty("EE")
+
+            }
+            }
+            else if(i==4){
+                a.innerText="EEA"
+            a.onclick = function() {
+                difficulty("EEA")
+
+            }
+            }
+            else if(i==5){
+                a.innerText="EAI"
+            a.onclick = function() {
+                difficulty("EAI")
+
+            }
+            }
+            // Aggiunge il bottone al container
+            li.appendChild(a)
+            ul.appendChild(li);
+        }
+
+    }
+    
+    else if(tipo == "Alpinismo"){
+        for (let i = 1; i <= 7; i++) {
+            let li = document.createElement("li");
+            let a = document.createElement("a")
+            a.classList = "dropdown-item"
+            if(i==1){
+            a.innerText="F"
+            a.onclick = function() {
+                difficulty("F")
+            }
+        }
+            else if(i==2){
+                a.innerText="PD"
+            a.onclick = function() {
+                difficulty("PD")
+            }
+        }
+            else if(i==3){
+                a.innerText="AB"
+            a.onclick = function() {
+                difficulty("AB")
+
+            }
+            }
+            else if(i==4){
+                a.innerText="D"
+            a.onclick = function() {
+                difficulty("D")
+
+            }
+            }
+            else if(i==5){
+                a.innerText="TD"
+            a.onclick = function() {
+                difficulty("TD")
+
+            }
+            }
+            else if(i==6){
+                a.innerText="ED"
+            a.onclick = function() {
+                difficulty("ED")
+
+            }
+            }
+            else if(i==7){
+                a.innerText="ABO"
+            a.onclick = function() {
+                difficulty("ABO")
+
+            }
+            }
+            // Aggiunge il bottone al container
+            li.appendChild(a)
+            ul.appendChild(li);
+        }
+
+    }
+    else{
+        document.getElementById("divDifficulty").style.display = "none"
+    
+    }
+    //document.getElementById("divDifficulty").style.display = "block"
+}
+
+
+function difficulty(difficoltà){
+    document.getElementById("difficulty").value = difficoltà
+  }
