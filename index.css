@@ -14,7 +14,6 @@ body, html {
   /* Montagna principale */
   .mountain {
     position: fixed;
-    z-index: 0;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);

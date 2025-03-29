@@ -11,7 +11,7 @@ var pages
 async function loading(){
  await fetch(url + '/all', {
         method: 'GET',
-        headeheaders: {
+        headers: {
             "Content-Type": "application/json", // Tipo di contenuto accettato in risposta
         },
     })

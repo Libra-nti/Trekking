@@ -90,7 +90,7 @@
 
 
 <h2>Carica il tuo file GPX e visualizza il percorso</h2>
-<input type="file" id="file-input" accept=".gpx" />
+<input type="file" id="gpxFile" accept=".gpx" />
 <div id="map" style="height: 600px; width: 100%;"></div>
 
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -176,10 +176,10 @@ var imageURL
 
 
 
-  document.getElementById('file-input').addEventListener('change', function(event) {
+  document.getElementById('gpxFile').addEventListener('change', function(event) {
     const file = event.target.files[0];
-    filePath = document.getElementById("file-input").value
-    console.log(file)
+    filePath = document.getElementById("gpxFile").value
+    console.log(file + "di ensione "+file.size)
     if (file) {
         
         
@@ -187,36 +187,39 @@ var imageURL
       reader.onload = function(e) {
         console.log(file)
         const gpxData = e.target.result;
-        console.log(gpxData)
-        var data = {
-            name: document.getElementById("nome").value,
-            filegpx: file.name,
-            description: document.getElementById("descrizione").value,
-            elevation: document.getElementById("dislivello").value,
-            duration: document.getElementById("durata").value,
-            date: document.getElementById("data").value,
-            difficulty: document.getElementById("difficoltà").value,
-            distance: document.getElementById("distanza").value,
-            gpx: "",
-            imgId: imageURL,
-            parking: document.getElementById("parking").value,
-            relive: document.getElementById("relive").value,
-            youtube: document.getElementById("youtube").value,
-            url: document.getElementById("url").value,
-            season: document.getElementById("stagione").value,
-            equipment: equips,
-            numFoto: document.getElementById("foto").value,
-            stars: document.getElementById("stelle").value,
-            tipo: document.getElementById("tipologia").value 
+        const formData = new FormData();
+        console.log(equips)
+        equips = JSON.stringify(equips)
+        console.log(equips)
 
-        }
+    formData.append('gpxFile', file);
+
+        
+    formData.append('name', document.getElementById("nome").value)
+    formData.append('description', document.getElementById("descrizione").value)
+    formData.append('elevation', document.getElementById("dislivello").value)
+    formData.append('duration', document.getElementById("durata").value)
+    formData.append('date', document.getElementById("data").value)
+    formData.append('difficulty', document.getElementById("difficoltà").value)
+    formData.append('distance', document.getElementById("distanza").value)
+    formData.append('gpx', "")
+    formData.append('imgId', imageURL)
+    formData.append('parking', document.getElementById("parking").value)
+    formData.append('relive', document.getElementById("relive").value)
+    formData.append('youtube', document.getElementById("youtube").value)
+    formData.append('url', document.getElementById("url").value)
+    formData.append('season', document.getElementById("stagione").value)
+    formData.append('equipment', equips)
+    formData.append('numFoto', document.getElementById("foto").value)
+    formData.append('stars', document.getElementById("stelle").value)
+    formData.append('tipo', document.getElementById("tipologia").value )
+
+        
         console.log("eseguo fetch")
-        fetch("https://trekkingbackend.onrender.com/saveGPX2", {
+        try{
+        fetch("http://localhost:3000/saveGPX2", {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+            body: formData
         })
         .then(response => response.json())
         .then(json =>{
@@ -225,6 +228,10 @@ var imageURL
 
 
         })
+      }
+      catch(e){
+        console.log("errore:"+ e)
+      }
         // Carica il file GPX nella mappa utilizzando Omnivore
         const gpxLayer = omnivore.gpx.parse(gpxData);
         
