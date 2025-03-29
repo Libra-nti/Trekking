@@ -317,9 +317,9 @@ function tipo(tipo){
             }
         }
             else if(i==3){
-                a.innerText="AB"
+                a.innerText="AD"
             a.onclick = function() {
-                difficulty("AB")
+                difficulty("AD")
 
             }
             }
