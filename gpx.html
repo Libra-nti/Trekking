@@ -11,62 +11,78 @@
   <script src="https://unpkg.com/leaflet-omnivore@0.3.0/leaflet-omnivore.min.js"></script>
 </head>
 <body>
-  <div class="container my-4">
-    <div class="card rounded-3 shadow-sm">
-        <div class="card-header text-center bg-success text-white rounded-top-3">
-            <h5>Informazioni del Percorso</h5>
-        </div>
-        <div class="card-body">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Partenza: </strong> <a href="" id="trekking-parking"></a></li>
-                <li class="list-group-item" ><strong>Durata: </strong><span id="trekking-duration"></span></li>
-                <li class="list-group-item"><strong>Dislivello: </strong> <span id="trekking-elevation"> </span></li>
-                <li class="list-group-item"><strong>Distanza: </strong> <span id="trekking-distance"></span></span></li>
-                <li class="list-group-item"><strong>Difficoltà: </strong> <span id="trekking-difficulty"></span></li>
-            </ul>
-        </div>
-    </div>
-</div>
   <form>
     <!-- Nome -->
+    <div class="input-group mb-3">
     <label for="nome" class="block mb-2 text-lg font-medium">Nome</label>
     <input type="text" id="nome" name="nome" placeholder="Nome del percorso" class="w-full mb-4 p-2 border rounded-md" required>
-  
+    </div>
     <!-- Data -->
+    <div class="input-group mb-3">
     <label for="data" class="block mb-2 text-lg font-medium">Data</label>
     <input type="date" id="data" name="data" class="w-full mb-4 p-2 border rounded-md" required>
-  
+    </div>
     <!-- Dislivello -->
+    <div class="input-group mb-3">
     <label for="dislivello" class="block mb-2 text-lg font-medium">Dislivello (m)</label>
     <input type="number" id="dislivello" name="dislivello" placeholder="Es. 1200" class="w-full mb-4 p-2 border rounded-md" min="0" required>
-  
+    </div>
     <!-- Durata -->
+    <div class="input-group mb-3">
     <label for="durata" class="block mb-2 text-lg font-medium">Durata (hh:mm)</label>
     <input type="time" id="durata" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
-
+    </div>
+    <div class="input-group mb-3">
     <label for="youtube" class="block mb-2 text-lg font-medium">Link Youtube</label>
     <input type="text" id="youtube" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
-
+    </div>
+    <div class="input-group mb-3">
     <label for="relive" class="block mb-2 text-lg font-medium">Link Relive</label>
     <input type="text" id="relive" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
-
+    </div>
+    <div class="input-group mb-3">
     <label for="parking" class="block mb-2 text-lg font-medium">Parking</label>
     <input type="text" id="parking" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
-
+    </div>
+    <div class="input-group mb-3">
     <label for="url" class="block mb-2 text-lg font-medium">url immagine</label>
     <input type="url" id="url" name="durata" class="w-full mb-4 p-2 border rounded-md" required>
-  
+    </div>
     <!-- Distanza -->
+    <div class="input-group mb-3">
     <label for="distanza" class="block mb-2 text-lg font-medium">Distanza (km)</label>
     <input type="number" step="0.01" id="distanza" name="distanza" placeholder="Es. 10.5" class="w-full mb-4 p-2 border rounded-md" step="0.1" min="0" required>
-  
+    </div>
     <!-- Descrizione -->
+    <div class="input-group mb-3">
     <label for="descrizione" class="block mb-2 text-lg font-medium">Descrizione</label>
     <textarea id="descrizione" name="descrizione" rows="4" placeholder="Descrivi il percorso..." class="w-full mb-4 p-2 border rounded-md"></textarea>
-  
+    </div>
 
+    <div class="input-group mb-3">
     <label for="difficoltà" class="block mb-2 text-lg font-medium">Difficoltà</label>
-    <textarea id="difficoltà" name="difficoltà" rows="4" placeholder="Difficoltà" class="w-full mb-4 p-2 border rounded-md"></textarea>
+    <input id="difficoltà" type="text" name="difficoltà" rows="4" placeholder="Difficoltà" class="w-full mb-4 p-2 border rounded-md">
+    </div>
+    <div class="input-group mb-3">
+    <label for="stagione" class="block mb-2 text-lg font-medium">Stagione</label>
+    <input id="stagione" type="text" name="stagione" rows="4" placeholder="Stagione" class="w-full mb-4 p-2 border rounded-md">
+    </div>
+    <div class="input-group mb-3">
+    <label for="stelle" class="block mb-2 text-lg font-medium">Stelle</label>
+    <input id="stelle" type="number" name="stelle" rows="4" placeholder="Stelle" class="w-full mb-4 p-2 border rounded-md">
+    </div>
+    <div class="input-group mb-3">
+    <label for="tipologia" class="block mb-2 text-lg font-medium">Tipologia</label>
+    <input id="tipologia" type="text" name="Tipologia" rows="4" placeholder="Tipologia" class="w-full mb-4 p-2 border rounded-md">
+    </div>
+    <div class="input-group mb-3">
+    <label for="foto" class="block mb-2 text-lg font-medium">Numero Foto</label>
+    <input id="foto" type="number" name="foto" rows="4" placeholder="Num. Foto" class="w-full mb-4 p-2 border rounded-md">
+    </div>
+    <div class="input-group mb-3">
+    <label for="equipaggiamento" class="block mb-2 text-lg font-medium">Equipaggiamento</label>
+    <textarea id="equipaggiamento" name="equipaggiamento" rows="4" placeholder="equipaggiamento" class="w-full mb-4 p-2 border rounded-md"></textarea>
+    </div>
     <!-- Pulsante di invio -->
     <button type="button" onclick="send()" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Invia</button>
   </form>
@@ -79,6 +95,25 @@
 
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
+  var word = ""
+  var equips = []
+
+  function send(){
+    var equip = document.getElementById("equipaggiamento").value
+    for(var i=0;i<equip.length;i++){
+      if(equip[i]!=" "){
+        word = word + equip[i]
+      }
+      else{
+        equips.push(word)
+        word=""
+      }
+    }
+    console.log(equips)
+  }
+
+
+
   // Inizializzazione della mappa
   const map = L.map('map').setView([51.505, -0.09], 13); // Imposta una vista iniziale
 
@@ -144,7 +179,7 @@ var imageURL
   document.getElementById('file-input').addEventListener('change', function(event) {
     const file = event.target.files[0];
     filePath = document.getElementById("file-input").value
-    console.log(filePath)
+    console.log(file)
     if (file) {
         
         
@@ -168,6 +203,11 @@ var imageURL
             relive: document.getElementById("relive").value,
             youtube: document.getElementById("youtube").value,
             url: document.getElementById("url").value,
+            season: document.getElementById("stagione").value,
+            equipment: equips,
+            numFoto: document.getElementById("foto").value,
+            stars: document.getElementById("stelle").value,
+            tipo: document.getElementById("tipologia").value 
 
         }
         console.log("eseguo fetch")
