@@ -84,13 +84,14 @@
     <textarea id="equipaggiamento" name="equipaggiamento" rows="4" placeholder="equipaggiamento" class="w-full mb-4 p-2 border rounded-md"></textarea>
     </div>
     <!-- Pulsante di invio -->
-    <button type="button" onclick="send()" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Invia</button>
+    
   </form>
 
 
 
 <h2>Carica il tuo file GPX e visualizza il percorso</h2>
 <input type="file" id="gpxFile" accept=".gpx" />
+<button type="button" onclick="send()" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Invia</button>
 <div id="map" style="height: 600px; width: 100%;"></div>
 
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -109,7 +110,8 @@
         word=""
       }
     }
-    console.log(equips)
+    //console.log(equips)
+    target()
   }
 
 
@@ -176,8 +178,9 @@ var imageURL
 
 
 
-  document.getElementById('gpxFile').addEventListener('change', function(event) {
-    const file = event.target.files[0];
+  async function target() {
+    const fileInput = document.getElementById('gpxFile'); // Recupera l'input file
+    const file = fileInput.files[0]
     filePath = document.getElementById("gpxFile").value
     console.log(file + "di ensione "+file.size)
     if (file) {
@@ -243,7 +246,7 @@ var imageURL
       };
       reader.readAsText(file);
     }
-  });
+  };
 </script>
 
 </body>
