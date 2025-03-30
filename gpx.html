@@ -106,11 +106,15 @@
         word = word + equip[i]
       }
       else{
+        if (!Array.isArray(equips)) {
+    equips = equips ? [equips] : [];  // Se non è un array, lo converte
+}
+
         equips.push(word)
         word=""
       }
     }
-    //console.log(equips)
+    console.log(equips)
     target()
   }
 
