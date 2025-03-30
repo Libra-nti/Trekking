@@ -106,7 +106,9 @@ body, html {
 
 #newLogo{
   position: absolute;
-  margin-top: -280px;
-  margin-left: -18px;
-  opacity: 0.9;
+    top: 25%;  
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra l'immagine sopra */
+    width: 90%; /* Regola la dimensione dell'immagine interna */
+  opacity: 0.8;
 }

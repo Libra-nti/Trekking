@@ -21,8 +21,8 @@ async function loading(){
         trekkingData = data;
         filteredTrekking = data;
         newest()
-       renderTrekkingList(filteredTrekking, 1)
-       cronological()
+        renderTrekkingList(filteredTrekking, 1)
+        cronological()
         
 
         //console.log(filteredTrekking)
@@ -102,12 +102,15 @@ function renderTrekkingList(trekkingList, pageSelected) {
     if(trekkingList[pagesI].date == dataNewest){
         //console.log("qui")
         card.innerHTML = `
-    <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto">
+    <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
+    <div class="prova" style="display: inline-block; positoin:relative">
       <img src='${trekkingList[pagesI].url}' class="card-img-top">
+      <img id="newLogo" src="newLogo.png" >
+      </div>
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekkingList[pagesI].name}</h5>
        <p class="card-text">${trekkingList[pagesI].date}</p>
-       <img id="newLogo" src="newLogo.png" style="width:100%"></img>
+       
       </div>
       </div>
     `;
@@ -127,6 +130,15 @@ function renderTrekkingList(trekkingList, pageSelected) {
 
 }
 
+
+function hideLogo(){
+    document.getElementById("newLogo").style.opacity = 0;
+}
+
+
+function showLogo(){
+    document.getElementById("newLogo").style.opacity = 0.8;
+}
 // Funzione per caricare i dettagli di un trekking
 
 var dataNewest
