@@ -179,7 +179,7 @@ var imageURL
 
   // Funzione per caricare il file GPX
 
-
+    var token = "f770202092ac8b7145942bdcde2aa1e3"
 
 
   async function target() {
@@ -226,6 +226,9 @@ var imageURL
         try{
         fetch("https://trekkingbackend.onrender.com/saveGPX2", {
             method: 'POST',
+            headers: {
+              "Authorization": `Bearer ${token}`
+            },
             body: formData
         })
         .then(response => response.json())
