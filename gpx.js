@@ -99,11 +99,11 @@ var imageURL
         
     formData.append('name', document.getElementById("nome").value)
     formData.append('description', document.getElementById("descrizione").value)
-    formData.append('elevation', document.getElementById("dislivello").value)
+    formData.append('elevation', (document.getElementById("dislivello").value).parseFloat())
     formData.append('duration', document.getElementById("durata").value)
     formData.append('date', document.getElementById("data").value)
     formData.append('difficulty', document.getElementById("difficoltà").value)
-    formData.append('distance', document.getElementById("distanza").value)
+    formData.append('distance', (document.getElementById("distanza").value).parseFloat())
     formData.append('gpx', "")
     formData.append('imgId', imageURL)
     formData.append('parking', document.getElementById("parking").value)
@@ -112,8 +112,8 @@ var imageURL
     formData.append('url', document.getElementById("url").value)
     formData.append('season', document.getElementById("stagione").value)
     formData.append('equipment', equips)
-    formData.append('numFoto', document.getElementById("foto").value)
-    formData.append('stars', document.getElementById("stelle").value)
+    formData.append('numFoto', (document.getElementById("foto").value).parseInt())
+    formData.append('stars', (document.getElementById("stelle").value).parseFloat())
     formData.append('tipo', document.getElementById("tipologia").value )
 
         
