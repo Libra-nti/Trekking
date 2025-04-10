@@ -122,7 +122,7 @@ var imageURL
         fetch("https://trekkingbackend.onrender.com/saveGPX2", {
             method: 'POST',
             headers: {
-              "Authorization": `Bearer ${token}`
+              "Authorization": `${token}`
             },
             body: formData
         })
