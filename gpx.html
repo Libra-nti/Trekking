@@ -6,7 +6,7 @@
   <title>Visualizza GPX su Mappa</title>
   <!-- Includi Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="/gpx.js"></script>
+  
   <!-- Includi il plugin Leaflet Omnivore per il GPX -->
   <script src="https://unpkg.com/leaflet-omnivore@0.3.0/leaflet-omnivore.min.js"></script>
 </head>
@@ -14,7 +14,7 @@
   <form>
 
     <div class="input-group mb-3">
-      <label for="token" class="block mb-2 text-lg font-medium">Nome</label>
+      <label for="token" class="block mb-2 text-lg font-medium">Token</label>
       <input type="text" id="token" name="token" placeholder="Autorizzazione" class="w-full mb-4 p-2 border rounded-md" required>
       </div>
     <!-- Nome -->
@@ -100,6 +100,7 @@
 <div id="map" style="height: 600px; width: 100%;"></div>
 
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="gpx.js"></script>
 <script>
     const map = L.map('map').setView([51.505, -0.09], 13); // Imposta una vista iniziale
 

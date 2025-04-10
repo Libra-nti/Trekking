@@ -77,7 +77,7 @@ var imageURL
 
 
   async function target(token) {
-    console.log("token")
+    console.log(token)
     const fileInput = document.getElementById('gpxFile'); // Recupera l'input file
     const file = fileInput.files[0]
     filePath = document.getElementById("gpxFile").value
