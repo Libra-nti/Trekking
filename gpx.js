@@ -4,7 +4,7 @@ var equips = []
   function send(){
     var equip = document.getElementById("equipaggiamento").value
     for(var i=0;i<equip.length;i++){
-      if(equip[i]!=" "){
+      if(equip[i]!=","){
         word = word + equip[i]
       }
       else{
