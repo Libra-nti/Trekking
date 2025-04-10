@@ -1,5 +1,5 @@
 var word = ""
-  var equips = []
+var equips = []
 
   function send(){
     var equip = document.getElementById("equipaggiamento").value
@@ -23,13 +23,7 @@ var word = ""
 
 
   // Inizializzazione della mappa
-  const map = L.map('map').setView([51.505, -0.09], 13); // Imposta una vista iniziale
 
-  // Aggiungi un layer di tile della mappa (OpenStreetMap)
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  
-  }).addTo(map);
 var imageURL
   async function ottieni(){
     const img = document.getElementById("image")
