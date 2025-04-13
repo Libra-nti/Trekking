@@ -112,7 +112,7 @@ var imageURL
     formData.append('url', document.getElementById("url").value)
     formData.append('season', document.getElementById("stagione").value)
     formData.append('equipment', equips)
-    formData.append('numFoto', (document.getElementById("foto").value).parseInt())
+    formData.append('numFoto',parseInt(document.getElementById("foto").value))
     formData.append('stars', parseFloat(document.getElementById("stelle").value))
     formData.append('tipo', document.getElementById("tipologia").value )
 
