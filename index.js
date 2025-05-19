@@ -22,6 +22,8 @@ async function loading(){
         trekkingData = data;
         filteredTrekking = data;
         newest()
+        fillCards()
+        
         cronological()
         renderTrekkingList(filteredTrekking, 1)
         
@@ -65,9 +67,47 @@ function filterTrekking() {
 }
 
 var cards = []
+
+
+function fillCards(){
+    for(var i = 0;i<trekkingData.length;i++){
+        const card = document.createElement('div');
+        card.className = "col-sm-4 col-lg-2 col-6 mb-3"
+        if(trekkingData[pagesI].date != dataNewest){
+        
+        card.innerHTML = `
+    <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto">
+      <img src="public/${trekkingList[pagesI].name}-${trekkingList[pagesI].date}/copertina.jpg" class="card-img-top">
+       <div class="card-body bottom-0">
+       <h5 class="card-title">${trekkingList[pagesI].name}</h5>
+       <p class="card-text">${trekkingList[pagesI].date}</p>
+      </div>
+      </div>
+    `
+        }
+        else{
+            card.innerHTML = `
+    <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
+    <div class="prova" style="display: inline-block; positoin:relative">
+      <img src="public/${trekkingList[pagesI].name}-${trekkingList[pagesI].date}/copertina.jpg" class="card-img-top">
+      <img id="newLogo" src="newLogo.png" >
+      </div>
+       <div class="card-body bottom-0">
+       <h5 class="card-title">${trekkingList[pagesI].name}</h5>
+       <p class="card-text">${trekkingList[pagesI].date}</p>
+       
+      </div>
+      </div>
+    `;
+        }
+        cards.push(card)
+    }
+}
+
+
 // Funzione per visualizzare i trekking
 function renderTrekkingList(trekkingList, pageSelected) {
-    cards = []
+
     var c = 0
     console.log(trekkingList)
     const listContainer = document.getElementById('trekking-list');
@@ -89,41 +129,8 @@ function renderTrekkingList(trekkingList, pageSelected) {
             row.className = "row"
             listContainer.appendChild(row)
         }
-        const card = document.createElement('div');
-        card.className = "col-sm-4 col-lg-2 col-6 mb-3"
-        card.innerHTML = `
-    <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto">
-      <img src="public/${trekkingList[pagesI].name}-${trekkingList[pagesI].date}/copertina.jpg" class="card-img-top">
-       <div class="card-body bottom-0">
-       <h5 class="card-title">${trekkingList[pagesI].name}</h5>
-       <p class="card-text">${trekkingList[pagesI].date}</p>
-      </div>
-      </div>
-    `;
-    
-    if(trekkingList[pagesI].date == dataNewest){
-        //console.log("qui")
-        card.innerHTML = `
-    <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
-    <div class="prova" style="display: inline-block; positoin:relative">
-      <img src="public/${trekkingList[pagesI].name}-${trekkingList[pagesI].date}/copertina.jpg" class="card-img-top">
-      <img id="newLogo" src="newLogo.png" >
-      </div>
-       <div class="card-body bottom-0">
-       <h5 class="card-title">${trekkingList[pagesI].name}</h5>
-       <p class="card-text">${trekkingList[pagesI].date}</p>
-       
-      </div>
-      </div>
-    `;
-        /* var t = document.getElementsByClassName("card-body")[pagesI]
-    var newLogo = document.createElement("img")
-    newLogo.src = "newLogo.png"
-    newLogo.style.width="100%"
-    t.appendChild(newLogo) */
-    }
-        cards.push(card)
-        row.appendChild(card)
+        
+        row.appendChild(cards[i])
         H = H + 1
 
     }
