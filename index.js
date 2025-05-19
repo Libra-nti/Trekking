@@ -208,7 +208,7 @@ function cronological(){
     var temp
     var c =-1
     console.log(cards)
-    for(var i = 0;i<trekkingData.length-1;i++){
+    for(var i = 0;i<trekkingData.length-2;i++){
         console.log(i)
         if(cards[i].childNodes[1].children[1].children[1].innerText<cards[i+1].childNodes[1].children[1].children[1].innerText){
             temp = cards[i]
