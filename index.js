@@ -62,8 +62,9 @@ function filterTrekking() {
     });
     console.log(filteredTrekking)
 
-    renderTrekkingList(filteredTrekking, 1);
+    
     cronological()
+    renderTrekkingList(filteredTrekking, 1);
 }
 
 var cards = []
@@ -131,7 +132,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
             listContainer.appendChild(row)
         }
         
-        row.appendChild(cards[H])
+        row.appendChild(cards[pagesI])
         H = H + 1
 
     }
@@ -227,13 +228,6 @@ function cronological(){
 
         }
     }
-    console.log(cards)
-    for(var i=0; i<cards.length;i++){
-        if(i%6==0){
-            c++
-        }
-            document.getElementsByClassName("row")[c].appendChild(cards[i])
-    
     }
     
 }
