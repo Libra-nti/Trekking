@@ -23,7 +23,7 @@ async function loading(){
         filteredTrekking = data;
         newest()
         renderTrekkingList(filteredTrekking, 1)
-        cronological()
+        //cronological()
         
 
         //console.log(filteredTrekking)
