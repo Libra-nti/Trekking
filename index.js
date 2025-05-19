@@ -23,7 +23,7 @@ async function loading(){
         filteredTrekking = data;
         newest()
         renderTrekkingList(filteredTrekking, 1)
-        //cronological()
+        cronological()
         
 
         //console.log(filteredTrekking)
@@ -92,7 +92,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
         card.className = "col-sm-4 col-lg-2 col-6 mb-3"
         card.innerHTML = `
     <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto">
-      <img src='' class="card-img-top">
+      <img src="public/${trekkingList[pagesI].name}-${trekkingList[pagesI].date}"/copertina.jpg" class="card-img-top">
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekkingList[pagesI].name}</h5>
        <p class="card-text">${trekkingList[pagesI].date}</p>
@@ -105,7 +105,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
         card.innerHTML = `
     <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
     <div class="prova" style="display: inline-block; positoin:relative">
-      <img src='' class="card-img-top">
+      <img src='"public/${trekkingList[pagesI].name}-${trekkingList[pagesI].date}"/copertina.jpg" ' class="card-img-top">
       <img id="newLogo" src="newLogo.png" >
       </div>
        <div class="card-body bottom-0">
