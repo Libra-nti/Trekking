@@ -4,6 +4,7 @@ var J = 0
 
 var url = "https://trekkingbackend.onrender.com"
 
+
 var src = []
 var pages
 
@@ -91,7 +92,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
         card.className = "col-sm-4 col-lg-2 col-6 mb-3"
         card.innerHTML = `
     <div onclick="move('${trekkingList[pagesI]._id}')" class="card h-100" style="width: auto">
-      <img src='${trekkingList[pagesI].url}' class="card-img-top">
+      <img src="public/'+${trekking.name}+"-"+${trekking.date}+"copertina.jpg"' class="card-img-top">
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekkingList[pagesI].name}</h5>
        <p class="card-text">${trekkingList[pagesI].date}</p>
