@@ -209,14 +209,21 @@ function cronological(){
     var c =-1
     console.log(cards)
     for(var i = 0;i<trekkingData.length-1;i++){
-      
+        console.log(i)
+        if(cards[i].childNodes[1].children[1].children[1].innerText<cards[i+1].childNodes[1].children[1].children[1].innerText){
+            temp = cards[i]
+            cards[i]=cards[i+1]
+            cards[i+1]=temp
+            i=-1
+
+        }
     }
     console.log(cards)
     for(var i=0; i<cards.length;i++){
         if(i%6==0){
             c++
         }
-            document.getElementsByClassName("row")[c].appendChild(trekkingList[i])
+            document.getElementsByClassName("row")[c].appendChild(cards[i])
     
     }
     

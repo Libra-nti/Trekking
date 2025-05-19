@@ -109,7 +109,7 @@ var imageURL
     formData.append('parking', document.getElementById("parking").value)
     formData.append('relive', document.getElementById("relive").value)
     formData.append('youtube', document.getElementById("youtube").value)
-    formData.append('url', document.getElementById("url").value)
+    
     formData.append('season', document.getElementById("stagione").value)
     formData.append('equipment', equips)
     formData.append('numFoto',parseInt(document.getElementById("foto").value))
