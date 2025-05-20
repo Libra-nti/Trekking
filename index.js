@@ -131,7 +131,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
             listContainer.appendChild(row)
         }
         
-        row.appendChild()
+        row.appendChild(cards[pagesI])
         H = H + 1
 
     }
