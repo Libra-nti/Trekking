@@ -24,7 +24,7 @@ async function loading(){
         newest()
         fillCards(trekkingData)
         
-        cronological()
+        cronological(trekkingData)
         renderTrekkingList(filteredTrekking, 1)
         
         
@@ -63,7 +63,7 @@ function filterTrekking() {
     console.log(filteredTrekking)
 
     fillCards(filteredTrekking)
-    cronological()
+    cronological(filteredTrekking)
     renderTrekkingList(filteredTrekking, 1);
 }
 
@@ -215,11 +215,11 @@ function move(idTrek){
 }
 
 
-function cronological(){
+function cronological(trekkingList){
     var temp
     var c =-1
     console.log(cards)
-    for(var i = 0;i<trekkingData.length-1;i++){
+    for(var i = 0;i<trekkingList.length-1;i++){
         console.log(i)
         if(cards[i].childNodes[1].children[1].children[1].innerText<cards[i+1].childNodes[1].children[1].children[1].innerText){
             temp = cards[i]
