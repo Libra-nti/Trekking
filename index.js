@@ -63,6 +63,7 @@ function filterTrekking() {
     console.log(filteredTrekking)
 
     fillCards(filteredTrekking)
+    cronological()
     renderTrekkingList(filteredTrekking, 1);
 }
 
