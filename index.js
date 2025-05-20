@@ -22,7 +22,7 @@ async function loading(){
         trekkingData = data;
         filteredTrekking = data;
         newest()
-        fillCards()
+        fillCards(trekkingData)
         
         cronological()
         renderTrekkingList(filteredTrekking, 1)
@@ -62,40 +62,40 @@ function filterTrekking() {
     });
     console.log(filteredTrekking)
 
-    
+    fillCards(filteredTrekking)
     renderTrekkingList(filteredTrekking, 1);
 }
 
 var cards = []
 
 
-function fillCards(){
-    for(var i = 0;i<trekkingData.length;i++){
+function fillCards(trekkingList){
+    for(var i = 0;i<trekkingList.length;i++){
         const card = document.createElement('div');
         card.className = "col-sm-4 col-lg-2 col-6 mb-3"
 
-        if(trekkingData[i].date != dataNewest){
+        if(trekkingList[i].date != dataNewest){
         
         card.innerHTML = `
-    <div onclick="move('${trekkingData[i]._id}')" class="card h-100" style="width: auto">
-      <img src="public/${trekkingData[i].name}-${trekkingData[i].date}/copertina.jpg" class="card-img-top">
+    <div onclick="move('${trekkingList[i]._id}')" class="card h-100" style="width: auto">
+      <img src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg" class="card-img-top">
        <div class="card-body bottom-0">
-       <h5 class="card-title">${trekkingData[i].name}</h5>
-       <p class="card-text">${trekkingData[i].date}</p>
+       <h5 class="card-title">${trekkingList[i].name}</h5>
+       <p class="card-text">${trekkingList[i].date}</p>
       </div>
       </div>
     `
         }
         else{
             card.innerHTML = `
-    <div onclick="move('${trekkingData[i]._id}')" class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
+    <div onclick="move('${trekkingList[i]._id}')" class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
     <div class="prova" style="display: inline-block; positoin:relative">
-      <img src="public/${trekkingData[i].name}-${trekkingData[i].date}/copertina.jpg" class="card-img-top">
+      <img src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg" class="card-img-top">
       <img id="newLogo" src="newLogo.png" >
       </div>
        <div class="card-body bottom-0">
-       <h5 class="card-title">${trekkingData[i].name}</h5>
-       <p class="card-text">${trekkingData[i].date}</p>
+       <h5 class="card-title">${trekkingList[i].name}</h5>
+       <p class="card-text">${trekkingList[i].date}</p>
        
       </div>
       </div>
@@ -131,7 +131,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
             listContainer.appendChild(row)
         }
         
-        row.appendChild(cards[pagesI])
+        row.appendChild()
         H = H + 1
 
     }
