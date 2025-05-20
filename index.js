@@ -63,7 +63,6 @@ function filterTrekking() {
     console.log(filteredTrekking)
 
     
-    cronological()
     renderTrekkingList(filteredTrekking, 1);
 }
 
