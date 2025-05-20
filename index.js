@@ -70,6 +70,7 @@ var cards = []
 
 
 function fillCards(trekkingList){
+    cards = []
     for(var i = 0;i<trekkingList.length;i++){
         const card = document.createElement('div');
         card.className = "col-sm-4 col-lg-2 col-6 mb-3"
