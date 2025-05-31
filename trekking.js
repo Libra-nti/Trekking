@@ -179,10 +179,12 @@ function addOverpassElementsToMap(data, map) {
 
   elements.forEach(el => {
     if (el.type === 'node' && el.lat && el.lon) {
-      const name = el.tags?.name || 'Senza nome';
+        if(el.tags != null){
+      const name = el.tags?.name ;
       L.marker([el.lat, el.lon], {icon: bivaccoIcon})
         .addTo(map)
         .bindPopup(name);
+        }
     }
 
     // Se è un way, calcolo un centro medio dei nodi per metterci il marker
