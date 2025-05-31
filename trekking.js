@@ -158,6 +158,13 @@ window.addEventListener("load", () => {
     mostraContenuto();
 });
 
+const bivaccoIcon = L.icon({
+  iconUrl: 'public/loghi/tent.svg',   // Percorso al tuo file
+  iconSize: [32, 32],           // Dimensioni icona
+  iconAnchor: [16, 32],         // Punto che tocca la mappa (in basso al centro)
+  popupAnchor: [0, -32]         // Dove appare il popup rispetto all'icona
+});
+
 
 function addOverpassElementsToMap(data, map) {
   const elements = data.elements;
@@ -173,7 +180,7 @@ function addOverpassElementsToMap(data, map) {
   elements.forEach(el => {
     if (el.type === 'node' && el.lat && el.lon) {
       const name = el.tags?.name || 'Senza nome';
-      L.marker([el.lat, el.lon])
+      L.marker([el.lat, el.lon], {icon: bivaccoIcon})
         .addTo(map)
         .bindPopup(name);
     }
@@ -191,7 +198,7 @@ function addOverpassElementsToMap(data, map) {
         const avgLon = latlngs.reduce((sum, p) => sum + p[1], 0) / latlngs.length;
         const name = el.tags?.name || 'Senza nome';
 
-        L.marker([avgLat, avgLon])
+        L.marker([avgLat, avgLon], {icon: bivaccoIcon})
           .addTo(map)
           .bindPopup(name);
       }
