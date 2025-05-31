@@ -91,6 +91,39 @@ async function mostraContenuto() {
     gpxLayer.addTo(map);
     // Adatta la vista della mappa per includere l'intero percorso
     map.fitBounds(gpxLayer.getBounds());
+    const bounds = map.getBounds();  // map è l'istanza Leaflet
+const south = bounds.getSouth();
+const west = bounds.getWest();
+const north = bounds.getNorth();
+const east = bounds.getEast();
+
+const queryOverpass = `[out:json][timeout:25];
+(
+  node["tourism"~"alpine_hut|wilderness_hut"](south,west,north,east);
+  way["tourism"~"alpine_hut|wilderness_hut"](south,west,north,east);
+  relation["tourism"~"alpine_hut|wilderness_hut"](south,west,north,east);
+
+  node["amenity"="shelter"](south,west,north,east);
+  way["amenity"="shelter"](south,west,north,east);
+  relation["amenity"="shelter"](south,west,north,east);
+
+  node["name"~"bivacco|rifugio",i](south,west,north,east);
+);
+out body;
+>;
+out skel qt;`
+
+fetch('https://overpass-api.de/api/interpreter', {
+  method: 'POST',
+  body: query,
+  headers: {
+    'Content-Type': 'text/plain'
+  }
+})
+.then(res => res.json())
+.then(data => console.log(data));
+
+
     //wait(1000);  
     carosello()
     document.getElementById("loader").style.display = "none"; // Nascondi il loader
@@ -484,36 +517,4 @@ function generateStars(rating) {
         container.innerHTML += `<span class="star-empty">${emptyStar}</span>`;
     }
 }
-
-const bounds = map.getBounds();  // map è l'istanza Leaflet
-const south = bounds.getSouth();
-const west = bounds.getWest();
-const north = bounds.getNorth();
-const east = bounds.getEast();
-
-const queryOverpass = `[out:json][timeout:25];
-(
-  node["tourism"~"alpine_hut|wilderness_hut"](south,west,north,east);
-  way["tourism"~"alpine_hut|wilderness_hut"](south,west,north,east);
-  relation["tourism"~"alpine_hut|wilderness_hut"](south,west,north,east);
-
-  node["amenity"="shelter"](south,west,north,east);
-  way["amenity"="shelter"](south,west,north,east);
-  relation["amenity"="shelter"](south,west,north,east);
-
-  node["name"~"bivacco|rifugio",i](south,west,north,east);
-);
-out body;
->;
-out skel qt;`
-
-fetch('https://overpass-api.de/api/interpreter', {
-  method: 'POST',
-  body: query,
-  headers: {
-    'Content-Type': 'text/plain'
-  }
-})
-.then(res => res.json())
-.then(data => console.log(data));
 
