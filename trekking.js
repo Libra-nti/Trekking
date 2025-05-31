@@ -99,15 +99,15 @@ const east = bounds.getEast();
 
 const queryOverpass = `[out:json][timeout:25];
 (
-  node["tourism"~"alpine_hut|wilderness_hut"](`+south+`,`+west+`,`+north+`,`+east+`);
-  way["tourism"~"alpine_hut|wilderness_hut"](`+south+`,`+west+`,`+north+`,`+east+`);
-  relation["tourism"~"alpine_hut|wilderness_hut"](`+south+`,`+west+`,`+north+`,`+east+`);
+  node["tourism"~"alpine_hut|wilderness_hut"](${south},${west},${north},${east});
+  way["tourism"~"alpine_hut|wilderness_hut"](${south},${west},${north},${east});
+  relation["tourism"~"alpine_hut|wilderness_hut"](${south},${west},${north},${east});
 
-  node["amenity"="shelter"](`+south+`,`+west+`,`+north+`,`+east+`);
-  way["amenity"="shelter"](`+south+`,`+west+`,`+north+`,`+east+`);
-  relation["amenity"="shelter"](`+south+`,`+west+`,`+north+`,`+east+`);
+  node["amenity"="shelter"](${south},${west},${north},${east});
+  way["amenity"="shelter"](${south},${west},${north},${east});
+  relation["amenity"="shelter"](${south},${west},${north},${east});
 
-  node["name"~"bivacco|rifugio",i](`+south+`,`+west+`,`+north+`,`+east+`);
+  node["name"~"bivacco|rifugio",i](${south},${west},${north},${east});
 );
 out body;
 >;
