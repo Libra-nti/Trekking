@@ -112,7 +112,7 @@ const queryOverpass = `[out:json][timeout:25];
 out body;
 >;
 out skel qt;`
-
+console.log(queryOverpass)
 fetch('https://overpass-api.de/api/interpreter', {
   method: 'POST',
   body: queryOverpass,
