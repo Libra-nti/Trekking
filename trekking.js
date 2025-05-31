@@ -92,9 +92,9 @@ async function mostraContenuto() {
     // Adatta la vista della mappa per includere l'intero percorso
     map.fitBounds(gpxLayer.getBounds());
     const bounds = gpxLayer.getBounds();  // map è l'istanza Leaflet
-const south = bounds.getSouth();
+const south = bounds.getSouth()+0.5;
 const west = bounds.getWest();
-const north = bounds.getNorth();
+const north = bounds.getNorth()+0.5;
 const east = bounds.getEast();
 
 const queryOverpass = `[out:json][timeout:25];
@@ -159,7 +159,7 @@ window.addEventListener("load", () => {
 });
 
 const bivaccoIcon = L.icon({
-  iconUrl: 'public/loghi/tent.svg',   // Percorso al tuo file
+  iconUrl: 'public/loghi/bivacco.png',   // Percorso al tuo file
   iconSize: [32, 32],           // Dimensioni icona
   iconAnchor: [16, 32],         // Punto che tocca la mappa (in basso al centro)
   popupAnchor: [0, -32]         // Dove appare il popup rispetto all'icona
