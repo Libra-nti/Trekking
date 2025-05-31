@@ -161,7 +161,7 @@ window.addEventListener("load", () => {
 
 const bivaccoIcon = L.icon({
   iconUrl: 'public/loghi/bivacco.png',   // Percorso al tuo file
-  iconSize: [32, 32],           // Dimensioni icona
+  iconSize: [28, 28],           // Dimensioni icona
   iconAnchor: [16, 32],         // Punto che tocca la mappa (in basso al centro)
   popupAnchor: [0, -32]         // Dove appare il popup rispetto all'icona
 });
