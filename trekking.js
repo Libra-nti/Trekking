@@ -58,6 +58,7 @@ async function mostraContenuto() {
     //console.log(trek)
     trekking = trek
      document.getElementById('trekking-name').innerText = trek.name;
+     document.getElementById('trekking-expose').innerText = trek.expose;
      document.getElementById('trekking-duration').innerText = trek.duration;
      document.getElementById('trekking-elevation').innerText = trek.elevation + " mt";
      document.getElementById('trekking-distance').innerText = trek.distance + " km";
