@@ -92,7 +92,7 @@ async function mostraContenuto() {
     // Adatta la vista della mappa per includere l'intero percorso
     map.fitBounds(gpxLayer.getBounds());
     const bounds = gpxLayer.getBounds();  // map è l'istanza Leaflet
-const south = bounds.getSouth()+0.5;
+const south = bounds.getSouth()-0.5;
 const west = bounds.getWest();
 const north = bounds.getNorth()+0.5;
 const east = bounds.getEast();
