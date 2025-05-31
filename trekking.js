@@ -121,7 +121,10 @@ fetch('https://overpass-api.de/api/interpreter', {
   }
 })
 .then(res => res.json())
-.then(data => console.log(data));
+.then(data => {
+    console.log(data)
+    addOverpassElementsToMap(data, map);
+});
 
 
     //wait(1000);  
@@ -154,6 +157,47 @@ window.addEventListener("load", () => {
     map = L.map('map').setView([51.505, -0.09], 13);
     mostraContenuto();
 });
+
+
+function addOverpassElementsToMap(data, map) {
+  const elements = data.elements;
+
+  // Mappa per cercare facilmente i nodi per ID (serve per i way)
+  const nodesById = {};
+  elements.forEach(el => {
+    if (el.type === 'node') {
+      nodesById[el.id] = el;
+    }
+  });
+
+  elements.forEach(el => {
+    if (el.type === 'node' && el.lat && el.lon) {
+      const name = el.tags?.name || 'Senza nome';
+      L.marker([el.lat, el.lon])
+        .addTo(map)
+        .bindPopup(name);
+    }
+
+    // Se è un way, calcolo un centro medio dei nodi per metterci il marker
+    if (el.type === 'way' && el.nodes?.length > 0) {
+      const latlngs = el.nodes
+        .map(id => nodesById[id])
+        .filter(n => n)
+        .map(n => [n.lat, n.lon]);
+
+      if (latlngs.length > 0) {
+        // Calcola centro geometrico
+        const avgLat = latlngs.reduce((sum, p) => sum + p[0], 0) / latlngs.length;
+        const avgLon = latlngs.reduce((sum, p) => sum + p[1], 0) / latlngs.length;
+        const name = el.tags?.name || 'Senza nome';
+
+        L.marker([avgLat, avgLon])
+          .addTo(map)
+          .bindPopup(name);
+      }
+    }
+  });
+}
 
 
 
