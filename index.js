@@ -396,12 +396,11 @@ function tipo(tipo){
     slider.max = grades.length - 1;
     slider.value = 0;
     slider.id = 'gradeSlider';
-    slider.style.width="100%"
+    slider.style.width="96%"
+    slider.style.marginLeft="2%"
     slider.addEventListener('input', function () {
       document.getElementById('difficulty').value = grades[this.value];
-    const index = this.value;
-    updateSliderColor(index);
-  });
+    });
 li.appendChild(slider)
             ul.appendChild(li);
     }
@@ -436,15 +435,3 @@ var parentWidth = parent.getBoundingClientRect().width
         ul.style.width=parentWidth-spamPX+"px"
 }
 
-function updateSliderColor(index) {
-    const grade = grades[index];
-    let color;
-
-    if (index <= 5) color = "#4caf50"; // verde
-    else if (index <= 11) color = "#ffeb3b"; // giallo
-    else if (index <= 17) color = "#ff9800"; // arancione
-    else if (index <= 23) color = "#f44336"; // rosso
-    else color = "#b71c1c"; // rosso scuro
-
-    slider.style.setProperty("--slider-color", color);
-  }
