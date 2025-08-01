@@ -387,11 +387,11 @@ function tipo(tipo){
 
     }
     else if(tipo == "Multipitch"){
-        var targetElement = document.getElementsByClassName("input-group mb-3")[4];
-var spamPX = targetElement.getBoundingClientRect()[0].width;
+        var targetElement = document.getElementsByClassName("input-group-text")[6];
+var spamPX = targetElement.getBoundingClientRect().width;
 var parent = ul.parentElement
-var parentWidth = parent.getBoundingClientRect()[0].width
-        ul.style.width=parentWidth-spamPX
+var parentWidth = parent.getBoundingClientRect().width
+        ul.style.width="100%-"+spamPX
         let li = document.createElement("li");
         var slider = document.createElement("input")
         slider.type="range"
