@@ -390,7 +390,7 @@ function tipo(tipo){
 var spamPX = targetElement.getBoundingClientRect().width;
 var parent = ul.parentElement
 var parentWidth = parent.getBoundingClientRect().width
-        ul.style.width=parentWidth-spamPX
+        ul.style.width=parentWidth-spamPX+"px"
         let li = document.createElement("li");
         var slider = document.createElement("input")
         slider.type="range"
