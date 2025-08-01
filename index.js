@@ -249,7 +249,7 @@ function tipo(tipo){
     document.getElementById("tipo").value = tipo
     
     var ul = document.getElementById("ulDifficulty")
-    ul.style.width="auto"
+    ul.style.width="100%"
     lis = ul.getElementsByTagName("li")
     Array.from(lis).forEach(el => el.remove());
 
