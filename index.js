@@ -388,11 +388,14 @@ function tipo(tipo){
         let li = document.createElement("li");
             let a = document.createElement("a")
         var slider = document.createElement("input")
-        slider.type="ramge"
+        slider.type="range"
         slider.min = 0;
     slider.max = grades.length - 1;
     slider.value = 0;
     slider.id = 'gradeSlider';
+    slider.addEventListener('input', function () {
+      document.getElementById('selectedGrade').textContent = grades[this.value];
+    });
 li.appendChild(slider)
             ul.appendChild(li);
     }
