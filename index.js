@@ -234,6 +234,15 @@ function cronological(trekkingList){
 }
 
 
+const grades = [
+      "4a", "4b", "4c",
+      "5a", "5b", "5c",
+      "6a", "6a+", "6b", "6b+", "6c", "6c+",
+      "7a", "7a+", "7b", "7b+", "7c", "7c+",
+      "8a", "8a+", "8b", "8b+", "8c", "8c+",
+      "9a", "9a+", "9b", "9b+", "9c"
+    ];
+
 function tipo(tipo){
     document.getElementById("difficulty").removeAttribute("disabled");
     document.getElementById("tipo").value = tipo
@@ -374,6 +383,18 @@ function tipo(tipo){
             ul.appendChild(li);
         }
 
+    }
+    else if(tipo == "Multipitch"){
+        let li = document.createElement("li");
+            let a = document.createElement("a")
+        var slider = document.createElement("input")
+        slider.type="ramge"
+        slider.min = 0;
+    slider.max = grades.length - 1;
+    slider.value = 0;
+    slider.id = 'gradeSlider';
+li.appendChild(slider)
+            ul.appendChild(li);
     }
     else{
         document.getElementById("divDifficulty").style.display = "none"
