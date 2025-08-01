@@ -245,9 +245,11 @@ const grades = [
 
 function tipo(tipo){
     document.getElementById("difficulty").removeAttribute("disabled");
+    document.getElementById("difficulty").value = ""
     document.getElementById("tipo").value = tipo
     
     var ul = document.getElementById("ulDifficulty")
+    ul.style.width="auto"
     lis = ul.getElementsByTagName("li")
     Array.from(lis).forEach(el => el.remove());
 
@@ -385,14 +387,13 @@ function tipo(tipo){
 
     }
     else if(tipo == "Multipitch"){
+        ul.style.width="80%"
         let li = document.createElement("li");
-            let a = document.createElement("a")
         var slider = document.createElement("input")
         slider.type="range"
         slider.min = 0;
     slider.max = grades.length - 1;
     slider.value = 0;
-    slider.style.width="100%"
     slider.id = 'gradeSlider';
     slider.addEventListener('input', function () {
       document.getElementById('difficulty').value = grades[this.value];
