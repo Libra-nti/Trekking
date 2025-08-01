@@ -249,7 +249,6 @@ function tipo(tipo){
     document.getElementById("tipo").value = tipo
     
     var ul = document.getElementById("ulDifficulty")
-    ul.style.width="100%"
     lis = ul.getElementsByTagName("li")
     Array.from(lis).forEach(el => el.remove());
 
@@ -391,7 +390,7 @@ function tipo(tipo){
 var spamPX = targetElement.getBoundingClientRect().width;
 var parent = ul.parentElement
 var parentWidth = parent.getBoundingClientRect().width
-        ul.style.width="100%-"+spamPX
+        ul.style.width=parentWidth-spamPX
         let li = document.createElement("li");
         var slider = document.createElement("input")
         slider.type="range"
