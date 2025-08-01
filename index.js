@@ -387,7 +387,8 @@ function tipo(tipo){
 
     }
     else if(tipo == "Multipitch"){
-        ul.style.width="80%"
+        var spamPX = document.getElementsByClassName("input-group mb-3")[4].width
+        ul.style.width="100%-"+spamPX
         let li = document.createElement("li");
         var slider = document.createElement("input")
         slider.type="range"
@@ -396,7 +397,6 @@ function tipo(tipo){
     slider.value = 0;
     slider.id = 'gradeSlider';
     slider.style.width="100%"
-    slider.style.background = "#ddd"
     slider.addEventListener('input', function () {
       document.getElementById('difficulty').value = grades[this.value];
     });

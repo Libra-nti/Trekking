@@ -116,43 +116,18 @@ body, html {
 /* stile base */
 input[type=range] {
   -webkit-appearance: none; /* rimuove lo stile di default */
-  width: 100%;
-  height: 8px;
-  background: #ddd; /* colore della barra di default */
-  border-radius: 4px;
-  outline: none;
+  margin-left: 5px;
+  margin-right: 5px;
+
 }
 
 /* colore della barra (parte "attiva") */
 input[type=range]::-webkit-slider-runnable-track {
-  height: 8px;
-  background: #4c91af; /* colore della barra */
-  border-radius: 4px;
+  background: #47c9ce; /* colore della barra */
 }
 
 /* pallino (thumb) */
 input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #348bd3; /* colore del pallino */
-  border-radius: 50%;
-  cursor: pointer;
-  margin-top: -6px; /* centra il thumb sulla track */
-}
-
-/* Firefox */
-input[type=range]::-moz-range-track {
-  height: 8px;
-  background: #4c91af; 
-  border-radius: 4px;
-}
-
-input[type=range]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: #348bd3; 
-  border: none;
-  border-radius: 50%;
+  background: #137f8b; /* colore del pallino */
   cursor: pointer;
 }
