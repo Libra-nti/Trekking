@@ -111,13 +111,13 @@ var imageURL
     formData.append('youtube', document.getElementById("youtube").value)
     
     formData.append('season', document.getElementById("stagione").value)
+    formData.append('expose', document.getElementById("esposizione").value)
     formData.append('equipment', equips)
     formData.append('numFoto',parseInt(document.getElementById("foto").value))
     formData.append('stars', parseFloat(document.getElementById("stelle").value))
     formData.append('tipo', document.getElementById("tipologia").value )
 
         
-        console.log("eseguo fetch")
         try{
         fetch("https://trekkingbackend.onrender.com/saveGPX2", {
             method: 'POST',
