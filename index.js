@@ -395,6 +395,8 @@ function tipo(tipo){
     slider.max = grades.length - 1;
     slider.value = 0;
     slider.id = 'gradeSlider';
+    slider.style.width="100%"
+    slider.style.background = "#ddd"
     slider.addEventListener('input', function () {
       document.getElementById('difficulty').value = grades[this.value];
     });
