@@ -392,9 +392,10 @@ function tipo(tipo){
         slider.min = 0;
     slider.max = grades.length - 1;
     slider.value = 0;
+    slider.style.width="100%"
     slider.id = 'gradeSlider';
     slider.addEventListener('input', function () {
-      document.getElementById('selectedGrade').textContent = grades[this.value];
+      document.getElementById('difficulty').textContent = grades[this.value];
     });
 li.appendChild(slider)
             ul.appendChild(li);
