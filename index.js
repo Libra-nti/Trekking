@@ -386,11 +386,9 @@ function tipo(tipo){
 
     }
     else if(tipo == "Multipitch"){
-        var targetElement = document.getElementsByClassName("input-group-text")[6];
-var spamPX = targetElement.getBoundingClientRect().width;
-var parent = ul.parentElement
-var parentWidth = parent.getBoundingClientRect().width
-        ul.style.width=parentWidth-spamPX+"px"
+        ulSize()
+        window.addEventListener("resize", ulSize);
+        
         let li = document.createElement("li");
         var slider = document.createElement("input")
         slider.type="range"
@@ -426,3 +424,12 @@ function difficulty(difficoltà){
 
   // Aggiungi qui la tua funzione di ricerca personalizzata
 });
+
+function ulSize(){
+    var ul = document.getElementById("ulDifficulty")
+    var targetElement = document.getElementsByClassName("input-group-text")[6];
+var spamPX = targetElement.getBoundingClientRect().width;
+var parent = ul.parentElement
+var parentWidth = parent.getBoundingClientRect().width
+        ul.style.width=parentWidth-spamPX+"px"
+}
