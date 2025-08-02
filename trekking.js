@@ -1,4 +1,4 @@
-id = new URLSearchParams(window.location.search).get('id')
+id = window.location.pathname.split('/').pop();
 var trekking
 var xmlGPX
 let marker
