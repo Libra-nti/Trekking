@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 
 // Servire file statici (HTML, CSS, JS, ecc.)
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(__dirname));
 
 // Proxy della sitemap dal backend
 app.get('/sitemap.xml', async (req, res) => {
