@@ -47,7 +47,7 @@ async function mostraContenuto() {
         mappa = mappa.slice(1,-1);
         extractDataAndPlot(mappa)
         xmlGPX = mappa
-    const trek = await fetch(url + "/trekking/" + id, {
+    const trek = await fetch(url + "/trek/" + id, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"
@@ -214,7 +214,7 @@ function addOverpassElementsToMap(data, map) {
 
 async function fetchData() {
 
-    fetch(url + "/trekking/" + id, {
+    fetch(url + "/trek/" + id, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json"
