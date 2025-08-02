@@ -8,6 +8,32 @@ var url = "https://trekkingbackend.onrender.com"
 var src = []
 var pages
 
+const express = require('express');
+const axios = require('axios');
+const app = express();
+
+app.use(express.static('public'));
+
+// Proxy sitemap.xml dal backend al frontend
+app.get('/sitemap.xml', async (req, res) => {
+    try {
+        const response = await axios.get('https://trekkingbackend.onrender.com/sitemap.xml');
+        res.header('Content-Type', 'application/xml');
+        res.send(response.data);
+    } catch (err) {
+        console.error('Errore caricando la sitemap:', err);
+        res.status(500).send('Errore caricando la sitemap');
+    }
+});
+
+// Altre route frontend...
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Frontend server in ascolto su porta ${PORT}`);
+});
+
+
 
 async function loading(){
  await fetch(url + '/all', {
