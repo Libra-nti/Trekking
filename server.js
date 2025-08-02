@@ -2,6 +2,13 @@ const express = require('express');
 const axios = require('axios');
 const path = require('path');
 const app = express();
+const prerender = require('prerender-node');
+
+// Inserisci il tuo token personale qui:
+prerender.set('prerenderToken', process.env.prerender);
+
+// Usa il middleware per abilitare il prerender su tutte le richieste
+app.use(prerender);
 
 // Servire file statici (HTML, CSS, JS, ecc.)
 app.use(express.static(__dirname));
