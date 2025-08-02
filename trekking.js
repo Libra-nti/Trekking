@@ -1,4 +1,4 @@
-id = window.location.pathname.split('/').pop();
+id = window.location.pathname.split('/')
 console.log(id)
 var trekking
 var xmlGPX
