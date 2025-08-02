@@ -37,7 +37,7 @@ app.get('/sitemap.xml', async (req, res) => {
 });
 
 app.get('/trekking/:slug', (req, res) => {
-    res.sendFile(path.join(__dirname, 'trekking-details.html'));
+    res.sendFile(path.join(__dirname, 'trekking-details.html/id='+req.params.slug));
 });
 
 const PORT = process.env.PORT || 3000;
