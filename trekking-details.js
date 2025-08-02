@@ -1,5 +1,3 @@
-const { Double } = require("mongodb");
-
 const slugId = window.location.pathname.split('/').pop();  
 const id = slugId.split('-').pop(); 
 var trekking
