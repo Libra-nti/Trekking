@@ -1,3 +1,5 @@
+const { Double } = require("mongodb");
+
 const slugId = window.location.pathname.split('/').pop();  
 const id = slugId.split('-').pop(); 
 var trekking
@@ -57,7 +59,11 @@ async function mostraContenuto() {
     .then(response =>  response.json()
       ); // Attendi la fine della fetch
     //console.log(trek)
-    document.title = trek.name + " - Viaggi di Tony"
+    document.title = trek.name + " | Viaggi di Tony"
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if(metaDesc){
+        metaDesc.setAttribute('content', trek.description)
+    }
     trekking = trek
      document.getElementById('trekking-name').innerText = trek.name;
      document.getElementById('trekking-expose').innerText = trek.expose;
