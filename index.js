@@ -80,7 +80,7 @@ function fillCards(trekkingList){
         if(trekkingList[i].date != dataNewest){
         
         card.innerHTML = `
-    <div onclick="move('${trekkingList[i]._id}')" class="card h-100" style="width: auto">
+    <div onclick="move('${trekkingList[i].name}+${trekkingList[i]._id}')" class="card h-100" style="width: auto">
       <img src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg" class="card-img-top">
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekkingList[i].name}</h5>
@@ -212,7 +212,7 @@ function prev(){
 }
 
 function move(idTrek){
-    window.location.href = "trekking-details.html?id="+idTrek
+    window.location.href = "trekking/"+idTrek
 }
 
 

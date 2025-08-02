@@ -1,5 +1,5 @@
-id = window.location.pathname.split('/').pop();
-console.log(id)
+const slugId = window.location.pathname.split('/').pop();  
+const id = slugId.split('-').pop(); 
 var trekking
 var xmlGPX
 let marker

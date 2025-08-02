@@ -13,14 +13,11 @@ app.get('/sitemap.xml', async (req, res) => {
     const { data } = await axios.get('https://trekkingbackend.onrender.com/all');
     const trekkingList = data; // supponendo che contenga array oggetti con slug/name
     console.log(trekkingList)
-    const urls = trekkingList.map(item => {
-      // Scegli lo slug: se c'è un campo `slug`, altrimenti crea da `nome`
-      const slug = item.slug || item.name.toLowerCase()
-        .replace(/\s+/g, '-')
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const url = `<url><loc>https://viaggiditony.com/trekking/${slug}</loc></url>`;
-      return url;
-    }).join('\n');
+    const urls = trekkingList.map(trekking => `
+        <url>
+            <loc>https://viaggiditony.com/trekking/${slugify(trekking.name)}-${trekking._id}</loc>
+        </url>
+    `).join('');
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -36,10 +33,19 @@ app.get('/sitemap.xml', async (req, res) => {
   }
 });
 
-app.get('/trekking/:slug', (req, res) => {
-    res.sendFile(path.join(__dirname,  'trekking-details.html'));
-});
+function slugify(text) {
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
 
+
+app.get('/trekking/:slugId', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'trekking-details.html'));
+});
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Frontend server listening on port ${PORT}`);
