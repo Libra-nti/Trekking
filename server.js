@@ -15,7 +15,7 @@ app.get('/sitemap.xml', async (req, res) => {
     console.log(trekkingList)
     const urls = trekkingList.map(trekking => `
         <url>
-            <loc>https://viaggiditony.com/trekking/${slugify(trekking.name)}-${trekking._id}</loc>
+            <loc>https://viaggiditony.com/trekking/${trekking.name.toLowerCase()}-${trekking._id}</loc>
         </url>
     `).join('');
 
