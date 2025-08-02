@@ -91,7 +91,7 @@ function fillCards(trekkingList){
         }
         else{
             card.innerHTML = `
-    <div onclick="move('${trekkingList[i]._id}')" class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
+    <div onclick="move('${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}')" class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
     <div class="prova" style="display: inline-block; positoin:relative">
       <img src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg" class="card-img-top">
       <img id="newLogo" src="newLogo.png" >
