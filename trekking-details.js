@@ -162,7 +162,7 @@ window.addEventListener("load", () => {
 });
 
 const bivaccoIcon = L.icon({
-  iconUrl: 'public/loghi/bivacco.png',   // Percorso al tuo file
+  iconUrl: 'viaggiditony.onrender.com/public/loghi/bivacco.png',   // Percorso al tuo file
   iconSize: [28, 28],           // Dimensioni icona
   iconAnchor: [16, 32],         // Punto che tocca la mappa (in basso al centro)
   popupAnchor: [0, -32]         // Dove appare il popup rispetto all'icona
@@ -516,7 +516,7 @@ function carosello(){
         else{
             carousel.classList = "carousel-item"
         }
-        image.src= "public/"+trekking.name+"-"+trekking.date+"/"+i+".jpg"
+        image.src= "viaggiditony.onrender.com/public/"+trekking.name+"-"+trekking.date+"/"+i+".jpg"
         image.classList ="d-block"
         carousel.appendChild(image)
         var node = document.getElementById("carosello")
