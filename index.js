@@ -80,18 +80,21 @@ function fillCards(trekkingList){
         if(trekkingList[i].date != dataNewest){
         
         card.innerHTML = `
-    <div onclick="move('${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}')" class="card h-100" style="width: auto">
+        <a href="/trekking/${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}">
+    <div class="card h-100" style="width: auto">
       <img src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg" class="card-img-top">
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekkingList[i].name}</h5>
        <p class="card-text">${trekkingList[i].date}</p>
       </div>
       </div>
+      </a>
     `
         }
         else{
             card.innerHTML = `
-    <div onclick="move('${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}')" class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
+            <a href="/trekking/${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}">
+    <div  class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
     <div class="prova" style="display: inline-block; positoin:relative">
       <img src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg" class="card-img-top">
       <img id="newLogo" src="newLogo.png" >
@@ -102,6 +105,7 @@ function fillCards(trekkingList){
        
       </div>
       </div>
+      </a>
     `;
         }
         cards.push(card)
