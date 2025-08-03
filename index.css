@@ -113,3 +113,7 @@ body, html {
   opacity: 0.8;
 }
 
+a {
+    color: inherit;         /* Usa il colore del testo genitore */
+    text-decoration: none;  /* Rimuove la sottolineatura */
+}
