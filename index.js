@@ -226,7 +226,7 @@ function cronological(trekkingList){
     console.log(cards)
     for(var i = 0;i<trekkingList.length-1;i++){
         console.log(i)
-        if(cards[i].childNodes[1].children[1].children[1].innerText<cards[i+1].childNodes[1].children[1].children[1].innerText){
+        if(cards[i].childNodes[1].children[0].children[1].children[1].innerText<cards[i+1].childNodes[1].children[0].children[1].children[1].innerText){
             temp = cards[i]
             cards[i]=cards[i+1]
             cards[i+1]=temp
