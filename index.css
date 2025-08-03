@@ -114,6 +114,5 @@ body, html {
 }
 
 a {
-    color: inherit;         /* Usa il colore del testo genitore */
-    text-decoration: none;  /* Rimuove la sottolineatura */
+    all: unset
 }
