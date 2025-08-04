@@ -36,7 +36,7 @@ async function loading(){
 
     })
     document.getElementById("loader").style.display = "none"
-    ocument.getElementById("main").style.display = "none"
+    document.getElementById("main").style.display = "none"
     document.getElementById("content").style.display = "block"
   }
 
