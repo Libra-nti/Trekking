@@ -113,3 +113,12 @@ body, html {
   opacity: 0.8;
 }
 
+.fade-in {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+/* Quando aggiungi la classe "visible", parte la transizione */
+.fade-in.visible {
+  opacity: 1;
+}

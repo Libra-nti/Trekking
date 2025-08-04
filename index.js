@@ -11,6 +11,7 @@ var pages
 
 
 async function loading(){
+  document.getElementById("main").classList.add('visible');
  await fetch(url + '/all', {
         method: 'GET',
         headers: {
@@ -35,6 +36,7 @@ async function loading(){
 
     })
     document.getElementById("loader").style.display = "none"
+    ocument.getElementById("main").style.display = "none"
     document.getElementById("content").style.display = "block"
   }
 
