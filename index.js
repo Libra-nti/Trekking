@@ -97,7 +97,7 @@ function fillCards(trekkingList){
             card.innerHTML = `
             <a href="./trekking/${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}" style="all: unset">
     <div  class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
-    <div class="prova" style="display: inline-block; positoin:relative">
+    <div class="prova" style="display: inline-block; position:relative">
       <img src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg" class="card-img-top">
       <img id="newLogo" src="newLogo.png" >
       </div>
