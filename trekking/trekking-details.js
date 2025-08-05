@@ -1,4 +1,4 @@
-const slugId = new URLSearchParams(window.location.search);
+var slugId = new URLSearchParams(window.location.search);
 slugId = slugId.get('id')
 slugId = slugId.split('/').pop()
 const id = slugId.split('-').pop(); 
