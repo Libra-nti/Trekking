@@ -48,7 +48,7 @@ async function mostraContenuto() {
         mappa = mappa.slice(1,-1);
         extractDataAndPlot(mappa)
         xmlGPX = mappa
-    const trek = await fetch(url + "/trek/" + id, {
+    const trek = await fetch(url + "/trekking/" + id, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"
