@@ -80,7 +80,7 @@ async function mostraContenuto() {
      generateStars(trek.stars)
      if(trek.tipo=="Multipitch"){
         document.getElementsByTagName('strong')[3].innerText = "Altezza:"
-        var card = document.getElementsByClassName('card-body')[0]
+        var ul = document.getElementsByClassName('list-group')[0]
         var li = document.createElement("li")
         var strong = document.createElement("strong")
         strong.innerText = "Dislivello avvicinamento: "
