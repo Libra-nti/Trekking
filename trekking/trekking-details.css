@@ -80,6 +80,6 @@ img {
 }
 
 .list-group-item{
-  border-left: none;
-  border-right: none;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
 }

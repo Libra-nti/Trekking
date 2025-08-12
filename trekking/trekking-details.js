@@ -83,7 +83,7 @@ async function mostraContenuto() {
         var card = document.getElementsByClassName('card-body')[0]
         var li = document.createElement("li")
         var strong = document.createElement("strong")
-        strong.innerText = "Dislivello avvicinamento:"
+        strong.innerText = "Dislivello avvicinamento: "
         var span = document.createElement("span")
         span.innerText = trek.approach + " mt"
         li.classList.add("list-group-item")
