@@ -90,7 +90,7 @@ async function mostraContenuto() {
         
         li.appendChild(strong)
         li.appendChild(span)
-        card.appendChild(li)
+        ul.appendChild(li)
         
      }
      for (var i = 0; i < trek.equipment.length; i++) {
