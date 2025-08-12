@@ -66,7 +66,7 @@ async function mostraContenuto() {
     trekking = trek
      document.getElementById('trekking-name').innerText = trek.name;
      document.getElementById('trekking-expose').innerText = trek.expose;
-     document.getElementById('trekking-duration').innerText = trek.duration;
+     var dur = document.getElementById('trekking-duration').innerText = trek.duration;
      document.getElementById('trekking-elevation').innerText = trek.elevation + " mt";
      document.getElementById('trekking-distance').innerText = trek.distance + " km";
      document.getElementById('trekking-difficulty').innerText = trek.difficulty;
@@ -78,6 +78,20 @@ async function mostraContenuto() {
      document.getElementById('trekking-season').innerText = trek.season
      document.getElementById('trekking-tipo').innerText = trek.tipo
      generateStars(trek.stars)
+     if(trek.tipo=="Multipitch"){
+        document.getElementsByTagName('strong')[3].innerText = "Altezza"
+        var card = document.getElementsByClassName('card-body')[0]
+        var li = document.createElement("li")
+        var strong = document.createElement("strong")
+        strong.innerText = "Avvicinamento"
+        var span = document.createElement("span")
+        span.innerText = trek.approach
+        li.classList("list-group-item")
+        strong.appendChild(span)
+        li.appendChild(strong)
+        card.appendChild(li)
+        
+     }
      for (var i = 0; i < trek.equipment.length; i++) {
         ////consol.log("dentro")
         var father = document.getElementById("equipaggiamento")
