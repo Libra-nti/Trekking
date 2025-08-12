@@ -78,3 +78,8 @@ img {
   -webkit-background-clip: text;
   color: transparent;
 }
+
+.list-group-item{
+  border-left: none;
+  border-right: none;
+}

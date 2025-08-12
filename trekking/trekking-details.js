@@ -79,16 +79,17 @@ async function mostraContenuto() {
      document.getElementById('trekking-tipo').innerText = trek.tipo
      generateStars(trek.stars)
      if(trek.tipo=="Multipitch"){
-        document.getElementsByTagName('strong')[3].innerText = "Altezza"
+        document.getElementsByTagName('strong')[3].innerText = "Altezza:"
         var card = document.getElementsByClassName('card-body')[0]
         var li = document.createElement("li")
         var strong = document.createElement("strong")
-        strong.innerText = "Dislivello avvicinamento"
+        strong.innerText = "Dislivello avvicinamento:"
         var span = document.createElement("span")
         span.innerText = trek.approach + " mt"
         li.classList.add("list-group-item")
-        strong.appendChild(span)
+        
         li.appendChild(strong)
+        li.appendChild(span)
         card.appendChild(li)
         
      }
