@@ -86,7 +86,7 @@ async function mostraContenuto() {
         strong.innerText = "Dislivello avvicinamento"
         var span = document.createElement("span")
         span.innerText = trek.approach + " mt"
-        li.classList("list-group-item")
+        li.classList.add("list-group-item")
         strong.appendChild(span)
         li.appendChild(strong)
         card.appendChild(li)
