@@ -118,11 +118,7 @@ catch(e){
 
 
 // Esegui la funzione quando la pagina è completamente caricata
-document.addEventListener("DOMContentLoaded", () => {
-    map = L.map('map').setView([51.505, -0.09], 13);
-    mostraContenuto();
-    
-});
+
 
 const bivaccoIcon = L.icon({
   iconUrl: '/public/loghi/bivacco.png',   // Percorso al tuo file
