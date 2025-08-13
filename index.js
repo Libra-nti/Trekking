@@ -82,7 +82,7 @@ function fillCards(trekkingList){
         if(trekkingList[i].date != dataNewest){
         
         card.innerHTML = `
-        <a href="./trekking/${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}" style="all: unset">
+        <a href="./trekking/trekking-details.html?id=${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}" style="all: unset">
     <div class="card h-100" style="width: auto">
       <img src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg" class="card-img-top">
        <div class="card-body bottom-0">
@@ -95,7 +95,7 @@ function fillCards(trekkingList){
         }
         else{
             card.innerHTML = `
-            <a href="./trekking/${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}" style="all: unset">
+            <a href="./trekking/trekking-details.html?id=${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}" style="all: unset">
     <div  class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
     <div class="prova" style="display: inline-block">
       <img src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg" class="card-img-top">
