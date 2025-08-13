@@ -1,6 +1,4 @@
-var slugId = new URLSearchParams(window.location.search);
-slugId = slugId.get('id')
-const id = slugId.split('-').pop(); 
+
 var trekking
 var xmlGPX
 let marker

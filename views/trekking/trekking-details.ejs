@@ -209,7 +209,7 @@
     const container = document.getElementById('rating');
 
     // Calcoliamo il numero di stelle piene, metà stella e vuote
-    let fullStars = Math.floor(document.getElementById(rating).value);
+    let fullStars = Math.floor(document.getElementById('rating').value);
     let halfStars = (rating % 1 >= 0.5) ? 1 : 0;
     let emptyStars = 5 - fullStars - halfStars;
 
