@@ -31,7 +31,7 @@ const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // Funzione per mostrare il contenuto dopo il caricamento
 async function mostraContenuto() {
     try{
-        var trek = await fetch(url + "/trekkID/" + document.getElementById("trekking-name").value, {
+        var trek = await fetch(url + "/trekkID/" + document.getElementById("trekking-name").innerText, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"
