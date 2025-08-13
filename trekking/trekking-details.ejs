@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description">
-  <title>Dettaglio Trekking</title>
+  <title><%= name %> | Viaggi di Tony</title>
   <link rel="stylesheet" href="trekking-details.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet-omnivore@0.3.0/leaflet-omnivore.min.js"></script>
@@ -15,15 +15,6 @@
 </head>
 <body>
 
-  <div id="loader">
-    <div class="text-center">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Caricamento...</span>
-        </div>
-        <p>Caricamento in corso...</p>
-    </div>
-</div>
-
 
 <div id="content">
 
@@ -32,7 +23,7 @@
   <nav class="navbar navbar-expand-lg navbar-custom navbar-light bg-light">
     <div class="container justify-content-center">
         <!-- Titolo centrato -->
-        <h1 class="navbar-brand" id="trekking-name" style="font-size: 30px;">titolo</h1>
+        <h1 class="navbar-brand" id="trekking-name" style="font-size: 30px;"><%= name%></h1>
     </div>
 </nav>
 
@@ -47,16 +38,18 @@
               <li class="list-group-item"><strong>Bellezza: </strong>  <span class="stars" id="rating">
                 <!-- Le stelle saranno generate dinamicamente da JavaScript -->
               </span></li>
-                <li class="list-group-item"><strong>Partenza: </strong> <a href="" id="trekking-parking"></a></li>
-                <li class="list-group-item" ><strong>Durata: </strong><span id="trekking-duration"></span></li>
-                <li class="list-group-item"><strong>Quota: </strong> <span id="trekking-altitude"> </span></li>
-                <li class="list-group-item"><strong>Dislivello: </strong> <span id="trekking-elevation"> </span></li>
-                <li id="approach" class="list-group-item" style="display: none;"><strong>Dislivello avvicinamento: </strong> <span id="trekking-approach"> </span></li>
-                <li class="list-group-item"><strong>Distanza: </strong> <span id="trekking-distance"></span></span></li>
-                <li class="list-group-item"><strong>Tipologia: </strong> <span id="trekking-tipo"></span></li>
-                <li class="list-group-item"><strong>Difficoltà: </strong> <span id="trekking-difficulty"></span></li>
-                <li class="list-group-item"><strong>Stagione: </strong> <span id="trekking-season"></span></li>
-                <li class="list-group-item"><strong>Esposizione: </strong> <span id="trekking-expose"></span></li>
+                <li class="list-group-item"><strong>Partenza: </strong> <a href="" id="trekking-parking"><%= parking%></a></li>
+                <li class="list-group-item" ><strong>Durata: </strong><span id="trekking-duration"><%= duration%></span></li>
+                <li class="list-group-item"><strong>Quota: </strong> <span id="trekking-altitude"><%= altitude%> mt</span></li>
+                <li class="list-group-item"><strong>Dislivello: </strong> <span id="trekking-elevation"><%= elevation%> mt</span></li>
+                <% if(tipo=="Multipitch") {%>
+                <li id="approach" class="list-group-item" style="display: none;"><strong>Dislivello avvicinamento: </strong> <span id="trekking-approach"><%= approach%> mt</span></li>
+                <% }%>
+                <li class="list-group-item"><strong>Distanza: </strong> <span id="trekking-distance"><%= distance%> km</span></span></li>
+                <li class="list-group-item"><strong>Tipologia: </strong> <span id="trekking-tipo"><%= tipo%></span></li>
+                <li class="list-group-item"><strong>Difficoltà: </strong> <span id="trekking-difficulty"><%= difficulty%></span></li>
+                <li class="list-group-item"><strong>Stagione: </strong> <span id="trekking-season"><%= season%></span></li>
+                <li class="list-group-item"><strong>Esposizione: </strong> <span id="trekking-expose"><%= expose%></span></li>
             </ul>
         </div>
     </div>
@@ -116,6 +109,9 @@
             <div id="collapseEquipaggiamento" class="accordion-collapse collapse" aria-labelledby="headingEquipaggiamento" data-bs-parent="#accordionAttrezzatura">
                 <div class="accordion-body">
                     <ul class="list-group" id="equipaggiamento">
+                      <% for(var i = 0; i < equipment.length; i++){>
+                        <li class="list-group-item"> <%=equipment[i]%></li>
+                        <% }%>
                     </ul>
                 </div>
             </div>
@@ -153,8 +149,24 @@
       <div class="col-12 d-flex justify-content-center align-items-center">
         <div id="carouselExampleIndicators" class="carousel slide mb-3 mt-3" data-bs-ride="carousel">
           <div class="carousel-indicators" id="indicator">
+            <% for(var i =1 ; i<numFoto+1;i++){%>
+              <button aria-label="<%= i%>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i-1 %>"></button>
+              <% }%>
           </div>
           <div class="carousel-inner" id="carosello">
+            <% for(var h =1 ; h<numFoto+1;h++){%>
+              <% if(h==1){%>
+                <div class="carousel-item active">
+                <img src="/public/<%=name%>-<%=date%>" class="d-block" alt="Foto n° <%= h%> del trekking <%=name%>">
+                </div>
+                <%}%>
+                <%else{%>
+                  <div class="carousel-item">
+                <img src="/public/<%=name%>-<%=date%>" class="d-block" alt="Foto n° <%= h%> del trekking <%=name%>">
+                </div>
+                  <%}>
+              
+              <%}%>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

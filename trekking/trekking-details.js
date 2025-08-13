@@ -5,9 +5,9 @@ var trekking
 var xmlGPX
 let marker
 var map // Imposta una vista iniziale
-var url = "https://trekkingbackend.onrender.com"
+var url = "https://viaggiditony.onrender.com"
 //var url = "http://localhost:3100"
-const urlGPX = 'https://trekkingbackend.onrender.com/trekGPX/' + id; // URL del tuo file XML binario
+const urlGPX = 'https://vaiggiditony.onrender.com/trekGPX/' + id; // URL del tuo file XML binario
 
 async function fetchAndConvertToXML(urlGPX) {
     // Effettua la fetch per ottenere i dati binari
@@ -49,58 +49,9 @@ async function mostraContenuto() {
         mappa = mappa.slice(1,-1);
         extractDataAndPlot(mappa)
         xmlGPX = mappa
-    const trek = await fetch(url + "/trekking/" + id, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json"
-        },
-    })
-    .then(response =>  response.json()
-      ); // Attendi la fine della fetch
-    //console.log(trek)
-    document.title = trek.name + " | Viaggi di Tony"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    if(metaDesc){
-        metaDesc.setAttribute('content', trek.description)
-    }
-    trekking = trek
-     document.getElementById('trekking-name').innerText = trek.name;
-     document.getElementById('trekking-expose').innerText = trek.expose;
-     document.getElementById('trekking-duration').innerText = trek.duration;
-     document.getElementById('trekking-elevation').innerText = trek.elevation + " mt";
-     document.getElementById('trekking-altitude').innerText = trek.altitude + " mt";
-     document.getElementById('trekking-distance').innerText = trek.distance + " km";
-     document.getElementById('trekking-difficulty').innerText = trek.difficulty;
-     document.getElementById('trekking-description').innerText = trek.description;
-     var you = document.getElementById('youtube').innerHTML = trek.youtube;
-     var relive = document.getElementById('relive').innerHTML = trek.relive
-     document.getElementById('trekking-parking').innerText = trek.parking
-     document.getElementById('trekking-parking').href = "https://www.google.com/maps/place/" + trek.parking
-     document.getElementById('trekking-season').innerText = trek.season
-     document.getElementById('trekking-tipo').innerText = trek.tipo
+    
      generateStars(trek.stars)
-     if(trek.tipo=="Multipitch"){
-        document.getElementsByTagName('strong')[4].innerText = "Altezza:"
-        document.getElementById('approach').style.display = "block"
-        document.getElementById('trekking-approach').innerText = trek.approach + " mt"
-        
-     }
-     you.title = "Video YouTube"
-     relive.title = "Mappa Relive"
-     you.sanbox = ""
-     relive.sanbox = ""
-     for (var i = 0; i < trek.equipment.length; i++) {
-        ////consol.log("dentro")
-        var father = document.getElementById("equipaggiamento")
-        //consol.log(father)
-        var clone = document.createElement("li")
-
-        clone.classList = "list-group-item"
-        //consol.log(clone)
-        clone.innerHTML = trek.equipment[i]
-        father.appendChild(clone)
-    }
-
+     
     // Aggiungi un layer di tile della mappa (OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -131,7 +82,7 @@ const queryOverpass = `[out:json][timeout:25];
 out body;
 >;
 out skel qt;`
-console.log(queryOverpass)
+//console.log(queryOverpass)
 fetch('https://overpass-api.de/api/interpreter', {
   method: 'POST',
   body: queryOverpass,
@@ -148,9 +99,6 @@ fetch('https://overpass-api.de/api/interpreter', {
 
     //wait(1000);  
     carosello()
-    document.getElementById("loader").style.display = "none"; // Nascondi il loader
-    
-    document.getElementById("content").style.display = "block"; // Mostra il contenuto
 
     //removeFooter()
     if (window.map) {
@@ -231,31 +179,6 @@ function addOverpassElementsToMap(data, map) {
 
 async function fetchData() {
 
-    fetch(url + "/trek/" + id, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json"
-            },
-        })
-        .then(response =>  response.json()
-          ).
-    then(data => {
-        trekking = data
-        if (trekking) {
-            
-
-            for (var i = 0; i < data.equipment.length; i++) {
-                ////consol.log("dentro")
-                var father = document.getElementById("equipaggiamento")
-                //consol.log(father)
-                var clone = document.createElement("li")
-
-                clone.classList = "list-group-item"
-                //consol.log(clone)
-                clone.innerHTML = data.equipment[i]
-                father.appendChild(clone)
-            }
-
             // Aggiungi un layer di tile della mappa (OpenStreetMap)
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -266,10 +189,7 @@ async function fetchData() {
             // Adatta la vista della mappa per includere l'intero percorso
             map.fitBounds(gpxLayer.getBounds());
             
-        }
-    })
-
-    
+       
     //consol.log("finito")
 
 };
