@@ -27,7 +27,7 @@ const upload = multer({
 
 // Connessione a MongoDB
 let db, bucket;
-
+app.set("view engine", "ejs");
 
 
 const axios = require('axios');
@@ -196,7 +196,7 @@ app.get("/trekking/:nome", async (req, res) => {
     }
   
 
-  res.render("/trekking/trekking-details.ejs", trek);
+  res.render("/trekking/trekking-details", trek);
 });
 
 
