@@ -183,7 +183,7 @@ app.get("/trekking/:nome", async (req, res) => {
     try {
         client.connect();
         var trek = await client.db("trekking").collection("treks").findOne(
-            { name: { $regex: nome, $options: "i" } }
+            { name: nome }
         )
         console.log(trek)
         const builder = new xml2js.Builder();
