@@ -5,7 +5,6 @@ let marker
 var map // Imposta una vista iniziale
 var url = "https://viaggiditony.onrender.com"
 //var url = "http://localhost:3100"
-const urlGPX = 'https://vaiggiditony.onrender.com/trekGPX/' + id; // URL del tuo file XML binario
 
 async function fetchAndConvertToXML(urlGPX) {
     // Effettua la fetch per ottenere i dati binari
@@ -40,7 +39,7 @@ fetchAndConvertToXML(urlGPX)
         })
     }
 // Funzione per mostrare il contenuto dopo il caricamento
-async function mostraContenuto() {
+async function mostraContenuto(urlGPX) {
     try{
         var mappa = await fetchAndConvertToXML(urlGPX)
         mappa = mappa.slice(1,-1);
