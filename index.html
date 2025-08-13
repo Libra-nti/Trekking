@@ -18,21 +18,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body style="background-color: rgb(255, 255, 255);" onload="loading()">
-  <a href="https://viaggiditony.onrender.com/trekking/sodadura-67c615f687d605853e0063b8"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/grignone-67c6172b87d605853e0063bc"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/ferrata%20medale-67c6183f87d605853e0063bf"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/necropolis%20-%20rocca%20di%20baiedo-688cd6c4da4c66c2d074be7d"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/cresta%20marbrées-68617a545c4e27f427247356"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/cresta%20ongania-682b4bbbb190d309dc5dfb75"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/grignetta-67c619c887d605853e0063c1"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/magnodeno-67c61b4b87d605853e0063ca"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/grignetta-67c61db787d605853e0063cb"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/resegone-67f795c37397f0b1a8b280c0"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/cresta%20osa-67e45dd2dbc6f038d7d67149"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/corno%20orientale-67db33e1faa2ceed884c0e24"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/bivacco%20zeb-67cacebb64915a87f08e65f2"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/due%20mani-67c618c187d605853e0063c0"></a>
-  <a href="https://viaggiditony.onrender.com/trekking/laghi%20azzurri-67c61eae87d605853e0063d0"></a>
 
   <h1 name="descrizione-sito" class="visually-hidden">Raccolgo e documento i miei trekking e le mie attività in motagna che vanno dall'alpinismo fino all'arrampicata. Qui troverete una vasta gamma di esperienze ben dettagliate, utile per tutti gli appassionati di montagna come me.</h1>
   <nav class="navbar navbar-light bg-light" style="z-index: 1;">
@@ -40,9 +25,9 @@
       <a class="navbar-brand"><h1>Trekking&Co.</h1></a>
       <form class="d-flex" id="formS">
         <input id="search" onkeypress="filterTrekking()" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-dark" type="submit" ><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></button>
+        <button class="btn btn-outline-dark" name="cerca" type="submit" ><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></button>
       </form>
-      <button class="btn btn-dark" onclick="show()">Filtra</button>
+      <button class="btn btn-dark" name="filtra" onclick="show()">Filtra</button>
       
     </div>
   </nav>
@@ -102,7 +87,7 @@
         </ul>
     </div>
     <div class="input-group mb-2">
-      <button type="button" class="btn btn-link" onclick="filterTrekking()">Applica</button>
+      <button type="button" class="btn btn-link" name="Applica filtri" onclick="filterTrekking()">Applica</button>
     </div>
 
     
