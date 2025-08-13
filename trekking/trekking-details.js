@@ -80,9 +80,9 @@ async function mostraContenuto() {
      document.getElementById('trekking-tipo').innerText = trek.tipo
      generateStars(trek.stars)
      if(trek.tipo=="Multipitch"){
-        document.getElementsByTagName('strong')[3].innerText = "Altezza:"
+        document.getElementsByTagName('strong')[4].innerText = "Altezza:"
         document.getElementById('approach').style.display = "block"
-        document.getElementById('trekking-approach').innerText = trek.approach
+        document.getElementById('trekking-approach').innerText = trek.approach + " mt"
         
      }
      for (var i = 0; i < trek.equipment.length; i++) {
