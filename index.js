@@ -2,7 +2,7 @@ let trekkingData = [];
 let filteredTrekking = [];
 var J = 0
 
-var url = "localhost:3000"
+var url = "https://viaggiditony.onrender.com"
 
 
 var src = []

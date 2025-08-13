@@ -182,9 +182,9 @@ app.get("/trekking/:nome", async (req, res) => {
   const client = new mongoClient(process.env.uri)
     try {
         client.connect();
-        var trek = await client.db("trekking").collection("treks").findOne({
-            name: nome
-        })
+        var trek = await client.db("trekking").collection("treks").findOne(
+            { name: { $regex: `^${nome}$`, $options: "i" } }
+        )
         const builder = new xml2js.Builder();
         const xmlOutput = builder.buildObject(trek.gpx);
         //console.log("output")
