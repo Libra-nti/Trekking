@@ -45,9 +45,6 @@ body {
     z-index: 9999;
 }
 /* Nasconde il contenuto finché non è caricato */
-#content {
-    display: none;
-}
 
 
 .carousel-inner {
