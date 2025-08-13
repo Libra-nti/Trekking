@@ -39,20 +39,19 @@ fetchAndConvertToXML(urlGPX)
         })
     }
 // Funzione per mostrare il contenuto dopo il caricamento
-async function mostraContenuto(urlGPX) {
+async function mostraContenuto(urlGPX, trekGPX) {
     try{
         var mappa = await fetchAndConvertToXML(urlGPX)
         mappa = mappa.slice(1,-1);
         extractDataAndPlot(mappa)
         xmlGPX = mappa
     
-     generateStars(trek.stars)
      
     // Aggiungi un layer di tile della mappa (OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    const gpxLayer = omnivore.gpx.parse(trek.gpx);
+    const gpxLayer = omnivore.gpx.parse(trekGPX);
     // Aggiungi il layer GPX alla mappa
     gpxLayer.addTo(map);
     // Adatta la vista della mappa per includere l'intero percorso

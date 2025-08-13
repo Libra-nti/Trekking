@@ -202,36 +202,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 <script>
-  mostraContenuto("https://vaiggiditony.onrender.com/trekGPX/"+'<%=id%>')
+  
   document.addEventListener("DOMContentLoaded", () => {
-    const fullStar = '&#9733;';
-    const halfStar = '&#9733;';
-    const emptyStar = '&#9733;';
-    const container = document.getElementById('rating');
-
-    // Calcoliamo il numero di stelle piene, metà stella e vuote
-    let fullStars = Math.floor(document.getElementById('rating').value);
-    let halfStars = (rating % 1 >= 0.5) ? 1 : 0;
-    let emptyStars = 5 - fullStars - halfStars;
-
-    // Ricostruiamo la valutazione con le stelle
-    container.innerHTML = '';
-
-    // Stelle piene
-    for (let i = 0; i < fullStars; i++) {
-        container.innerHTML += `<span class="star">${fullStar}</span>`;
-    }
-
-    // Mezza stella
-    if (halfStars) {
-        container.innerHTML += `<span class="star-half">${halfStar}</span>`;
-    }
-
-    // Stelle vuote
-    for (let i = 0; i < emptyStars; i++) {
-        container.innerHTML += `<span class="star-empty">${emptyStar}</span>`;
-    }
-  })
+    mostraContenuto("https://vaiggiditony.onrender.com/trekGPX/"+'<%=id%>', '<%=gpx%>')
+    generateStar(document.getElementById("rating").value)
+    })
 </script>
 </body>
 </html>
