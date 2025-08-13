@@ -8,27 +8,8 @@ const express = require('express') //modulo utilizzato con nodejs per semplifica
 const path = require('path');
 //const multer = require('multer');
 const app = express() //una specie di costruttore che inizializza express e che ci permette di utilizzare tutti i metodi
-app.use(cors({
-    origin: ["https://viaggiditony.onrender.com",
-    'https://service.prerender.io'         // Prerender.io per Googlebot rendering
-    ],
-    methods: ['GET','OPTIONS'],  // Solo API di lettura devono essere pubbliche
-    allowedHeaders: ['Content-Type'],
-}))
-app.use(express.json())
-app.use((req, res, next) => {
-    const allowedOrigin = 'https://viaggiditony.onrender.com';
 
-    // Solo per metodi sensibili
-    if (['POST', 'PUT', 'DELETE'].includes(req.method)) {
-        const origin = req.headers.origin;
-        
-        if (origin !== allowedOrigin) {
-            return res.status(403).json({ error: 'Forbidden' });
-        }
-    }
-    next();
-});
+app.use(express.json())
 
 //const upload = multer({ dest: 'uploads/' });
 const xmlBodyParser = require('express-xml-bodyparser');
