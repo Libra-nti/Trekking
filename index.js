@@ -56,7 +56,7 @@ function filterTrekking() {
         return (
             (trekking.name.toLowerCase().includes(search) || trekking.description.toLowerCase().includes(search)) &&
             (difficulty ? trekking.difficulty === difficulty : true) &&
-            (distance ? trekking.distance - distance <= 0 : true) &&
+            (distance ? trekking.distance - distance > 0.5 && trekking.distance - distance < 0.5 : true) &&
             (elevation ? trekking.elevation - elevation <= 0 : true) &&
             (date ? trekking.date == date : true) && 
             (season ? trekking.season === season : true)&& 
@@ -181,6 +181,7 @@ function next(){
     if(document.getElementById("distance").value != '' || document.getElementById("elevation").value != '' ||document.getElementById("season").value != '' ||document.getElementById("difficulty").value != '' ||document.getElementById("date").value != ''){
         items = filteredTrekking
        
+
     }
     else{
         items = trekkingData

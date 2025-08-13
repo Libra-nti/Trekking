@@ -68,6 +68,7 @@ async function mostraContenuto() {
      document.getElementById('trekking-expose').innerText = trek.expose;
      var dur = document.getElementById('trekking-duration').innerText = trek.duration;
      document.getElementById('trekking-elevation').innerText = trek.elevation + " mt";
+     document.getElementById('trekking-altitude').innerText = trek.altitude + " mt";
      document.getElementById('trekking-distance').innerText = trek.distance + " km";
      document.getElementById('trekking-difficulty').innerText = trek.difficulty;
      document.getElementById('trekking-description').innerText = trek.description;
@@ -80,17 +81,8 @@ async function mostraContenuto() {
      generateStars(trek.stars)
      if(trek.tipo=="Multipitch"){
         document.getElementsByTagName('strong')[3].innerText = "Altezza:"
-        var ul = document.getElementsByClassName('list-group')[0]
-        var li = document.createElement("li")
-        var strong = document.createElement("strong")
-        strong.innerText = "Dislivello avvicinamento: "
-        var span = document.createElement("span")
-        span.innerText = trek.approach + " mt"
-        li.classList.add("list-group-item")
-        
-        li.appendChild(strong)
-        li.appendChild(span)
-        ul.appendChild(li)
+        document.getElementById('approach').style.display = "block"
+        document.getElementById('trekking-approach').innerText = trek.approach
         
      }
      for (var i = 0; i < trek.equipment.length; i++) {
