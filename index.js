@@ -86,7 +86,7 @@ function fillCards(trekkingList){
     <div class="card h-100" style="width: auto">
       <img loading="lazy" src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg?format=webp" class="card-img-top" name="${trekkingList[i].name}" alt="Foto copetina ${trekkingList[i].name}">
        <div class="card-body bottom-0">
-       <h1 class="card-title">${trekkingList[i].name}</h1>
+       <h5 class="card-title">${trekkingList[i].name}</h5>
        <p class="card-text">${trekkingList[i].date}</p>
       </div>
       </div>
@@ -102,7 +102,7 @@ function fillCards(trekkingList){
       <img id="newLogo" src="newLogo.png" alt="NUOVO!">
       </div>
        <div class="card-body bottom-0">
-       <h1 class="card-title">${trekkingList[i].name}</h1>
+       <h5 class="card-title">${trekkingList[i].name}</h5>
        <p class="card-text">${trekkingList[i].date}</p>
        
       </div>

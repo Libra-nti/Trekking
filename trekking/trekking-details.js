@@ -66,14 +66,14 @@ async function mostraContenuto() {
     trekking = trek
      document.getElementById('trekking-name').innerText = trek.name;
      document.getElementById('trekking-expose').innerText = trek.expose;
-     var dur = document.getElementById('trekking-duration').innerText = trek.duration;
+     document.getElementById('trekking-duration').innerText = trek.duration;
      document.getElementById('trekking-elevation').innerText = trek.elevation + " mt";
      document.getElementById('trekking-altitude').innerText = trek.altitude + " mt";
      document.getElementById('trekking-distance').innerText = trek.distance + " km";
      document.getElementById('trekking-difficulty').innerText = trek.difficulty;
      document.getElementById('trekking-description').innerText = trek.description;
-     document.getElementById('youtube').innerHTML = trek.youtube;
-     document.getElementById('relive').innerHTML = trek.relive
+     var you = document.getElementById('youtube').innerHTML = trek.youtube;
+     var relive = document.getElementById('relive').innerHTML = trek.relive
      document.getElementById('trekking-parking').innerText = trek.parking
      document.getElementById('trekking-parking').href = "https://www.google.com/maps/place/" + trek.parking
      document.getElementById('trekking-season').innerText = trek.season
@@ -85,6 +85,10 @@ async function mostraContenuto() {
         document.getElementById('trekking-approach').innerText = trek.approach + " mt"
         
      }
+     you.title = "Video YouTube"
+     relive.title = "Mappa Relive"
+     you.sanbox = ""
+     relive.sanbox = ""
      for (var i = 0; i < trek.equipment.length; i++) {
         ////consol.log("dentro")
         var father = document.getElementById("equipaggiamento")
@@ -516,7 +520,7 @@ function carosello(){
         var button = document.createElement("button")
         var carouselIndicator = document.getElementById("indicator")
         button.type = "button"
-        button.name = i
+        button.ariaLabel = i
         button.setAttribute('data-bs-target', '#carouselExampleIndicators');
         button.setAttribute('data-bs-slide-to', i-1);
         var image = document.createElement("img")
