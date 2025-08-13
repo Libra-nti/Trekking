@@ -30,7 +30,6 @@ function removeFooter() {
 }
 
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 function XML(){
 fetchAndConvertToXML(urlGPX)
         .then(xmlContent => {
