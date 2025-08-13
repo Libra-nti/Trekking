@@ -204,8 +204,7 @@
 <script>
   
   document.addEventListener("DOMContentLoaded", () => {
-    var trekGPX = "<%=gpx.toString()%>"
-    mostraContenuto("https://vaiggiditony.onrender.com/trekGPX/"+"<%=_id.toString()%>", trekGPX)
+    mostraContenuto("https://vaiggiditony.onrender.com/trekGPX/"+"<%=_id.toString()%>", "<%= gpx.replace(/`/g, '\\`') %>")
     generateStar(document.getElementById("rating").value)
     })
 </script>
