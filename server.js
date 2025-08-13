@@ -196,7 +196,7 @@ app.get("/trekking/:nome", async (req, res) => {
     }
   
 
-  res.render("/trekking/trekking-details", trek);
+  res.render("/trekking/trekking-details.ejs", trek);
 });
 
 
