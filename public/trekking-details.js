@@ -29,9 +29,22 @@ function removeFooter() {
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Funzione per mostrare il contenuto dopo il caricamento
-async function mostraContenuto(urlGPX, trekGPX) {
+async function mostraContenuto() {
     try{
-        var mappa = await fetchAndConvertToXML(urlGPX)
+        var trek = await fetch(url + "/trekkID/" + document.getElementById("trekking-name").value, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+    .then(response =>  response.json()
+      );
+    }
+    catch(e){
+        console.log(e)
+    }
+    try{
+        var mappa = await fetchAndConvertToXML(url+trek._id.toString())
         mappa = mappa.slice(1,-1);
         extractDataAndPlot(mappa)
         xmlGPX = mappa
@@ -41,7 +54,7 @@ async function mostraContenuto(urlGPX, trekGPX) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    const gpxLayer = omnivore.gpx.parse(trekGPX);
+    const gpxLayer = omnivore.gpx.parse(trek.gpx);
     // Aggiungi il layer GPX alla mappa
     gpxLayer.addTo(map);
     // Adatta la vista della mappa per includere l'intero percorso
