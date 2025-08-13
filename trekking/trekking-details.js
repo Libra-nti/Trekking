@@ -72,8 +72,8 @@ async function mostraContenuto() {
      document.getElementById('trekking-distance').innerText = trek.distance + " km";
      document.getElementById('trekking-difficulty').innerText = trek.difficulty;
      document.getElementById('trekking-description').innerText = trek.description;
-     var you = document.getElementById('youtube').appendChild(trek.youtube);
-     var relive = document.getElementById('relive').appendChild(trek.relive)
+     var you = document.getElementById('youtube').innerHTML = trek.youtube;
+     var relive = document.getElementById('relive').innerHTML = trek.relive
      document.getElementById('trekking-parking').innerText = trek.parking
      document.getElementById('trekking-parking').href = "https://www.google.com/maps/place/" + trek.parking
      document.getElementById('trekking-season').innerText = trek.season
