@@ -157,26 +157,6 @@ app.get("/all", async (req, res) => {
 })
 
 
-app.get("/trekking/:id", async (req, res) => {
-    var id = req.params.id
-    res.type('html');
-    const client = new mongoClient(process.env.uri)
-    try {
-        client.connect();
-        var trek = await client.db("trekking").collection("treks").findOne({
-            _id: new ObjectId(id)
-        })
-        const builder = new xml2js.Builder();
-        const xmlOutput = builder.buildObject(trek.gpx);
-        //console.log("output")
-        //console.log(xmlOutput)
-        trek.gpx = xmlOutput
-        res.json(trek)
-    } catch (e) {
-        console.log(e)
-    }
-})
-
 app.get("/trekGPX/:id", async (req, res) => {
     var id = req.params.id
     const client = new mongoClient(process.env.uri)
