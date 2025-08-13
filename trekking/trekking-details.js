@@ -137,7 +137,7 @@ fetch('https://overpass-api.de/api/interpreter', {
 })
 .then(res => res.json())
 .then(data => {
-    console.log(data)
+    //console.log(data)
     addOverpassElementsToMap(data, map);
 });
 
@@ -516,6 +516,7 @@ function carosello(){
         var button = document.createElement("button")
         var carouselIndicator = document.getElementById("indicator")
         button.type = "button"
+        button.name = i
         button.setAttribute('data-bs-target', '#carouselExampleIndicators');
         button.setAttribute('data-bs-slide-to', i-1);
         var image = document.createElement("img")
@@ -530,6 +531,7 @@ function carosello(){
         }
         image.src= "/public/"+trekking.name+"-"+trekking.date+"/"+i+".jpg"
         image.classList ="d-block"
+        image.alt = "Foto n° "+i+ " del trekking "+ trekking.name
         carousel.appendChild(image)
         var node = document.getElementById("carosello")
         node.appendChild(carousel)
