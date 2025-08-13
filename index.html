@@ -25,9 +25,9 @@
       <a class="navbar-brand"><h1>Trekking&Co.</h1></a>
       <form class="d-flex" id="formS">
         <input id="search" onkeypress="filterTrekking()" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-dark" name="cerca" type="submit" ><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></button>
+        <button class="btn btn-outline-dark" aria-label="Cerca" type="submit" ><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></button>
       </form>
-      <button class="btn btn-dark" name="filtra" onclick="show()">Filtra</button>
+      <button class="btn btn-dark" aria-label="filtra" onclick="show()">Filtra</button>
       
     </div>
   </nav>
@@ -87,7 +87,7 @@
         </ul>
     </div>
     <div class="input-group mb-2">
-      <button type="button" class="btn btn-link" name="Applica filtri" onclick="filterTrekking()">Applica</button>
+      <button type="button" class="btn btn-link" aria-label="Applica filtri" onclick="filterTrekking()">Applica</button>
     </div>
 
     
@@ -127,13 +127,13 @@
 
   
   <div class="input-group mb-3" id="footer">
-    <a onclick="prev()" class="input-group-text" >
+    <div onclick="prev()" class="input-group-text" >
       <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
-    </a>
+    </div>
     <div class="form-control" id="pages">1</div>
-    <a onclick="next()" class="input-group-text">
+    <div onclick="next()" class="input-group-text">
       <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
-    </a>
+    </div>
 
   </div>
   </div>
