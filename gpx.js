@@ -109,7 +109,10 @@ var imageURL
     formData.append('parking', document.getElementById("parking").value)
     formData.append('relive', document.getElementById("relive").value)
     formData.append('youtube', document.getElementById("youtube").value)
-    
+    formData.append('altitude', document.getElementById("quota").value)
+    if(document.getElementById("tipologia").value=="Multipitch"){
+      formData.append('approach', document.getElementById("avvicinamento").value)
+    }
     formData.append('season', document.getElementById("stagione").value)
     formData.append('expose', document.getElementById("esposizione").value)
     formData.append('equipment', equips)

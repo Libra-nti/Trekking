@@ -81,6 +81,14 @@
     <input id="tipologia" type="text" name="Tipologia" rows="4" placeholder="Tipologia" class="w-full mb-4 p-2 border rounded-md">
     </div>
     <div class="input-group mb-3">
+    <label for="quota" class="block mb-2 text-lg font-medium">Quota</label>
+    <input id="quota" type="text" name="quota" rows="4" placeholder="Quota" class="w-full mb-4 p-2 border rounded-md">
+    </div>
+    <div class="input-group mb-3" >
+    <label for="avvicinamento" class="block mb-2 text-lg font-medium">Dislivello avvicinamento</label>
+    <input id="avvicinamento" style="display: none;" type="text" name="avvicinamento" rows="4" placeholder="Quota" class="w-full mb-4 p-2 border rounded-md">
+    </div>
+    <div class="input-group mb-3">
     <label for="foto" class="block mb-2 text-lg font-medium">Numero Foto</label>
     <input id="foto" type="number" name="foto" rows="4" placeholder="Num. Foto" class="w-full mb-4 p-2 border rounded-md">
     </div>
@@ -109,6 +117,10 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 
 }).addTo(map);
+
+  if(document.getElementById('tipologia').value == "Multipitch"){
+    document.getElementById('avvicinamento').style.display = "block"
+  }
 </script>
 
 </body>
