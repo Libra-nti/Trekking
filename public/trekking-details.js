@@ -27,17 +27,7 @@ function removeFooter() {
 }
 
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-function XML(){
-fetchAndConvertToXML(urlGPX)
-        .then(xmlContent => {
-            ////consol.log(xmlContent); 
-            const result = xmlContent.slice(1, -1);
-            //consol.log(result); 
-            extractDataAndPlot(result)
-            xmlGPX = xmlContent // Questo stamperà l'XML decodificato
-            // Puoi anche fare un parsing aggiuntivo con un parser XML se necessario
-        })
-    }
+
 // Funzione per mostrare il contenuto dopo il caricamento
 async function mostraContenuto(urlGPX, trekGPX) {
     try{
