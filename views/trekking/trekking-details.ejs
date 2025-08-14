@@ -152,12 +152,10 @@
         <div id="carouselExampleIndicators" class="carousel slide mb-3 mt-3 pointer-event" data-bs-ride="carousel">
           <div class="carousel-indicators" id="indicator">
             <% for(var i =1 ; i<numFoto+1;i++){%>
-              <% if(h==1){%>
-              <button aria-label="Slide <%= i%>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i-1 %>" class="active" aria-current="true"></button>
-              <%} else{%>
-                <button aria-label="Slide <%= i%>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i-1 %>"></button>
               
-              <% }%>
+                <button aria-label="Slide <%= i%>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i-1 %>" class="<%= i===1 ? 'active' : ''%>" aria-current="<%= i === 1 ? 'true' : '' %>"></button>
+              
+              
               <% }%>
           </div>
           <div class="carousel-inner" id="carosello">
