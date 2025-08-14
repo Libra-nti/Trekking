@@ -156,7 +156,7 @@ app.get("/all", async (req, res) => {
 
   
 })
-c
+
 app.get("", async (req, res) => {
     
     const client = new mongoClient(process.env.uri)
