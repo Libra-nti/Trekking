@@ -133,10 +133,10 @@ function next(){
     var actualPage = pagesEl.innerText
     console.log(pages)
     if(pages>1 && pagesEl.innerText!=pages){
-        console.log("qui")
+        //console.log("qui")
         actualPage++
         pagesEl.innerText = actualPage
-        console.log(pagesEl.innerText)
+        //console.log(pagesEl.innerText)
         renderTrekkingList(items, pagesEl.innerText)
     }
     
@@ -161,9 +161,7 @@ function prev(){
 
 }
 
-function move(idTrek){
-    window.location.href = "trekking/"+idTrek
-}
+
 
 
 function cronological(trekkingList){
