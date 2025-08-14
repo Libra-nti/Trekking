@@ -33,7 +33,7 @@ async function mostraContenuto() {
     try{
         var id = document.getElementById("trekking-name").innerText
         console.log(id)
-        var trek = await fetch(url + "/trekkID/" + id, {
+        var trek = await fetch(url + "/trekID/" + id, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"
