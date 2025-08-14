@@ -116,34 +116,38 @@
   <div id="content" >
 
   <div id="trekking-list" class="container">
-    <% for(var i=0; i<allT.length%12; i++) {%>
+    <% treks.forEach(trek => {%>
     <div class="row">
     <div class="col-sm-4 col-lg-2 col-6 mb-3">
-      <a href="/trekking/<%=allT[i].name%>" style="all: unset">
+      <a href="/trekking/<%=trek.name%>" style="all: unset">
     <div class="card h-100" style="width: auto">
-      <img loading="lazy" src="public/<%=allT[i].name%>-<%=allT[i].date%>/copertina.jpg?format=webp" class="card-img-top" name="<%=allT[i].name%>" alt="Foto copetina <%=allT[i].name%>">
+      <img loading="lazy" src="public/<%=trek.name%>-<%=trek.date%>/copertina.jpg?format=webp" class="card-img-top" name="<%=trek.name%>" alt="Foto copetina <%=trek.name%>">
        <div class="card-body bottom-0">
-       <h5 class="card-title"><%=allT[i].name%></h5>
-       <p class="card-text"><%=allT[i].date%></p>
+       <h5 class="card-title"><%=trek.name%></h5>
+       <p class="card-text"><%=trek.date%></p>
       </div>
       </div>
       </a>
     </div>
 </div>
-<%}%>
+<%});%>
   </div>
 
 
   
   <div class="input-group mb-3" id="footer">
-    <div onclick="prev()" class="input-group-text" >
+    <% if (page > 1) { %>
+    <a href="?page=<%= page - 1 %>" class="input-group-text" >
       <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
-    </div>
-    <div class="form-control" id="pages">1</div>
-    <div onclick="next()" class="input-group-text">
+    </a>
+    <% } %>
+  
+    <div class="form-control" id="pages"><%=page%></div>
+    <% if (page < totalPages) { %>
+    <a href="?page=<%= page - 1 %>" class="input-group-text">
       <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
-    </div>
-
+    </a>
+<% } %>
   </div>
   </div>
   

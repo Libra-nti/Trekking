@@ -164,15 +164,39 @@ app.get("", async (req, res) => {
         client.connect();
         const db = client.db('trekking'); // Nome del database
         const collection = db.collection('treks'); // Nome della collezione
-        var allT = await collection.find().toArray()
+        var trekkingCollection = await collection.find().toArray()
         //console.log(allT)
         telegram(req, res)
+         const page = parseInt(req.query.page) || 1;
+        const perPage = 12;
+         const totalItems = await trekkingCollection.countDocuments();
+  const treks = await trekkingCollection
+    .find({})
+    .skip((page - 1) * perPage)
+    .limit(perPage)
+    .toArray();
+
+    const totalPages = Math.ceil(totalItems / perPage);
     } finally {
         await client.close()
     }
-res.render("index", {allT});
+res.render("index", {treks, page, totalPages});
   
 })
+
+app.get("/lista", (req, res) => {
+  const tutti = Array.from({ length: 50 }, (_, i) => `Elemento ${i+1}`);
+  const page = parseInt(req.query.page) || 1;
+  const perPage = 12;
+  const start = (page - 1) * perPage;
+  const end = start + perPage;
+
+  const items = tutti.slice(start, end);
+  const totalPages = Math.ceil(tutti.length / perPage);
+
+  res.render("lista", { items, page, totalPages });
+});
+
 
 
 app.get("/trekGPX/:id", async (req, res) => {
