@@ -239,7 +239,9 @@ app.get("/trekID/:nome", async (req, res) => {
     res.json(trek)
 });
   
-
+app.get('/ping', (req, res) => {
+  res.send('ok');
+});
 app.get("/trekking/:nome", async (req, res) => {
   // recuperi i dati dal DB o da un JSON
   var nome = req.params.nome
