@@ -157,6 +157,23 @@ app.get("/all", async (req, res) => {
   
 })
 
+app.get("", async (req, res) => {
+    
+    const client = new mongoClient(process.env.uri)
+    try {
+        client.connect();
+        const db = client.db('trekking'); // Nome del database
+        const collection = db.collection('treks'); // Nome della collezione
+        var allT = await collection.find().toArray()
+        //console.log(allT)
+        telegram(req, res)
+    } finally {
+        await client.close()
+    }
+res.render("index", allT);
+  
+})
+
 
 app.get("/trekGPX/:id", async (req, res) => {
     var id = req.params.id
