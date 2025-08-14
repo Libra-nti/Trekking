@@ -301,7 +301,7 @@ function cronological(trekkingList){
 
         }
     }
-    trekkingList[0].push({newest: "true"})
+    trekkingList[0].newest = "true"
     
 }
 
