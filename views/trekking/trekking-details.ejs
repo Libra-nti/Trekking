@@ -160,7 +160,7 @@
           </div>
           <div class="carousel-inner" id="carosello">
             <% for(var h =1 ; h<numFoto+1;h++){%>
-                  <div class="carousel-item" <%= h === 1 ? 'active' : '' %>>
+                  <div class="carousel-item <%= h === 1 ? 'active' : '' %>">
                 <img src="/public/<%=name%>-<%=date%>/<%=h%>.jpg" class="d-block" alt="Foto n° <%= h%> del trekking <%=name%>">
                 </div>
               <%}%>
