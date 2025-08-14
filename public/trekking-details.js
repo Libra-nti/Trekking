@@ -5,11 +5,12 @@ let marker
 var map // Imposta una vista iniziale
 var url = "https://viaggiditony.onrender.com"
 //var url = "http://localhost:3100"
-
+var gpxLayer
 async function fetchAndConvertToXML(id) {
     // Effettua la fetch per ottenere i dati binari
     const response = await fetch(url+"/trekGPX/"+id);
-    //consol.log(response)
+    gpxLayer = omnivore.gpx.parse(response.gpx)
+    consol.log(response)
     // Recupera il dato binario come ArrayBuffer
     const binaryData = await response.arrayBuffer();
     //consol.log(binaryData)
@@ -42,7 +43,7 @@ async function mostraContenuto() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    const gpxLayer = omnivore.gpx.parse(trek.gpx);
+    
     // Aggiungi il layer GPX alla mappa
     gpxLayer.addTo(map);
     // Adatta la vista della mappa per includere l'intero percorso
