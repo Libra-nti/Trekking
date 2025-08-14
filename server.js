@@ -156,7 +156,7 @@ app.get("/all", async (req, res) => {
 
   
 })
-
+var totalPages
 app.get("", async (req, res) => {
     
     const client = new mongoClient(process.env.uri)
@@ -175,7 +175,7 @@ app.get("", async (req, res) => {
     .limit(perPage)
     .toArray();
         cronological(treks)
-    var totalPages = Math.ceil(totalItems / perPage);
+    totalPages = Math.ceil(totalItems / perPage);
     } finally {
         await client.close()
     }
@@ -263,11 +263,16 @@ app.get("/trekking/:nome", async (req, res) => {
 });
 
 
-app.get('/sitemap.xml', (req, res) => {
+app.get('/sitemap.xml', async (req, res) => {
     const baseUrl = 'https://viaggiditony.onrender.com'; // Cambia con il tuo dominio
     var urls = [ "/"]
+    const response = await axios.get("https://viaggiditony.onrender.com/all")
+    console.log(response)
     for(var i=0;i<trekkings.length;i++){
         urls.push("/trekking/"+trekkings[i].name)
+    }
+    for(var i=0;i<totalPages;i++){
+        urls.push("/?page="+i)
     }
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
