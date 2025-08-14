@@ -175,6 +175,7 @@ app.get("", async (req, res) => {
     .limit(perPage)
     .toArray();
         cronological(treks)
+        console.log(treks)
     totalPages = Math.ceil(totalItems / perPage);
     } finally {
         await client.close()
@@ -272,7 +273,7 @@ app.get('/sitemap.xml', async (req, res) => {
         urls.push("/trekking/"+trekkings[i].name)
     }
     for(var i=0;i<totalPages;i++){
-        urls.push("/?page="+i)
+        urls.push("/?page="+i+1)
     }
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
