@@ -138,7 +138,7 @@ app.post("/saveGPX2",upload.single('gpxFile'),async (req, res) => {
           
 }
 )
-
+var trekkings
 app.get("/all", async (req, res) => {
     
     const client = new mongoClient(process.env.uri)
@@ -146,17 +146,17 @@ app.get("/all", async (req, res) => {
         client.connect();
         const db = client.db('trekking'); // Nome del database
         const collection = db.collection('treks'); // Nome della collezione
-        var allT = await collection.find().toArray()
+        trekkings = await collection.find().toArray()
         //console.log(allT)
         telegram(req, res)
-        res.json(allT)
+        res.json(trekkings)
     } finally {
         await client.close()
     }
 
   
 })
-
+c
 app.get("", async (req, res) => {
     
     const client = new mongoClient(process.env.uri)
@@ -260,6 +260,27 @@ app.get("/trekking/:nome", async (req, res) => {
   
 
   res.render("trekking/trekking-details", trek);
+});
+
+
+app.get('/sitemap.xml', (req, res) => {
+    const baseUrl = 'https://viaggiditony.onrender.com'; // Cambia con il tuo dominio
+    var urls = [ "/"]
+    for(var i=0;i<trekkings.length;i++){
+        urls.push("/trekking/"+trekkings[i])
+    }
+
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+        ${urls.map(url => `
+            <url>
+                <loc>${baseUrl}${url}</loc>
+                <priority>0.8</priority>
+            </url>`).join('')}
+    </urlset>`;
+
+    res.header('Content-Type', 'application/xml');
+    res.send(sitemap);
 });
 
 
