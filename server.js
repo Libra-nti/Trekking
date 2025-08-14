@@ -269,7 +269,7 @@ app.get("/trekking/:nome", async (req, res) => {
         var trek = await client.db("trekking").collection("treks").findOne({
             name: nome
         })
-        // console.log(trek)
+        console.log(trek)
         const builder = new xml2js.Builder();
         const xmlOutput = builder.buildObject(trek.gpx);
         //console.log("output")
