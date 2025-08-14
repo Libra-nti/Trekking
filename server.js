@@ -166,7 +166,7 @@ app.get("", async (req, res) => {
         const trekkingCollection = db.collection('treks'); // Nome della collezione
         //console.log(allT)
         telegram(req, res)
-         const page = parseInt(req.query.page) || 1;
+         var page = parseInt(req.query.page) || 1;
         const perPage = 12;
          const totalItems = await trekkingCollection.countDocuments();
   var treks = await trekkingCollection
@@ -175,7 +175,7 @@ app.get("", async (req, res) => {
     .limit(perPage)
     .toArray();
 
-    const totalPages = Math.ceil(totalItems / perPage);
+    var totalPages = Math.ceil(totalItems / perPage);
     } finally {
         await client.close()
     }
