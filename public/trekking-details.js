@@ -5,13 +5,11 @@ let marker
 var map // Imposta una vista iniziale
 var url = "https://viaggiditony.onrender.com"
 //var url = "http://localhost:3100"
-var gpxLayer
-async function fetchAndConvertToXML(id) {
+
+async function fetchAndConvertToXML(urlGPX) {
     // Effettua la fetch per ottenere i dati binari
-    const response = await fetch(url+"/trekGPX/"+id);
-    console.log(response)
-    gpxLayer = omnivore.gpx.parse(response)
-    
+    const response = await fetch(urlGPX);
+    //consol.log(response)
     // Recupera il dato binario come ArrayBuffer
     const binaryData = await response.arrayBuffer();
     //consol.log(binaryData)
@@ -32,9 +30,24 @@ const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Funzione per mostrare il contenuto dopo il caricamento
 async function mostraContenuto() {
-    
     try{
-        var mappa = await fetchAndConvertToXML(document.getElementById("trekking-name").innerText)
+        var id = document.getElementById("trekking-name").innerText
+        console.log(id)
+        var trek = await fetch(url + "/trekID/" + id, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+    .then(response =>  response.json()
+      );
+      console.log(trek)
+    }
+    catch(e){
+        console.log(e)
+    }
+    try{
+        var mappa = await fetchAndConvertToXML(url+"/trekGPX/"+trek._id.toString())
         mappa = mappa.slice(1,-1);
         extractDataAndPlot(mappa)
         xmlGPX = mappa
@@ -44,7 +57,7 @@ async function mostraContenuto() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    
+    const gpxLayer = omnivore.gpx.parse(trek.gpx);
     // Aggiungi il layer GPX alla mappa
     gpxLayer.addTo(map);
     // Adatta la vista della mappa per includere l'intero percorso

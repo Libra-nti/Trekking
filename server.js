@@ -170,7 +170,7 @@ app.get("", async (req, res) => {
     } finally {
         await client.close()
     }
-res.render("index", allT);
+res.render("index", {allT});
   
 })
 
