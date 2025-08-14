@@ -1,3 +1,2 @@
 User-agent: *
-Disallow: /gpx.html
 Sitemap: https://viaggiditony.onrender.com/sitemap.xml
