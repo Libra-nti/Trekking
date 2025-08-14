@@ -119,12 +119,12 @@
     <% for(var i=0; i<allT.length%12; i++) {%>
     <div class="row">
     <div class="col-sm-4 col-lg-2 col-6 mb-3">
-      <a href="/trekking/<%=name%>" style="all: unset">
+      <a href="/trekking/<%=allT[i].name%>" style="all: unset">
     <div class="card h-100" style="width: auto">
-      <img loading="lazy" src="public/<%=name%>-<%=date%>/copertina.jpg?format=webp" class="card-img-top" name="<%=name%>" alt="Foto copetina <%=name%>">
+      <img loading="lazy" src="public/<%=allT[i].name%>-<%=allT[i].date%>/copertina.jpg?format=webp" class="card-img-top" name="<%=allT[i].name%>" alt="Foto copetina <%=allT[i].name%>">
        <div class="card-body bottom-0">
-       <h5 class="card-title"><%=name%></h5>
-       <p class="card-text"><%=date%></p>
+       <h5 class="card-title"><%=allT[i].name%></h5>
+       <p class="card-text"><%=allT[i].date%></p>
       </div>
       </div>
       </a>
