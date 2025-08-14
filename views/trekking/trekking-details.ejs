@@ -137,22 +137,27 @@
         </div>
       </div>
         <div class="col-md-6 col-sm-12" id="relive">
-          
+          <%-relive%>
         </div>
         
       
     </div>
     <div class="row mt-5">
       <div class="col-12 d-flex justify-content-center align-items-center" id="youtube">
-
+          <%-yourube%>
       </div>
     </div>
     <div class="row">
       <div class="col-12 d-flex justify-content-center align-items-center">
-        <div id="carouselExampleIndicators" class="carousel slide mb-3 mt-3" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide mb-3 mt-3 pointer-event" data-bs-ride="carousel">
           <div class="carousel-indicators" id="indicator">
             <% for(var i =1 ; i<numFoto+1;i++){%>
-              <button aria-label="<%= i%>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i-1 %>"></button>
+              <% if(h==1){%>
+              <button aria-label="Slide <%= i%>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i-1 %>" class="active" aria-current="true"></button>
+              <%} else{%>
+                <button aria-label="Slide <%= i%>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i-1 %>"></button>
+              
+              <% }%>
               <% }%>
           </div>
           <div class="carousel-inner" id="carosello">
