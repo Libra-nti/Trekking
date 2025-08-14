@@ -174,7 +174,7 @@ app.get("", async (req, res) => {
     .skip((page - 1) * perPage)
     .limit(perPage)
     .toArray();
-
+        cronological(treks)
     var totalPages = Math.ceil(totalItems / perPage);
     } finally {
         await client.close()
@@ -267,7 +267,7 @@ app.get('/sitemap.xml', (req, res) => {
     const baseUrl = 'https://viaggiditony.onrender.com'; // Cambia con il tuo dominio
     var urls = [ "/"]
     for(var i=0;i<trekkings.length;i++){
-        urls.push("/trekking/"+trekkings[i])
+        urls.push("/trekking/"+trekkings[i].name)
     }
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -282,6 +282,23 @@ app.get('/sitemap.xml', (req, res) => {
     res.header('Content-Type', 'application/xml');
     res.send(sitemap);
 });
+
+function cronological(trekkingList){
+    var temp
+    var c =-1
+    for(var i = 0;i<trekkingList.length-1;i++){
+        
+        if(trekkingList[i].date<trekkingList[i+1].date){
+            temp = trekkingList[i]
+            trekkingList[i]=trekkingList[i+1]
+            trekkingList[i+1]=temp
+            i=-1
+
+        }
+    }
+    trekkingList[0].push({newest: "true"})
+    
+}
 
 
 
