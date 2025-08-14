@@ -9,8 +9,9 @@ var gpxLayer
 async function fetchAndConvertToXML(id) {
     // Effettua la fetch per ottenere i dati binari
     const response = await fetch(url+"/trekGPX/"+id);
-    gpxLayer = omnivore.gpx.parse(response.gpx)
     consol.log(response)
+    gpxLayer = omnivore.gpx.parse(response)
+    
     // Recupera il dato binario come ArrayBuffer
     const binaryData = await response.arrayBuffer();
     //consol.log(binaryData)
