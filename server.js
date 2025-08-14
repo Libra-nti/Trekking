@@ -9,20 +9,31 @@ const path = require('path');
 //const multer = require('multer');
 const app = express() //una specie di costruttore che inizializza express e che ci permette di utilizzare tutti i metodi
 
-app.use(express.json())
 
+
+
+app.use(express.json())
+var url = "https://viaggiditony.onrender.com"
 //const upload = multer({ dest: 'uploads/' });
 const xmlBodyParser = require('express-xml-bodyparser');
 const fs = require('fs');
 const xml2js = require('xml2js');
 var bodyParser = require('body-parser');
 const multer = require('multer');
-app.use(bodyParser.json({limit: "50mb"}));
-app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+app.use(bodyParser.json({
+    limit: "50mb"
+}));
+app.use(bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000
+}));
 const storage = multer.memoryStorage(); // Salva il file in memoria
-const upload = multer({ 
-  storage: storage, 
-  limits: { fileSize: 100 * 1024 * 1024 } // Limite di 100MB
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 100 * 1024 * 1024
+    } // Limite di 100MB
 });
 
 
@@ -71,11 +82,13 @@ async function telegram(req) {
     `;
 
     // Invia la notifica su Telegram
+    if(ip!="128.140.8.200"){
     await axios.post("https://api.telegram.org/bot"+process.env.telegram_token+"/sendMessage", {
         chat_id: process.env.chat_id,
         text: message,
         parse_mode: 'Markdown'
     });
+}
 
 }
 catch(e){
@@ -97,10 +110,10 @@ app.use(xmlBodyParser({
 
 
 
-app.post("/saveGPX2",upload.single('gpxFile'),async (req, res) => {
-    console.log(req.headers['authorization'])
-    if(req.headers['authorization']==process.env.token){
-    //console.log(req.body.equipment)
+app.post("/saveGPX2", upload.single('gpxFile'), async (req, res) => {
+    //console.log(req.headers['authorization'])
+    if (req.headers['authorization'] == process.env.token) {
+        //console.log(req.body.equipment)
         // Converte l'XML in JSON
         const parser = new xml2js.Parser();
         parser.parseString(req.file.buffer.toString(), async (err, result) => {
@@ -113,7 +126,7 @@ app.post("/saveGPX2",upload.single('gpxFile'),async (req, res) => {
 
             try {
                 await client.connect();
-                ArrayEq= JSON.parse(req.body.equipment)
+                ArrayEq = JSON.parse(req.body.equipment)
                 //console.log(ArrayEq)
                 const db = client.db('trekking'); // Nome del database
                 const collection = db.collection('treks'); // Nome della collezione
@@ -131,16 +144,16 @@ app.post("/saveGPX2",upload.single('gpxFile'),async (req, res) => {
                 console.log(e)
             }
         })
+    } else {
+        res.status(401).json({
+            message: "Accesso non autorizzato"
+        })
     }
-        else{
-            res.status(401).json({message: "Accesso non autorizzato"})
-        }
-          
-}
-)
+
+})
 var trekkings
 app.get("/all", async (req, res) => {
-    
+
     const client = new mongoClient(process.env.uri)
     try {
         client.connect();
@@ -154,11 +167,11 @@ app.get("/all", async (req, res) => {
         await client.close()
     }
 
-  
+
 })
 var totalPages
 app.get("", async (req, res) => {
-    
+
     const client = new mongoClient(process.env.uri)
     try {
         client.connect();
@@ -166,35 +179,40 @@ app.get("", async (req, res) => {
         const trekkingCollection = db.collection('treks'); // Nome della collezione
         //console.log(allT)
         telegram(req, res)
-         var page = parseInt(req.query.page) || 1;
+        var page = parseInt(req.query.page) || 1;
         const perPage = 12;
-         const totalItems = await trekkingCollection.countDocuments();
-  var treks = await trekkingCollection
-    .find({})
-    .skip((page - 1) * perPage)
-    .limit(perPage)
-    .toArray();
+        const totalItems = await trekkingCollection.countDocuments();
+        var treks = await trekkingCollection.find({}).toArray();
         cronological(treks)
-        console.log(treks)
-    totalPages = Math.ceil(totalItems / perPage);
+        totalPages = Math.ceil(totalItems / perPage);
     } finally {
         await client.close()
     }
-res.render("index", {treks, page, totalPages});
-  
+    res.render("index", {
+        treks,
+        page,
+        totalPages
+    });
+
 })
 
 app.get("/lista", (req, res) => {
-  const tutti = Array.from({ length: 50 }, (_, i) => `Elemento ${i+1}`);
-  const page = parseInt(req.query.page) || 1;
-  const perPage = 12;
-  const start = (page - 1) * perPage;
-  const end = start + perPage;
+    const tutti = Array.from({
+        length: 50
+    }, (_, i) => `Elemento ${i+1}`);
+    const page = parseInt(req.query.page) || 1;
+    const perPage = 12;
+    const start = (page - 1) * perPage;
+    const end = start + perPage;
 
-  const items = tutti.slice(start, end);
-  const totalPages = Math.ceil(tutti.length / perPage);
+    const items = tutti.slice(start, end);
+    const totalPages = Math.ceil(tutti.length / perPage);
 
-  res.render("lista", { items, page, totalPages });
+    res.render("lista", {
+        items,
+        page,
+        totalPages
+    });
 });
 
 
@@ -219,15 +237,15 @@ app.get("/trekGPX/:id", async (req, res) => {
 })
 
 app.get("/trekID/:nome", async (req, res) => {
-  // recuperi i dati dal DB o da un JSON
- var nome = req.params.nome
-  const client = new mongoClient(process.env.uri)
+    // recuperi i dati dal DB o da un JSON
+    var nome = req.params.nome
+    const client = new mongoClient(process.env.uri)
     try {
         client.connect();
-        var trek = await client.db("trekking").collection("treks").findOne(
-            { name: nome }
-        )
-        console.log(trek)
+        var trek = await client.db("trekking").collection("treks").findOne({
+            name: nome
+        })
+        //console.log(trek)
         const builder = new xml2js.Builder();
         const xmlOutput = builder.buildObject(trek.gpx);
         //console.log("output")
@@ -238,20 +256,20 @@ app.get("/trekID/:nome", async (req, res) => {
     }
     res.json(trek)
 });
-  
+
 app.get('/ping', (req, res) => {
-  res.send('ok');
+    res.send('ok');
 });
 app.get("/trekking/:nome", async (req, res) => {
-  // recuperi i dati dal DB o da un JSON
-  var nome = req.params.nome
-  const client = new mongoClient(process.env.uri)
+    // recuperi i dati dal DB o da un JSON
+    var nome = req.params.nome
+    const client = new mongoClient(process.env.uri)
     try {
         client.connect();
-        var trek = await client.db("trekking").collection("treks").findOne(
-            { name: nome }
-        )
-        console.log(trek)
+        var trek = await client.db("trekking").collection("treks").findOne({
+            name: nome
+        })
+        // console.log(trek)
         const builder = new xml2js.Builder();
         const xmlOutput = builder.buildObject(trek.gpx);
         //console.log("output")
@@ -260,24 +278,24 @@ app.get("/trekking/:nome", async (req, res) => {
     } catch (e) {
         console.log(e)
     }
-  
 
-  res.render("trekking/trekking-details", trek);
+
+    res.render("trekking/trekking-details", trek);
 });
 
 
 app.get('/sitemap.xml', async (req, res) => {
-    const baseUrl = 'https://viaggiditony.onrender.com'; // Cambia con il tuo dominio
-    var urls = [ "/"]
-    const response = await axios.get("https://viaggiditony.onrender.com/all")
-    console.log(response)
-    for(var i=0;i<trekkings.length;i++){
-        urls.push("/trekking/"+trekkings[i].name)
+    const baseUrl = url // Cambia con il tuo dominio
+    var urls = ["/"]
+    const response = await axios.get(url + "/all")
+    //console.log(response)
+    for (var i = 0; i < trekkings.length; i++) {
+        urls.push("/trekking/" + trekkings[i].name)
     }
-    for(var i=0;i<totalPages;i++){
-        urls.push("/?page="+i+1)
+    /* for(var i=1;i<totalPages+1;i++){
+        urls.push("/?page="+i)
     }
-
+ */
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         ${urls.map(url => `
@@ -291,21 +309,38 @@ app.get('/sitemap.xml', async (req, res) => {
     res.send(sitemap);
 });
 
-function cronological(trekkingList){
+app.post("/filter", async (req, res) => {
+    var data = req.body
+    var response = await axios.get(url + "/all");
+    var trekkingList = response.data;
+    var filtrati = trekkingList.filter(trekking => {
+        return (
+            (data.difficulty != "" ? trekking.difficulty === data.difficulty : true) &&
+            (data.distance != "" ? trekking.distance - data.distance >= -0.5 && trekking.distance - data.distance <= 0.5 : true) &&
+            (data.elevation != "" ? trekking.elevation - data.elevation >= -100 && trekking.elevation - data.elevation <= 100 : true) &&
+            (data.date != "" ? trekking.date == data.date : true) &&
+            (data.season != "" ? trekking.season === data.season : true) &&
+            (data.tipo != "" ? trekking.tipo === data.tipo : true)
+        )
+    })
+    res.json(filtrati)
+})
+
+function cronological(trekkingList) {
     var temp
-    var c =-1
-    for(var i = 0;i<trekkingList.length-1;i++){
-        
-        if(trekkingList[i].date<trekkingList[i+1].date){
+    var c = -1
+    for (var i = 0; i < trekkingList.length - 1; i++) {
+
+        if (trekkingList[i].date < trekkingList[i + 1].date) {
             temp = trekkingList[i]
-            trekkingList[i]=trekkingList[i+1]
-            trekkingList[i+1]=temp
-            i=-1
+            trekkingList[i] = trekkingList[i + 1]
+            trekkingList[i + 1] = temp
+            i = -1
 
         }
     }
-    trekkingList[0].newest = "true"
-    
+    //trekkingList[0].newest = "true"
+
 }
 
 
@@ -315,4 +350,4 @@ const PORT = process.env.PORT || 3000; // Usa la porta di Render, altrimenti 300
 
 app.listen(PORT, () => {
     console.log(`Server in ascolto su porta ${PORT}`);
-  });
+});

@@ -1,4 +1,3 @@
-
 var trekking
 var xmlGPX
 let marker
@@ -30,45 +29,43 @@ const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Funzione per mostrare il contenuto dopo il caricamento
 async function mostraContenuto() {
-    try{
+    try {
         var id = document.getElementById("trekking-name").innerText
-        console.log(id)
+        //console.log(id)
         var trek = await fetch(url + "/trekID/" + id, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json"
-        },
-    })
-    .then(response =>  response.json()
-      );
-      console.log(trek)
-    }
-    catch(e){
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+            .then(response => response.json());
+        //console.log(trek)
+    } catch (e) {
         console.log(e)
     }
-    try{
-        var mappa = await fetchAndConvertToXML(url+"/trekGPX/"+trek._id.toString())
-        mappa = mappa.slice(1,-1);
+    try {
+        var mappa = await fetchAndConvertToXML(url + "/trekGPX/" + trek._id.toString())
+        mappa = mappa.slice(1, -1);
         extractDataAndPlot(mappa)
         xmlGPX = mappa
-    
-     
-    // Aggiungi un layer di tile della mappa (OpenStreetMap)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    const gpxLayer = omnivore.gpx.parse(trek.gpx);
-    // Aggiungi il layer GPX alla mappa
-    gpxLayer.addTo(map);
-    // Adatta la vista della mappa per includere l'intero percorso
-    map.fitBounds(gpxLayer.getBounds());
-    const bounds = gpxLayer.getBounds();  // map è l'istanza Leaflet
-const south = bounds.getSouth();
-const west = bounds.getWest();
-const north = bounds.getNorth();
-const east = bounds.getEast();
 
-const queryOverpass = `[out:json][timeout:25];
+
+        // Aggiungi un layer di tile della mappa (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        const gpxLayer = omnivore.gpx.parse(trek.gpx);
+        // Aggiungi il layer GPX alla mappa
+        gpxLayer.addTo(map);
+        // Adatta la vista della mappa per includere l'intero percorso
+        map.fitBounds(gpxLayer.getBounds());
+        const bounds = gpxLayer.getBounds(); // map è l'istanza Leaflet
+        const south = bounds.getSouth();
+        const west = bounds.getWest();
+        const north = bounds.getNorth();
+        const east = bounds.getEast();
+
+        const queryOverpass = `[out:json][timeout:25];
 (
   node["tourism"~"alpine_hut|wilderness_hut"](${south},${west},${north},${east});
   way["tourism"~"alpine_hut|wilderness_hut"](${south},${west},${north},${east});
@@ -83,40 +80,39 @@ const queryOverpass = `[out:json][timeout:25];
 out body;
 >;
 out skel qt;`
-//console.log(queryOverpass)
-fetch('https://overpass-api.de/api/interpreter', {
-  method: 'POST',
-  body: queryOverpass,
-  headers: {
-    'Content-Type': 'text/plain'
-  }
-})
-.then(res => res.json())
-.then(data => {
-    //console.log(data)
-    addOverpassElementsToMap(data, map);
-});
+        //console.log(queryOverpass)
+        fetch('https://overpass-api.de/api/interpreter', {
+                method: 'POST',
+                body: queryOverpass,
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                //console.log(data)
+                addOverpassElementsToMap(data, map);
+            });
 
 
-    //wait(1000);  
-    carosello()
+        //wait(1000);  
+        carosello()
 
-    //removeFooter()
-    if (window.map) {
-        window.map.invalidateSize(); // Risistema le dimensioni della mappa
-        map.fitBounds(gpxLayer.getBounds());
+        //removeFooter()
+        if (window.map) {
+            window.map.invalidateSize(); // Risistema le dimensioni della mappa
+            map.fitBounds(gpxLayer.getBounds());
 
-    } else {
-        // Inizializza la mappa se non l'hai già fatto
-        window.map = L.map('map').setView([45.931055, 9.432543], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(window.map);
-        //char
-        // t.redraw()
+        } else {
+            // Inizializza la mappa se non l'hai già fatto
+            window.map = L.map('map').setView([45.931055, 9.432543], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(window.map);
+            //char
+            // t.redraw()
+        }
+    } catch (e) {
+        console.log(e)
     }
-}
-catch(e){
-    console.log(e)
-}
 };
 
 
@@ -124,70 +120,74 @@ catch(e){
 
 
 const bivaccoIcon = L.icon({
-  iconUrl: '/public/loghi/bivacco.png',   // Percorso al tuo file
-  iconSize: [28, 28],           // Dimensioni icona
-  iconAnchor: [16, 32],         // Punto che tocca la mappa (in basso al centro)
-  popupAnchor: [0, -32]         // Dove appare il popup rispetto all'icona
+    iconUrl: '/public/loghi/bivacco.png', // Percorso al tuo file
+    iconSize: [28, 28], // Dimensioni icona
+    iconAnchor: [16, 32], // Punto che tocca la mappa (in basso al centro)
+    popupAnchor: [0, -32] // Dove appare il popup rispetto all'icona
 });
 
 
 function addOverpassElementsToMap(data, map) {
-  const elements = data.elements;
+    const elements = data.elements;
 
-  // Mappa per cercare facilmente i nodi per ID (serve per i way)
-  const nodesById = {};
-  elements.forEach(el => {
-    if (el.type === 'node') {
-      nodesById[el.id] = el;
-    }
-  });
-
-  elements.forEach(el => {
-    if (el.type === 'node' && el.lat && el.lon) {
-        if(el.tags != null){
-      const name = el.tags?.name ;
-      L.marker([el.lat, el.lon], {icon: bivaccoIcon})
-        .addTo(map)
-        .bindPopup(name);
+    // Mappa per cercare facilmente i nodi per ID (serve per i way)
+    const nodesById = {};
+    elements.forEach(el => {
+        if (el.type === 'node') {
+            nodesById[el.id] = el;
         }
-    }
+    });
 
-    // Se è un way, calcolo un centro medio dei nodi per metterci il marker
-    if (el.type === 'way' && el.nodes?.length > 0) {
-      const latlngs = el.nodes
-        .map(id => nodesById[id])
-        .filter(n => n)
-        .map(n => [n.lat, n.lon]);
+    elements.forEach(el => {
+        if (el.type === 'node' && el.lat && el.lon) {
+            if (el.tags != null) {
+                const name = el.tags?.name;
+                L.marker([el.lat, el.lon], {
+                        icon: bivaccoIcon
+                    })
+                    .addTo(map)
+                    .bindPopup(name);
+            }
+        }
 
-      if (latlngs.length > 0) {
-        // Calcola centro geometrico
-        const avgLat = latlngs.reduce((sum, p) => sum + p[0], 0) / latlngs.length;
-        const avgLon = latlngs.reduce((sum, p) => sum + p[1], 0) / latlngs.length;
-        const name = el.tags?.name || 'Senza nome';
+        // Se è un way, calcolo un centro medio dei nodi per metterci il marker
+        if (el.type === 'way' && el.nodes?.length > 0) {
+            const latlngs = el.nodes
+                .map(id => nodesById[id])
+                .filter(n => n)
+                .map(n => [n.lat, n.lon]);
 
-        L.marker([avgLat, avgLon], {icon: bivaccoIcon})
-          .addTo(map)
-          .bindPopup(name);
-      }
-    }
-  });
+            if (latlngs.length > 0) {
+                // Calcola centro geometrico
+                const avgLat = latlngs.reduce((sum, p) => sum + p[0], 0) / latlngs.length;
+                const avgLon = latlngs.reduce((sum, p) => sum + p[1], 0) / latlngs.length;
+                const name = el.tags?.name || 'Senza nome';
+
+                L.marker([avgLat, avgLon], {
+                        icon: bivaccoIcon
+                    })
+                    .addTo(map)
+                    .bindPopup(name);
+            }
+        }
+    });
 }
 
 
 
 async function fetchData() {
 
-            // Aggiungi un layer di tile della mappa (OpenStreetMap)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            const gpxLayer = omnivore.gpx.parse(data.gpx);
-            // Aggiungi il layer GPX alla mappa
-            gpxLayer.addTo(map);
-            // Adatta la vista della mappa per includere l'intero percorso
-            map.fitBounds(gpxLayer.getBounds());
-            
-       
+    // Aggiungi un layer di tile della mappa (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    const gpxLayer = omnivore.gpx.parse(data.gpx);
+    // Aggiungi il layer GPX alla mappa
+    gpxLayer.addTo(map);
+    // Adatta la vista della mappa per includere l'intero percorso
+    map.fitBounds(gpxLayer.getBounds());
+
+
     //consol.log("finito")
 
 };
@@ -197,8 +197,8 @@ async function fetchData() {
 var chart
 var distanceDecimal = []
 
-function toDecimal(distances){
-    for(var i=0;i<distances.length;i++){
+function toDecimal(distances) {
+    for (var i = 0; i < distances.length; i++) {
         distanceDecimal[i] = distances[i].toFixed(2)
     }
 }
@@ -226,7 +226,7 @@ function createElevationChart(distances, elevations) {
         },
         options: {
             elements: {
-                point:{
+                point: {
                     pointStyle: "line",
                     radius: 1,
                     borderWidth: 0
@@ -248,8 +248,8 @@ function createElevationChart(distances, elevations) {
                             const label = context.dataset.label || '';
                             const y = context.parsed.y;
                             const x = distances[index]
-                            
-                            
+
+
                             //consol.log(context)
                             // Calcolo inclinazione tra il punto corrente e il precedente
                             let inclinazione = 'N/A'; // Default se non c'è punto precedente
@@ -258,7 +258,7 @@ function createElevationChart(distances, elevations) {
                                 const prevValueY = data[index - 1];
                                 const prevValueX = distances[index - 1];
                                 const deltaY = y - prevValueY;
-                                
+
                                 var deltaX = x * 1000 - prevValueX * 1000; // Assumendo distanze uguali tra i punti
                                 //consol.log(x)
                                 //consol.log(prevValueX)
@@ -433,27 +433,26 @@ function updateMapWithPosition(lat, lon) {
 }
 
 
-function carosello(){
-    for(var i =1 ; i<trekking.numFoto+1;i++){
+function carosello() {
+    for (var i = 1; i < trekking.numFoto + 1; i++) {
         var button = document.createElement("button")
         var carouselIndicator = document.getElementById("indicator")
         button.type = "button"
         button.ariaLabel = i
         button.setAttribute('data-bs-target', '#carouselExampleIndicators');
-        button.setAttribute('data-bs-slide-to', i-1);
+        button.setAttribute('data-bs-slide-to', i - 1);
         var image = document.createElement("img")
         var carousel = document.createElement("div")
-        
-        if(i==1){
+
+        if (i == 1) {
             button.classList = "active"
             carousel.classList = "carousel-item active"
-        }
-        else{
+        } else {
             carousel.classList = "carousel-item"
         }
-        image.src= "/public/"+trekking.name+"-"+trekking.date+"/"+i+".jpg"
-        image.classList ="d-block"
-        image.alt = "Foto n° "+i+ " del trekking "+ trekking.name
+        image.src = "/public/" + trekking.name + "-" + trekking.date + "/" + i + ".jpg"
+        image.classList = "d-block"
+        image.alt = "Foto n° " + i + " del trekking " + trekking.name
         carousel.appendChild(image)
         var node = document.getElementById("carosello")
         node.appendChild(carousel)
@@ -462,20 +461,22 @@ function carosello(){
 }
 
 
-function download(){
+function download() {
     //console.log(xmlGPX)
     const cleanGpxText = xmlGPX.replace(/\\n/g, '').replace(/\\/g, '');
     //console.log(cleanGpxText)
-    const blob = new Blob([cleanGpxText], { type: 'application/gpx+xml' });
-  const url = URL.createObjectURL(blob);
-  
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = trekking.name+'.gpx';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url); 
+    const blob = new Blob([cleanGpxText], {
+        type: 'application/gpx+xml'
+    });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = trekking.name + '.gpx';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 }
 
 
@@ -509,4 +510,3 @@ function generateStars(rating) {
         container.innerHTML += `<span class="star-empty">${emptyStar}</span>`;
     }
 }
-
