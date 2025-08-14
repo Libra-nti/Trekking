@@ -181,7 +181,7 @@ app.get("/trekGPX/:id", async (req, res) => {
     try {
         client.connect();
         var trek = await client.db("trekking").collection("treks").findOne({
-            _id: new ObjectId(id)
+            name: id
         })
         const builder = new xml2js.Builder();
         const xmlOutput = builder.buildObject(trek.gpx);
