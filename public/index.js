@@ -1,4 +1,4 @@
-let trekkingData = [];
+
 let filteredTrekking = [];
 var J = 0
 
@@ -10,36 +10,18 @@ var pages
 
 
 
-async function loading(){
-  document.getElementById("main").classList.add('visible');
- await fetch(url + '/all', {
+var trekkingData = await fetch(url + '/all', {
         method: 'GET',
         headers: {
             "Content-Type": "application/json", // Tipo di contenuto accettato in risposta
         },
     })
     .then(response => response.json())
-    .then(data => {
-        console.log(data)
-        trekkingData = data;
-        filteredTrekking = data;
-        newest()
-        fillCards(trekkingData)
-        
-        cronological(trekkingData)
-        renderTrekkingList(filteredTrekking, 1)
         
         
 
         //console.log(filteredTrekking)
         
-
-    })
-    document.getElementById("loader").style.display = "none"
-    document.getElementById("main").style.display = "none"
-    document.getElementById("content").style.display = "block"
-  }
-
 
 // Funzione per filtrare i trekking in base ai criteri
 function filterTrekking() {
@@ -73,50 +55,11 @@ function filterTrekking() {
 var cards = []
 
 
-function fillCards(trekkingList){
-    cards = []
-    for(var i = 0;i<trekkingList.length;i++){
-        const card = document.createElement('div');
-        card.className = "col-sm-4 col-lg-2 col-6 mb-3"
-
-        if(trekkingList[i].date != dataNewest){
-        
-        card.innerHTML = `
-        <a href="./trekking/trekking-details.html?id=${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}" style="all: unset">
-    <div class="card h-100" style="width: auto">
-      <img loading="lazy" src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg?format=webp" class="card-img-top" name="${trekkingList[i].name}" alt="Foto copetina ${trekkingList[i].name}">
-       <div class="card-body bottom-0">
-       <h5 class="card-title">${trekkingList[i].name}</h5>
-       <p class="card-text">${trekkingList[i].date}</p>
-      </div>
-      </div>
-      </a>
-    `
-        }
-        else{
-            card.innerHTML = `
-            <a href="./trekking/trekking-details.html?id=${trekkingList[i].name.toLowerCase()}-${trekkingList[i]._id}" style="all: unset">
-    <div  class="card h-100" style="width: auto" onmouseover="hideLogo()" onmouseout="showLogo()">
-    <div class="prova" style="display: inline-block">
-      <img loading="lazy" src="public/${trekkingList[i].name}-${trekkingList[i].date}/copertina.jpg?format=webp" class="card-img-top" name="${trekkingList[i].name}" alt="Foto copetina ${trekkingList[i].name}">
-      <img id="newLogo" src="newLogo.png" alt="NUOVO!">
-      </div>
-       <div class="card-body bottom-0">
-       <h5 class="card-title">${trekkingList[i].name}</h5>
-       <p class="card-text">${trekkingList[i].date}</p>
-       
-      </div>
-      </div>
-      </a>
-    `;
-        }
-        cards.push(card)
-    }
-}
-
+      /* <img id="newLogo" src="newLogo.png" alt="NUOVO!"> */
+   
 
 // Funzione per visualizzare i trekking
-function renderTrekkingList(trekkingList, pageSelected) {
+/* function renderTrekkingList(trekkingList, pageSelected) {
 
     var c = 0
     console.log(trekkingList)
@@ -148,7 +91,7 @@ function renderTrekkingList(trekkingList, pageSelected) {
     console.log(pages)
 
 }
-
+ */
 
 function hideLogo(){
     document.getElementById("newLogo").style.opacity = 0;

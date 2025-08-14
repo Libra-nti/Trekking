@@ -163,14 +163,13 @@ app.get("", async (req, res) => {
     try {
         client.connect();
         const db = client.db('trekking'); // Nome del database
-        const collection = db.collection('treks'); // Nome della collezione
-        var trekkingCollection = await collection.find().toArray()
+        const trekkingCollection = db.collection('treks'); // Nome della collezione
         //console.log(allT)
         telegram(req, res)
          const page = parseInt(req.query.page) || 1;
         const perPage = 12;
          const totalItems = await trekkingCollection.countDocuments();
-  const treks = await trekkingCollection
+  var treks = await trekkingCollection
     .find({})
     .skip((page - 1) * perPage)
     .limit(perPage)
