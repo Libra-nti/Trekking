@@ -53,7 +53,11 @@ document.addEventListener("DOMContentLoaded", function() {
             const card = `<div class="col-sm-4 col-lg-2 col-6 mb-3" style="display: block">
       <a href="/trekking/${trekking.name}" style="all: unset">
     <div class="card h-100" style="width: auto">
-      <img loading="lazy" src="public/${trekking.name}-${trekking.date}/copertina.jpg?format=webp" class="card-img-top" name="${trekking.name}" alt="Foto copetina ${trekking.name}">
+      <img loading="lazy" srcset="
+    public/${trekking.name}-${trekking.date}/copertina.jpg-400.jpg 400w,
+    public/${trekking.name}-${trekking.date}/copertina.jpg-800.jpg 800w,
+    public/${trekking.name}-${trekking.date}/copertina.jpg-1200.jpg 1200w
+  " sizes="(min-width: 992px) 16.66vw, (min-width: 576px) 33.33vw, 50vw" fetchpriority="high" src="public/${trekking.name}-${trekking.date}/copertina.jpg?format=webp" class="card-img-top" name="${trekking.name}" alt="Foto copetina ${trekking.name}">
       
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekking.name}</h5>
