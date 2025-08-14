@@ -6,9 +6,9 @@ var map // Imposta una vista iniziale
 var url = "https://viaggiditony.onrender.com"
 //var url = "http://localhost:3100"
 
-async function fetchAndConvertToXML(urlGPX) {
+async function fetchAndConvertToXML(response) {
     // Effettua la fetch per ottenere i dati binari
-    const response = await fetch(urlGPX);
+    
     //consol.log(response)
     // Recupera il dato binario come ArrayBuffer
     const binaryData = await response.arrayBuffer();
@@ -47,7 +47,7 @@ async function mostraContenuto() {
         console.log(e)
     }
     try{
-        var mappa = await fetchAndConvertToXML(url+trek._id.toString())
+        var mappa = await fetchAndConvertToXML(trek.gpx)
         mappa = mappa.slice(1,-1);
         extractDataAndPlot(mappa)
         xmlGPX = mappa

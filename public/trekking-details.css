@@ -50,7 +50,7 @@ body {
 .carousel-inner {
   display: flex;
   align-items: center;
-  background-color: #000; /* Sfondo nero per riempire gli spazi vuoti */
+  background-color: #ffffff; /* Sfondo nero per riempire gli spazi vuoti */
   max-height: 600px; /* Altezza massima del carosello */
 }
 
