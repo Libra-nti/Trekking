@@ -16,9 +16,15 @@
   <body>
     <div id="content">
       <nav class="navbar navbar-expand-lg navbar-custom navbar-light bg-light">
-        <div class="container justify-content-center">
+        
+        <div class="container-fluid">
+          <a class="navbar-brand" href="viaggiditony.onrender.com">
+      <img src="/public/mountain.ico" alt="" width="30" height="24">
+    </a>
           <!-- Titolo centrato -->
+           <div class="justify-content-center">
           <h1 class="navbar-brand" id="trekking-name" style="font-size: 30px;"><%= name%> </h1>
+          </div> 
         </div>
       </nav>
       <div class="container my-4">
@@ -75,6 +81,7 @@
           </div>
         </div>
       </div>
+      <main>
       <div class="container mt-4">
         <div class="row">
           <span class="mb-3" id="trekking-description" style="font-family: Consolas; padding: 30px;"><%= description%> </span>
@@ -145,6 +152,7 @@
 														</div>
 													</div>
 												</div>
+                        </main>
 											</div>
 										</div>
 										<script src="/trekking-details.js"></script>
