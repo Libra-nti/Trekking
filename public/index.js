@@ -77,7 +77,6 @@ function filterTrekking() {
 const cols = elems.filter(el => el.textContent.trim() !== "");
 
     const search = document.getElementById('search').value.toLowerCase();
-    const desc = document.getElementById('desc').value.toLowerCase();
     /* 
         const difficulty = document.getElementById('difficulty').value;
         const distance = document.getElementById('distance').value;
@@ -88,7 +87,7 @@ const cols = elems.filter(el => el.textContent.trim() !== "");
 
     cols.forEach(col => {
         //console.log(col)
-        if ((col.childNodes[1].childNodes[1].childNodes[3].childNodes[1].innerText).toLowerCase().includes(search) || (col.childNodes[1].childNodes[1].childNodes[3].childNodes[3].childNodes[3].innerText).toLowerCase().includes(search))
+        if ((col.childNodes[1].childNodes[1].childNodes[3].childNodes[1].innerText).toLowerCase().includes(search))
         /* &&
                    (difficulty ? trekking.difficulty === difficulty : true) &&
                    (distance ? trekking.distance - distance >= -0.5 && trekking.distance - distance <= 0.5 : true) &&
