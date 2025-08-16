@@ -183,7 +183,11 @@
   " sizes="(min-width: 992px) 16.66vw, (min-width: 576px) 33.33vw, 50vw" fetchpriority="high" src="public/<%=trek.name%>-<%=trek.date%>/copertina-400.jpg" class="card-img-top" name="<%=trek.name%>" alt="Foto copetina <%=trek.name%>">
                 <div class="card-body bottom-0">
                   <h5 class="card-title"><%=trek.name%> </h5>
-                  <p class="card-text"><%=trek.date%> </p>
+                  <div class="card-text">
+                    <p><%=trek.date%></p>
+                  <p id="desc" style="display: none;">
+                    <%=trek.description%>
+                  </p> </div>
                 </div>
               </div>
             </a>

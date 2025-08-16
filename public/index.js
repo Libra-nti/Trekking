@@ -62,6 +62,9 @@ document.addEventListener("DOMContentLoaded", function() {
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekking.name}</h5>
        <p class="card-text">${trekking.date}</p>
+       <p id="desc" style="display: none;">
+                    ${trekking.description}
+                  </p>
       </div>
       </div>
       </a>
@@ -72,11 +75,12 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 function filterTrekking() {
-    const elems = Array.from(document.querySelectorAll(".col-sm-4")); // NodeList → Array
+    const elems = Array.from(document.querySelectorAll(".card")); // NodeList → Array
 
-const cols = elems.filter(el => el.textContent.trim() !== "");
+const cards = elems.filter(el => el.textContent.trim() !== "");
 
     const search = document.getElementById('search').value.toLowerCase();
+    const desc = document.getElementById('desc').value.toLowerCase();
     /* 
         const difficulty = document.getElementById('difficulty').value;
         const distance = document.getElementById('distance').value;
@@ -85,9 +89,9 @@ const cols = elems.filter(el => el.textContent.trim() !== "");
         const date = document.getElementById('date').value;
         const season = document.getElementById('season').value; */
 
-    cols.forEach(col => {
+    cards.forEach(col => {
         //console.log(col)
-        if ((col.childNodes[1].childNodes[1].childNodes[3].childNodes[1].innerText).toLowerCase().includes(search))
+        if ((col.childNodes[3].childNodes[1].innerText).toLowerCase().includes(search) || col.childNodes[3].childNodes[5].innerText.toLowerCase().includes(desc))
         /* &&
                    (difficulty ? trekking.difficulty === difficulty : true) &&
                    (distance ? trekking.distance - distance >= -0.5 && trekking.distance - distance <= 0.5 : true) &&
