@@ -90,7 +90,7 @@ const cards = elems.filter(el => el.textContent.trim() !== "");
         const season = document.getElementById('season').value; */
 
     cards.forEach(col => {
-        console.log(col.childNodes[3].childNodes[3].childNodes[3])
+        console.log(col.childNodes[3].childNodes[3])
         if ((col.childNodes[3].childNodes[1].innerText).toLowerCase().includes(search) || col.childNodes[3].childNodes[3].childNodes[3].innerText.toLowerCase().includes(desc))
         /* &&
                    (difficulty ? trekking.difficulty === difficulty : true) &&
