@@ -25,23 +25,6 @@ var equips = []
   // Inizializzazione della mappa
 
 var imageURL
-  async function ottieni(){
-    const img = document.getElementById("image")
-    try {
-            const response = await fetch("http://localhost:3100/image/space.jpg", {
-                method: "GET",
-            });
-
-            const result = await response;
-             const blob = await response.blob();
-             imageURL = URL.createObjectURL(blob);
-            img.src = imageURL;
-            img.style.display = "block";
-            status.textContent = "";
-        } catch (error) {
-            console.error("Errore:", error);
-        }
-  }
 
 
 
@@ -59,7 +42,7 @@ var imageURL
         formData.append("file", fileInput.files[0]);  // Aggiunge il file al FormData
 
         try {
-            const response = await fetch("https://trekkingbackend.onrender.com/upload", {
+            const response = await fetch("https://viaggiditony.onrender.com/upload", {
                 method: "POST",
                 body: formData
             });
@@ -122,7 +105,7 @@ var imageURL
 
         
         try{
-        fetch("https://trekkingbackend.onrender.com/saveGPX2", {
+        fetch("https://viaggiditony.onrender.com/saveGPX2", {
             method: 'POST',
             headers: {
               "Authorization": `${token}`
