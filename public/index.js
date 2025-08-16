@@ -91,7 +91,7 @@ const cards = elems.filter(el => el.textContent.trim() !== "");
 
     cards.forEach(col => {
         //console.log(col)
-        if ((col.childNodes[3].childNodes[1].innerText).toLowerCase().includes(search) || col.childNodes[3].childNodes[5].innerText.toLowerCase().includes(desc))
+        if ((col.childNodes[3].childNodes[1].innerText).toLowerCase().includes(search) || col.childNodes[3].childNodes[3].childNodes[3].innerText.toLowerCase().includes(desc))
         /* &&
                    (difficulty ? trekking.difficulty === difficulty : true) &&
                    (distance ? trekking.distance - distance >= -0.5 && trekking.distance - distance <= 0.5 : true) &&
