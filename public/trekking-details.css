@@ -51,7 +51,19 @@ body {
   display: flex;
   align-items: center;
   background-color: #ffffff; /* Sfondo nero per riempire gli spazi vuoti */
-  max-height: 600px; /* Altezza massima del carosello */
+}
+
+.carousel-item img {
+  max-height: 90vh;
+  object-fit: contain;
+  margin: 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+
+
+.carousel-item img.verticale {
+  width: 50%;  /* riduce le verticali */
 }
 
 img {
