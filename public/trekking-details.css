@@ -83,3 +83,13 @@ img {
   -webkit-background-clip: text;
   color: transparent;
 }
+
+a.custom-link {
+  color: white !important;
+}
+
+a.custom-link:visited,
+a.custom-link:hover,
+a.custom-link:active {
+  color: white !important;
+}
