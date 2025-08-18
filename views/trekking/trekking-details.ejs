@@ -135,7 +135,7 @@
                 </button><% }%> </div>
               <div class="carousel-inner" id="carosello"><% for(var h =1 ; h
 															<numFoto+1;h++){%> <div class="carousel-item <%= h === 1 ? 'active' : '' %>">
-                  <img src="/public/<%=name%>-<%=date%>/<%=h%>.jpg" class="d-block" alt="Foto n° <%= h%> del trekking <%=name%>">
+                  <img src="/public/<%=name%>-<%=date%>/<%=h%>.jpg" class="d-block img-clickable" alt="Foto n° <%= h%> del trekking <%=name%>">
                 </div><%}%>
 																</div>
 																<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -147,6 +147,13 @@
 																	<span class="visually-hidden">Next</span>
 																</button>
 															</div>
+                              <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0 shadow-none">
+      <img id="modalImage" src="" class="img-fluid rounded" alt="">
+    </div>
+  </div>
+</div>
 														</div>
 													</div>
 													<div class="row mb-3">
@@ -202,6 +209,13 @@
     mostraContenuto()
     generateStars(document.getElementById("rating").innerText)
     })
+
+     const imageModal = document.getElementById('imageModal');
+  imageModal.addEventListener('show.bs.modal', event => {
+    const triggerImg = event.relatedTarget; // immagine cliccata
+    const imgSrc = triggerImg.getAttribute('data-bs-img');
+    document.getElementById('modalImage').src = imgSrc;
+  });
 </script>
 </body>
 </html>
