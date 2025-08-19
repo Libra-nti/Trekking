@@ -1,78 +1,78 @@
-const mongoClient = require('mongodb').MongoClient;
-var Binary = require('mongodb').Binary;
-const ObjectId = require('mongodb').ObjectId;
-//const auth = require('./auth').auth
-//const { GridFsStorage } = require('multer-gridfs-storage');
-var cors = require('cors')
-const express = require('express') //modulo utilizzato con nodejs per semplificare la comunicazione server 
-const path = require('path');
-//const multer = require('multer');
-const app = express() //una specie di costruttore che inizializza express e che ci permette di utilizzare tutti i metodi
+const { MongoClient, ObjectId, Binary } = require("mongodb");
+const express = require("express");
+const path = require("path");
+const cors = require("cors");
+const axios = require("axios");
+const requestIp = require("request-ip");
+const bodyParser = require("body-parser");
+const multer = require("multer");
+const xml2js = require("xml2js");
+const fs = require("fs");
+const xmlBodyParser = require("express-xml-bodyparser");
 
+const app = express();
 
-
-
-app.use(express.json())
-var url = "https://viaggiditony.onrender.com"
-//const upload = multer({ dest: 'uploads/' });
-const xmlBodyParser = require('express-xml-bodyparser');
-const fs = require('fs');
-const xml2js = require('xml2js');
-var bodyParser = require('body-parser');
-const multer = require('multer');
-app.use(bodyParser.json({
-    limit: "50mb"
+// --- Middleware ---
+app.use(express.json());
+app.use(cors());
+app.use(requestIp.mw());
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
+app.use(xmlBodyParser({
+  xmlParseOptions: {
+    normalize: true,
+    normalizeTags: true,
+    explicitArray: false
+  }
 }));
-app.use(bodyParser.urlencoded({
-    limit: "50mb",
-    extended: true,
-    parameterLimit: 50000
-}));
-const storage = multer.memoryStorage(); // Salva il file in memoria
-const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 100 * 1024 * 1024
-    } // Limite di 100MB
-});
 
+// Multer
+const storage = multer.memoryStorage();
+const upload = multer({ storage, limits: { fileSize: 100 * 1024 * 1024 } });
 
-app.use(express.static(path.join(__dirname, 'public')));
+// Views
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(__dirname));
 app.set("view engine", "ejs");
-app.set('views', path.join(__dirname, 'views'));
+app.set("views", path.join(__dirname, "views"));
 
-const axios = require('axios');
-const requestIp = require('request-ip');
+// --- Variabili globali ---
+const url = "https://viaggiditony.onrender.com";
+let trekkings = [];
+let totalPages;
 
+// --- MongoDB (un solo client globale con pooling) ---
+const client = new MongoClient(process.env.uri, { maxPoolSize: 20 });
+let db;
 
-// Middleware per ottenere l'IP del visitatore
-app.use(requestIp.mw());
+async function connectDB() {
+  if (!db) {
+    await client.connect();
+    db = client.db("trekking");
+    console.log("✅ Connesso a MongoDB");
+  }
+}
+connectDB();
 
-
-
+// --- Funzione Telegram ---
 async function telegram(req) {
-    try{
-    const ip = req.clientIp || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    const userAgent = req.headers['user-agent'];
-    const referer = req.headers['referer'] || 'Diretto';
-    // Ottieni informazioni sulla posizione basate sull'IP
-    let location = 'Sconosciuta';
+  try {
+    const ip = req.clientIp || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    const userAgent = req.headers["user-agent"];
+    const referer = req.headers["referer"] || "Diretto";
+
+    let location = "Sconosciuta";
     try {
-        const geoRes = await axios.get("https://api.ipstack.com/"+ip, {
-            params: {
-              access_key: process.env.apikeyIP,
-            }
-          })
-        //console.log(geoRes)
-        if (geoRes.data && geoRes.data.city) {
-            location = `${geoRes.data.city}, ${geoRes.data.country_name}`;
-        }
+      const geoRes = await axios.get("https://api.ipstack.com/" + ip, {
+        params: { access_key: process.env.apikeyIP }
+      });
+      if (geoRes.data && geoRes.data.city) {
+        location = `${geoRes.data.city}, ${geoRes.data.country_name}`;
+      }
     } catch (error) {
-        console.error('Errore nella geolocalizzazione:', error.message);
+      console.error("Errore nella geolocalizzazione:", error.message);
     }
 
-    // Costruisci il messaggio da inviare su Telegram
     const message = `
 📡 *Nuovo Visitatore!*  
 🌍 *IP:* ${ip}  
@@ -81,273 +81,188 @@ async function telegram(req) {
 🔗 *Referer:* ${referer}
     `;
 
-    // Invia la notifica su Telegram
-    if(ip!="128.140.8.200"){
-    await axios.post("https://api.telegram.org/bot"+process.env.telegram_token+"/sendMessage", {
+    if (ip !== "128.140.8.200") {
+      await axios.post("https://api.telegram.org/bot" + process.env.telegram_token + "/sendMessage", {
         chat_id: process.env.chat_id,
         text: message,
-        parse_mode: 'Markdown'
+        parse_mode: "Markdown"
+      });
+    }
+  } catch (e) {
+    console.log("Errore Telegram:", e);
+  }
+}
+
+// --- ROTTE --- //
+
+app.post("/saveGPX2", upload.single("gpxFile"), async (req, res) => {
+  if (req.headers["authorization"] !== process.env.token) {
+    return res.status(401).json({ message: "Accesso non autorizzato" });
+  }
+
+  try {
+    const parser = new xml2js.Parser();
+    parser.parseString(req.file.buffer.toString(), async (err, result) => {
+      if (err) return res.status(400).json({ error: "Errore parsing XML" });
+
+      const collection = db.collection("treks");
+      const ArrayEq = JSON.parse(req.body.equipment);
+
+      req.body.gpx = result;
+      req.body.equipment = ArrayEq;
+
+      await collection.insertOne(req.body);
+      res.json({ message: "File GPX salvato con successo" });
     });
-}
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Errore interno" });
+  }
+});
 
-}
-catch(e){
-    console.log("errore: "+e)
-}
-};
-
-
-
-
-app.use(xmlBodyParser({
-    xmlParseOptions: {
-        normalize: true, // Normalizza gli spazi e i ritorni a capo
-        normalizeTags: true, // Normalizza i tag a minuscolo
-        explicitArray: false // Se impostato a `false`, non metterà gli elementi in un array
-    }
-}));
-
-
-
-
-app.post("/saveGPX2", upload.single('gpxFile'), async (req, res) => {
-    //console.log(req.headers['authorization'])
-    if (req.headers['authorization'] == process.env.token) {
-        //console.log(req.body.equipment)
-        // Converte l'XML in JSON
-        const parser = new xml2js.Parser();
-        parser.parseString(req.file.buffer.toString(), async (err, result) => {
-            if (err) {
-                console.error('Errore nella conversione dell\'XML:', err);
-                return;
-            }
-
-            const client = new mongoClient(process.env.uri);
-
-            try {
-                await client.connect();
-                ArrayEq = JSON.parse(req.body.equipment)
-                //console.log(ArrayEq)
-                const db = client.db('trekking'); // Nome del database
-                const collection = db.collection('treks'); // Nome della collezione
-                //console.log(req.body)
-                req.body.gpx = result;
-                req.body.equipment = ArrayEq
-                //console.log(req.body)
-                // Salva il file GPX come dati binari in MongoDB
-                await collection.insertOne(
-                    req.body);
-
-                console.log('File GPX salvato con successo:');
-
-            } catch (e) {
-                console.log(e)
-            }
-        })
-    } else {
-        res.status(401).json({
-            message: "Accesso non autorizzato"
-        })
-    }
-
-})
-var trekkings
 app.get("/all", async (req, res) => {
+  try {
+    trekkings = await db.collection("treks").find().toArray();
+    await telegram(req);
+    res.json(trekkings);
+  } catch (e) {
+    res.status(500).json({ error: "Errore interno" });
+  }
+});
 
-    const client = new mongoClient(process.env.uri)
-    try {
-        client.connect();
-        const db = client.db('trekking'); // Nome del database
-        const collection = db.collection('treks'); // Nome della collezione
-        trekkings = await collection.find().toArray()
-        //console.log(allT)
-        telegram(req, res)
-        res.json(trekkings)
-    } finally {
-        await client.close()
-    }
-
-
-})
-var totalPages
 app.get("", async (req, res) => {
-
-    const client = new mongoClient(process.env.uri)
-    try {
-        client.connect();
-        const db = client.db('trekking'); // Nome del database
-        const trekkingCollection = db.collection('treks'); // Nome della collezione
-        //console.log(allT)
-        telegram(req, res)
-        var page = parseInt(req.query.page) || 1;
-        const perPage = 12;
-        const totalItems = await trekkingCollection.countDocuments();
-        var treks = await trekkingCollection.find({}).toArray();
-        cronological(treks)
-        totalPages = Math.ceil(totalItems / perPage);
-    } finally {
-        await client.close()
-    }
-    res.render("index", {
-        treks,
-        page,
-        totalPages
-    });
-
-})
-
-app.get("/lista", (req, res) => {
-    const tutti = Array.from({
-        length: 50
-    }, (_, i) => `Elemento ${i+1}`);
+  try {
+    await telegram(req);
     const page = parseInt(req.query.page) || 1;
     const perPage = 12;
-    const start = (page - 1) * perPage;
-    const end = start + perPage;
+    const totalItems = await db.collection("treks").countDocuments();
+    let treks = await db.collection("treks").find({}).toArray();
 
-    const items = tutti.slice(start, end);
-    const totalPages = Math.ceil(tutti.length / perPage);
+    cronological(treks);
+    totalPages = Math.ceil(totalItems / perPage);
 
-    res.render("lista", {
-        items,
-        page,
-        totalPages
-    });
+    res.render("index", { treks, page, totalPages });
+  } catch (e) {
+    res.status(500).json({ error: "Errore interno" });
+  }
 });
 
+app.get("/lista", (req, res) => {
+  const tutti = Array.from({ length: 50 }, (_, i) => `Elemento ${i + 1}`);
+  const page = parseInt(req.query.page) || 1;
+  const perPage = 12;
+  const start = (page - 1) * perPage;
+  const end = start + perPage;
 
+  const items = tutti.slice(start, end);
+  const totalPages = Math.ceil(tutti.length / perPage);
+
+  res.render("lista", { items, page, totalPages });
+});
 
 app.get("/trekGPX/:id", async (req, res) => {
-    var id = req.params.id
-    const client = new mongoClient(process.env.uri)
-    try {
-        client.connect();
-        var trek = await client.db("trekking").collection("treks").findOne({
-            _id: new ObjectId(id)
-        })
-        const builder = new xml2js.Builder();
-        const xmlOutput = builder.buildObject(trek.gpx);
-        //console.log(xmlOutput)
-        res.json(xmlOutput)
-        // Invia i dati binari
-        //res.send(trek.gpx);
-    } catch (e) {
-        console.log(e)
-    }
-})
+  try {
+    const trek = await db.collection("treks").findOne({ _id: new ObjectId(req.params.id) });
+    if (!trek) return res.status(404).json({ error: "Non trovato" });
+
+    const builder = new xml2js.Builder();
+    const xmlOutput = builder.buildObject(trek.gpx);
+    res.json(xmlOutput);
+  } catch (e) {
+    res.status(500).json({ error: "Errore interno" });
+  }
+});
 
 app.get("/trekID/:nome", async (req, res) => {
-    // recuperi i dati dal DB o da un JSON
-    var nome = req.params.nome
-    const client = new mongoClient(process.env.uri)
-    try {
-        client.connect();
-        var trek = await client.db("trekking").collection("treks").findOne({
-            name: nome
-        })
-        //console.log(trek)
-        const builder = new xml2js.Builder();
-        const xmlOutput = builder.buildObject(trek.gpx);
-        //console.log("output")
-        //console.log(xmlOutput)
-        trek.gpx = xmlOutput
-    } catch (e) {
-        console.log(e)
-    }
-    res.json(trek)
+  try {
+    const trek = await db.collection("treks").findOne({ name: req.params.nome });
+    if (!trek) return res.status(404).json({ error: "Non trovato" });
+
+    const builder = new xml2js.Builder();
+    const xmlOutput = builder.buildObject(trek.gpx);
+    trek.gpx = xmlOutput;
+
+    res.json(trek);
+  } catch (e) {
+    res.status(500).json({ error: "Errore interno" });
+  }
 });
 
-app.get('/ping', (req, res) => {
-    res.send('ok');
-});
 app.get("/trekking/:nome", async (req, res) => {
-    // recuperi i dati dal DB o da un JSON
-    var nome = req.params.nome
-    const client = new mongoClient(process.env.uri)
-    try {
-        client.connect();
-        var trek = await client.db("trekking").collection("treks").findOne({
-            name: nome
-        })
-        console.log(trek)
-        const builder = new xml2js.Builder();
-        const xmlOutput = builder.buildObject(trek.gpx);
-        //console.log("output")
-        //console.log(xmlOutput)
-        trek.gpx = xmlOutput
-    } catch (e) {
-        console.log(e)
-    }
+  try {
+    const trek = await db.collection("treks").findOne({ name: req.params.nome });
+    if (!trek) return res.status(404).json({ error: "Non trovato" });
 
+    const builder = new xml2js.Builder();
+    const xmlOutput = builder.buildObject(trek.gpx);
+    trek.gpx = xmlOutput;
 
     res.render("trekking/trekking-details", trek);
+  } catch (e) {
+    res.status(500).json({ error: "Errore interno" });
+  }
 });
 
+app.get("/sitemap.xml", async (req, res) => {
+  const baseUrl = url;
+  const response = await axios.get(url + "/all");
+  const urls = ["/"];
 
-app.get('/sitemap.xml', async (req, res) => {
-    const baseUrl = url // Cambia con il tuo dominio
-    var urls = ["/"]
-    const response = await axios.get(url + "/all")
-    //console.log(response)
-    for (var i = 0; i < trekkings.length; i++) {
-        urls.push("/trekking/" + trekkings[i].name)
-    }
-    /* for(var i=1;i<totalPages+1;i++){
-        urls.push("/?page="+i)
-    }
- */
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-        ${urls.map(url => `
-            <url>
-                <loc>${baseUrl}${url}</loc>
-                <priority>0.8</priority>
-            </url>`).join('')}
-    </urlset>`;
+  for (let i = 0; i < trekkings.length; i++) {
+    urls.push("/trekking/" + trekkings[i].name);
+  }
 
-    res.header('Content-Type', 'application/xml');
-    res.send(sitemap);
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    ${urls.map(u => `
+      <url>
+        <loc>${baseUrl}${u}</loc>
+        <priority>0.8</priority>
+      </url>`).join("")}
+  </urlset>`;
+
+  res.header("Content-Type", "application/xml");
+  res.send(sitemap);
 });
 
 app.post("/filter", async (req, res) => {
-    var data = req.body
-    var response = await axios.get(url + "/all");
-    var trekkingList = response.data;
-    var filtrati = trekkingList.filter(trekking => {
-        return (
-            (data.difficulty != "" ? trekking.difficulty === data.difficulty : true) &&
-            (data.distance != "" ? trekking.distance - data.distance >= -0.5 && trekking.distance - data.distance <= 0.5 : true) &&
-            (data.elevation != "" ? trekking.elevation - data.elevation >= -100 && trekking.elevation - data.elevation <= 100 : true) &&
-            (data.date != "" ? trekking.date == data.date : true) &&
-            (data.season != "" ? trekking.season === data.season : true) &&
-            (data.tipo != "" ? trekking.tipo === data.tipo : true)
-        )
-    })
-    res.json(filtrati)
-})
+  try {
+    const data = req.body;
+    const response = await axios.get(url + "/all");
+    const trekkingList = response.data;
+
+    const filtrati = trekkingList.filter(trekking => {
+      return (
+        (data.difficulty !== "" ? trekking.difficulty === data.difficulty : true) &&
+        (data.distance !== "" ? Math.abs(trekking.distance - data.distance) <= 0.5 : true) &&
+        (data.elevation !== "" ? Math.abs(trekking.elevation - data.elevation) <= 100 : true) &&
+        (data.date !== "" ? trekking.date == data.date : true) &&
+        (data.season !== "" ? trekking.season === data.season : true) &&
+        (data.tipo !== "" ? trekking.tipo === data.tipo : true)
+      );
+    });
+
+    res.json(filtrati);
+  } catch (e) {
+    res.status(500).json({ error: "Errore interno" });
+  }
+});
 
 function cronological(trekkingList) {
-    var temp
-    var c = -1
-    for (var i = 0; i < trekkingList.length - 1; i++) {
-
-        if (trekkingList[i].date < trekkingList[i + 1].date) {
-            temp = trekkingList[i]
-            trekkingList[i] = trekkingList[i + 1]
-            trekkingList[i + 1] = temp
-            i = -1
-
-        }
+  for (let i = 0; i < trekkingList.length - 1; i++) {
+    if (trekkingList[i].date < trekkingList[i + 1].date) {
+      const temp = trekkingList[i];
+      trekkingList[i] = trekkingList[i + 1];
+      trekkingList[i + 1] = temp;
+      i = -1;
     }
-    //trekkingList[0].newest = "true"
-
+  }
 }
 
-
-
-const PORT = process.env.PORT || 3000; // Usa la porta di Render, altrimenti 3000
-
-
-app.listen(PORT, () => {
-    console.log(`Server in ascolto su porta ${PORT}`);
+app.get("/ping", (req, res) => {
+  res.send("ok");
 });
+
+// --- Start server ---
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server in ascolto su porta ${PORT}`));
