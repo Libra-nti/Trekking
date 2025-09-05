@@ -472,7 +472,7 @@ function download() {
 
     const link = document.createElement('a');
     link.href = url;
-    link.download = trekking.name + '.gpx';
+    link.download = document.getElementById("trekking-name") + '.gpx';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
