@@ -406,12 +406,12 @@ function tipo(tipo) {
 }
 
 
-/* function difficulty(difficoltà){
+function difficulty(difficoltà){
     document.getElementById("difficulty").value = difficoltà
   }
 
 
-
+/*
   document.getElementById("formS").addEventListener("submit", function(e) {
   e.preventDefault(); // Impedisce il refresh della pagina
 
