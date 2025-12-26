@@ -110,7 +110,7 @@ app.post("/saveGPX2", upload.single("gpxFile"), async (req, res) => {
 
       req.body.gpx = result;
       req.body.equipment = ArrayEq;
-      req.body.numFoto = new Int32(req.body.numFoto)
+      req.body.numFoto = Number(req.body.numFoto);
 
       await collection.insertOne(req.body);
       res.json({ message: "File GPX salvato con successo" });

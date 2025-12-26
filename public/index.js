@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
     public/${trekking.name}-${trekking.date}/copertina-400.jpg 400w,
     public/${trekking.name}-${trekking.date}/copertina-800.jpg 800w,
     public/${trekking.name}-${trekking.date}/copertina-1200.jpg 1200w
-  " sizes="(min-width: 992px) 16.66vw, (min-width: 576px) 33.33vw, 50vw" fetchpriority="high" src="public/${trekking.name}-${trekking.date}/copertina-400.jpg" class="card-img-top" name="${trekking.name}" alt="Foto copetina ${trekking.name}">
+  " sizes="(min-width: 992px) 16.66vw, (min-width: 576px) 33.33vw, 50vw" fetchpriority="high" src="public/${trekking.name}-${trekking.date}/copertina.jpg" class="card-img-top" name="${trekking.name}" alt="Foto copetina ${trekking.name}">
       
        <div class="card-body bottom-0">
        <h5 class="card-title">${trekking.name}</h5>
