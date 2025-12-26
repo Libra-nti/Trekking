@@ -81,6 +81,7 @@ var imageURL
 
         
     formData.append('name', document.getElementById("nome").value)
+    formData.append('title', document.getElementById("title").value)
     formData.append('description', document.getElementById("descrizione").value)
     formData.append('elevation', parseFloat(document.getElementById("dislivello").value))
     formData.append('duration', document.getElementById("durata").value)
