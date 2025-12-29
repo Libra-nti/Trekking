@@ -106,7 +106,7 @@ var imageURL
 
         
         try{
-        fetch("https://viaggiditony.onrender.com/saveGPX2", {
+        fetch("https://viaggiditony.it/saveGPX2", {
             method: 'POST',
             headers: {
               "Authorization": `${token}`
