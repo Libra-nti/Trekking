@@ -42,7 +42,7 @@ var imageURL
         formData.append("file", fileInput.files[0]);  // Aggiunge il file al FormData
 
         try {
-            const response = await fetch("https://viaggiditony.onrender.com/upload", {
+            const response = await fetch("https://viaggiditony.it/upload", {
                 method: "POST",
                 body: formData
             });

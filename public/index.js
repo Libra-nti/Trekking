@@ -1,7 +1,7 @@
 let filteredTrekking = [];
 var J = 0
 
-var url = "https://viaggiditony.onrender.com"
+var url = "https://viaggiditony.it"
 
 
 var src = []

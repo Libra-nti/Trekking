@@ -2,7 +2,7 @@ var trekking
 var xmlGPX
 let marker
 var map // Imposta una vista iniziale
-var url = "https://viaggiditony.onrender.com"
+var url = "https://viaggiditony.it"
 //var url = "http://localhost:3100"
 
 async function fetchAndConvertToXML(urlGPX) {

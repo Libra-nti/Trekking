@@ -13,6 +13,16 @@ const xmlBodyParser = require("express-xml-bodyparser");
 const app = express();
 
 // --- Middleware ---
+app.use((req, res, next) => {
+  const host = req.headers.host;
+
+  if (host === 'viaggiditony.onrender.com') {
+    return res.redirect(301, 'https://viaggiditony.it' + req.originalUrl);
+  }
+
+  next();
+});
+
 app.use(express.json());
 app.use(cors());
 app.use(requestIp.mw());
@@ -37,7 +47,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // --- Variabili globali ---
-const url = "https://viaggiditony.onrender.com";
+const url = "https://viaggiditony.it";
 let trekkings = [];
 let totalPages;
 
