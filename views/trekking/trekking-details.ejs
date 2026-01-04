@@ -4,32 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %> | Viaggi di Tony </title>
-    <meta name="description" content="<%=description%>">
+    <meta name="description" content="<%=description_small%>">
     <link rel="stylesheet" href="/trekking-details.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet-omnivore@0.3.0/leaflet-omnivore.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="icon" href="/public/mountain.ico" type="image/x-icon">
-     <!-- SITE NAME -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Viaggi di Tony",
-    "url": "https://viaggiditony.it"
-  }
-  </script>
-  <!-- LOGO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
+    <link rel="icon" href="/mountain.ico" type="image/x-icon">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "<%= trekking.nome %>",
+  "description": "<%= description_small %>",
+  "image": "https://viaggiditony.it//public/<%=name%>-<%=date%>/cover.jpg",
+  "datePublished": "<%= trekking.date %>",
+  "dateModified": "<%= trekking.dataAggiornamento || trekking.date %>",
+  "author": {
+    "@type": "Person",
+    "name": "Tony"
+  },
+  "publisher": {
     "@type": "Organization",
     "name": "Viaggi di Tony",
-    "url": "https://viaggiditony.it",
-    "logo": "https://viaggiditony.it/mountain.ico"
-  }
-  </script>
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://viaggiditony.it/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://viaggiditony.it/trekking/<%= trekking.slug %>"
+  },
+  "articleSection": "Trekking"
+}
+</script>
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   </head>
   <body>
