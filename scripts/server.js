@@ -42,7 +42,6 @@ const upload = multer({ storage, limits: { fileSize: 100 * 1024 * 1024 } });
 
 // Views
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(__dirname));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
