@@ -44,15 +44,6 @@ const upload = multer({ storage, limits: { fileSize: 100 * 1024 * 1024 } });
 //app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use((req, res, next) => {
-  if (
-    req.path.endsWith(".js") &&
-    !req.path.startsWith("/js/")
-  ) {
-    return res.status(403).send("Forbidden");
-  }
-  next();
-});
 app.use(express.static(path.join(__dirname, "public")));
 
 
