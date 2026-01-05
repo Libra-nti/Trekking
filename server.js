@@ -275,9 +275,7 @@ app.get("/ping", (req, res) => {
   res.send("ok");
 });
 
-app.get("/", (req, res) => {
-  res.send("OK");
-});
+
 
 
 // --- Start server ---
