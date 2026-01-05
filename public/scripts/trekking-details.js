@@ -120,7 +120,7 @@ out skel qt;`
 
 
 const bivaccoIcon = L.icon({
-    iconUrl: '/public/loghi/bivacco.png', // Percorso al tuo file
+    iconUrl: '/loghi/bivacco.png', // Percorso al tuo file
     iconSize: [28, 28], // Dimensioni icona
     iconAnchor: [16, 32], // Punto che tocca la mappa (in basso al centro)
     popupAnchor: [0, -32] // Dove appare il popup rispetto all'icona
@@ -450,7 +450,7 @@ function carosello() {
         } else {
             carousel.classList = "carousel-item"
         }
-        image.src = "/public/" + trekking.name + "-" + trekking.date + "/" + i + ".jpg"
+        image.src = "/" + trekking.name + "-" + trekking.date + "/" + i + ".jpg"
         image.classList = "d-block"
         image.alt = "Foto n° " + i + " del trekking " + trekking.name
         carousel.appendChild(image)
