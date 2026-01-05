@@ -1,25 +1,8 @@
 let filteredTrekking = [];
 var J = 0
-
 var url = "https://viaggiditony.it"
-
-
 var src = []
 var pages
-
-
-
-/* var trekkingData =  fetch(url + '/all', {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json", // Tipo di contenuto accettato in risposta
-        },
-    })
-    .then(response => response.json())
-        
-         */
-
-//console.log(filteredTrekking)
 
 
 // Funzione per filtrare i trekking in base ai criteri
@@ -77,24 +60,10 @@ function filterTrekking() {
 const cols = elems.filter(el => el.textContent.trim() !== "");
 
     const search = document.getElementById('search').value.toLowerCase();
-    /* 
-        const difficulty = document.getElementById('difficulty').value;
-        const distance = document.getElementById('distance').value;
-        const elevation = document.getElementById('elevation').value;
-        const tipo = document.getElementById("tipo").value;
-        const date = document.getElementById('date').value;
-        const season = document.getElementById('season').value; */
 
     cols.forEach(col => {
         //console.log(col)
         if ((col.childNodes[1].childNodes[1].childNodes[3].childNodes[1].innerText).toLowerCase().includes(search))
-        /* &&
-                   (difficulty ? trekking.difficulty === difficulty : true) &&
-                   (distance ? trekking.distance - distance >= -0.5 && trekking.distance - distance <= 0.5 : true) &&
-                   (elevation ? trekking.elevation - elevation >= -100 && trekking.elevation - elevation <= 100: true) &&
-                   (date ? trekking.date == date : true) && 
-                   (season ? trekking.season === season : true)&& 
-                   (tipo ? trekking.tipo === tipo : true) */
         {
             col.style.display = "block"
         } else {
@@ -119,43 +88,6 @@ function show() {
 }
 
 
-/* <img id="newLogo" src="newLogo.png" alt="NUOVO!"> */
-
-
-// Funzione per visualizzare i trekking
-/* function renderTrekkingList(trekkingList, pageSelected) {
-
-    var c = 0
-    console.log(trekkingList)
-    const listContainer = document.getElementById('trekking-list');
-    listContainer.innerHTML = ''; // Pulisce la lista esistente
-    var H = 0;
-    var row
-    var maxShowed
-    if(trekkingList.length<12*pageSelected){
-        maxShowed = trekkingList.length
-    }
-    else{
-        maxShowed = 12*pageSelected
-    }
-    for(var pagesI=12*(pageSelected-1); pagesI<maxShowed;pagesI++){
-        
-        //console.log(pagesI)
-        if (H % 6 == 0) {
-            row = document.createElement("div")
-            row.className = "row"
-            listContainer.appendChild(row)
-        }
-        
-        row.appendChild(cards[pagesI])
-        H = H + 1
-
-    }
-    pages = Math.ceil(trekkingList.length/12)
-    console.log(pages)
-
-}
- */
 
 function hideLogo() {
     document.getElementById("newLogo").style.opacity = 0;
@@ -168,20 +100,6 @@ function showLogo() {
 // Funzione per caricare i dettagli di un trekking
 
 var dataNewest
-/* function newest(){
-    var  newest = "1999-01-01"
-    
-    for(var i=0;i<trekkingData.length;i++){
-        if(newest<trekkingData[i].date){
-            newest = trekkingData[i].date
-            indiceNewest = i
-        }
-    }
-    //console.log(ind)
-    dataNewest = newest
-    
-    
-} */
 
 function next() {
     var items
@@ -411,14 +329,7 @@ function difficulty(difficoltà){
   }
 
 
-/*
-  document.getElementById("formS").addEventListener("submit", function(e) {
-  e.preventDefault(); // Impedisce il refresh della pagina
 
-  filterTrekking()
-
-  // Aggiungi qui la tua funzione di ricerca personalizzata
-}); */
 
 function ulSize() {
     var ul = document.getElementById("ulDifficulty")
