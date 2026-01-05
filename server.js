@@ -13,7 +13,7 @@ const xmlBodyParser = require("express-xml-bodyparser");
 const app = express();
 
 // --- Middleware ---
-/* app.use((req, res, next) => {
+app.use((req, res, next) => {
   const host = req.headers.host;
 
   if (host === 'viaggiditony.onrender.com') {
@@ -21,7 +21,7 @@ const app = express();
   }
 
   next();
-}); */
+});
 
 app.use(express.json());
 app.use(cors());
@@ -48,7 +48,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 // --- Variabili globali ---
-const url = "http://viaggiditony.it";
+const url = "https://viaggiditony.it";
 let trekkings = [];
 let totalPages;
 
@@ -142,7 +142,7 @@ app.get("/all", async (req, res) => {
   }
 });
 
-/* app.get("", async (req, res) => {
+app.get("", async (req, res) => {
   try {
     await telegram(req);
     const page = parseInt(req.query.page) || 1;
@@ -157,7 +157,7 @@ app.get("/all", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });
   }
-}); */
+});
 
 app.get("/lista", (req, res) => {
   const tutti = Array.from({ length: 50 }, (_, i) => `Elemento ${i + 1}`);
@@ -274,8 +274,6 @@ function cronological(trekkingList) {
 app.get("/ping", (req, res) => {
   res.send("ok");
 });
-
-
 
 
 // --- Start server ---
