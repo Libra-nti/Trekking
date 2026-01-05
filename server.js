@@ -142,7 +142,7 @@ app.get("/all", async (req, res) => {
   }
 });
 
-app.get("", async (req, res) => {
+/* app.get("", async (req, res) => {
   try {
     await telegram(req);
     const page = parseInt(req.query.page) || 1;
@@ -157,7 +157,7 @@ app.get("", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });
   }
-});
+}); */
 
 app.get("/lista", (req, res) => {
   const tutti = Array.from({ length: 50 }, (_, i) => `Elemento ${i + 1}`);
@@ -274,6 +274,11 @@ function cronological(trekkingList) {
 app.get("/ping", (req, res) => {
   res.send("ok");
 });
+
+app.get("/", (req, res) => {
+  res.send("OK");
+});
+
 
 // --- Start server ---
 const PORT = process.env.PORT || 3000;

@@ -160,8 +160,7 @@
         <div class="row">
           <div class="col-12 d-flex justify-content-center align-items-center">
             <div id="carouselExampleIndicators" class="carousel slide mb-3 mt-3 pointer-event" data-bs-ride="carousel">
-              <div class="carousel-indicators" id="indicator"><% for(var i =1 ; i
-														<numFoto+1;i++){%> <button aria-label="Slide <%= i%>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i-1 %>" class="<%= i===1 ? 'active' : ''%>" aria-current="<%= i === 1 ? 'true' : '' %>">
+              <div class="carousel-indicators" id="indicator"><% for(var i =1 ; i<numFoto+1;i++){%> <button aria-label="Slide <%= i%>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i-1 %>" class="<%= i===1 ? 'active' : ''%>" aria-current="<%= i === 1 ? 'true' : '' %>">
                 </button><% }%> </div>
               <div class="carousel-inner" id="carosello"><% for(var h =1 ; h
 															<numFoto+1;h++){%> <div class="carousel-item <%= h === 1 ? 'active' : '' %>">
