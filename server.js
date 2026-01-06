@@ -11,17 +11,10 @@ const fs = require("fs");
 const xmlBodyParser = require("express-xml-bodyparser");
 
 const app = express();
+app.set("trust proxy", true);
 
 // --- Middleware ---
-app.use((req, res, next) => {
-  const host = req.headers.host;
 
-  if (host === 'viaggiditony.onrender.com') {
-    return res.redirect(301, 'https://viaggiditony.it' + req.originalUrl);
-  }
-
-  next();
-});
 
 app.use(express.json());
 app.use(cors());
@@ -217,7 +210,6 @@ app.get("/trekking/:nome", async (req, res) => {
 
 app.get("/sitemap.xml", async (req, res) => {
   const baseUrl = url;
-  const response = await axios.get(url + "/all");
   const urls = ["/"];
 
   for (let i = 0; i < trekkings.length; i++) {
@@ -237,10 +229,12 @@ app.get("/sitemap.xml", async (req, res) => {
   res.send(sitemap);
 });
 
+const PORT = process.env.PORT || 3000;
+
 app.post("/filter", async (req, res) => {
   try {
     const data = req.body;
-    const response = await axios.get(url + "/all");
+    const response = await axios.get("http://localhost:"+PORT+"/all");
     const trekkingList = response.data;
 
     const filtrati = trekkingList.filter(trekking => {
@@ -277,5 +271,5 @@ app.get("/ping", (req, res) => {
 
 
 // --- Start server ---
-const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => console.log(`Server in ascolto su porta ${PORT}`));
