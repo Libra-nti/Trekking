@@ -229,7 +229,7 @@ app.get("/sitemap.xml", async (req, res) => {
   res.send(sitemap);
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 app.post("/filter", async (req, res) => {
   try {
