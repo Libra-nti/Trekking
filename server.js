@@ -19,19 +19,6 @@ app.set("trust proxy", true);
 app.use(express.json());
 app.use(cors());
 app.use(requestIp.mw());
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
-app.use(xmlBodyParser({
-  xmlParseOptions: {
-    normalize: true,
-    normalizeTags: true,
-    explicitArray: false
-  }
-}));
-
-// Multer
-const storage = multer.memoryStorage();
-const upload = multer({ storage, limits: { fileSize: 100 * 1024 * 1024 } });
 
 // Views
 //app.use(express.static(path.join(__dirname, "public")));
