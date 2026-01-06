@@ -450,7 +450,7 @@ function carosello() {
         } else {
             carousel.classList = "carousel-item"
         }
-        image.src = "/" + trekking.name + "-" + trekking.date + "/" + i + ".jpg"
+        image.src = "https://res.cloudinary.com/dieh3kepz/image/upload/" + trekking.name + "-" + trekking.date + "/" + i + ".jpg"
         image.classList = "d-block"
         image.alt = "Foto n° " + i + " del trekking " + trekking.name
         carousel.appendChild(image)
