@@ -152,6 +152,8 @@ app.get("", async (req, res) => {
   }
 });
 
+
+
 app.get("/lista", (req, res) => {
   const tutti = Array.from({ length: 50 }, (_, i) => `Elemento ${i + 1}`);
   const page = parseInt(req.query.page) || 1;
