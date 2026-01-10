@@ -79,7 +79,7 @@ var imageURL
 
     formData.append('gpxFile', file);
 
-        
+    formData.append('description_small', document.getElementById("descrizione_breve").value)
     formData.append('name', document.getElementById("nome").value)
     formData.append('title', document.getElementById("title").value)
     formData.append('description', document.getElementById("descrizione").value)
