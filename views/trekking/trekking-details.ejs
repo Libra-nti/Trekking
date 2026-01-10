@@ -164,7 +164,7 @@
                 </button><% }%> </div>
               <div class="carousel-inner" id="carosello"><% for(var h =1 ; h
 															<numFoto+1;h++){%> <div class="carousel-item <%= h === 1 ? 'active' : '' %>">
-                  <img src="https://res.cloudinary.com/dieh3kepz/image/upload/<%=name%>-<%=date%>/<%=h%>.jpg" class="d-block img-clickable" alt="Foto n° <%= h%> del trekking <%=name%>"  data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-img="/<%=name%>-<%=date%>/<%=h%>.jpg">
+                  <img src="https://res.cloudinary.com/dieh3kepz/image/upload/<%=name%>-<%=date%>/<%=h%>.jpg" class="d-block img-clickable" alt="Foto n° <%= h%> del trekking <%=name%>"  data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-img="https://res.cloudinary.com/dieh3kepz/image/upload/<%=name%>-<%=date%>/<%=h%>.jpg">
                 </div><%}%>
 																</div>
 																<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
