@@ -214,6 +214,7 @@ app.get("/sitemap.xml", async (req, res) => {
   const baseUrl = url;
   const urls = ["/"];
   const trekkings = await db.collection("treks").find().toArray();
+  console.log(trekkings);
   for (let i = 0; i < trekkings.length; i++) {
     urls.push("/trekking/" + trekkings[i].name);
   }
