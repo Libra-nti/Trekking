@@ -213,7 +213,7 @@ app.get("/trekking/:nome", async (req, res) => {
 app.get("/sitemap.xml", async (req, res) => {
   const baseUrl = url;
   const urls = ["/"];
-
+  const trekkings = await db.collection("treks").find().toArray();
   for (let i = 0; i < trekkings.length; i++) {
     urls.push("/trekking/" + trekkings[i].name);
   }
