@@ -88,6 +88,7 @@ var imageURL
     formData.append('date', document.getElementById("data").value)
     formData.append('difficulty', document.getElementById("difficoltà").value)
     formData.append('distance', parseFloat(document.getElementById("distanza").value))
+    formData.append('location', document.getElementById("location").value)
     formData.append('gpx', "")
     formData.append('imgId', imageURL)
     formData.append('parking', document.getElementById("parking").value)
