@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const data = {
             elevation: document.getElementById("elevation").value,
             distance: document.getElementById("distance").value,
-            date: document.getElementById("date").value,
+            location: document.getElementById("location").value,
             tipo: document.getElementById("tipo").value,
             difficulty: document.getElementById("difficulty").value,
             season: document.getElementById("season").value
@@ -171,6 +171,10 @@ const grades = [
     "8a", "8a+", "8b", "8b+", "8c", "8c+",
     "9a", "9a+", "9b", "9b+", "9c"
 ];
+
+function zona(zona) {
+    document.getElementById("location").value = zona;
+}
 
 function tipo(tipo) {
     document.getElementById("difficulty").removeAttribute("disabled");

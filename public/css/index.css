@@ -60,6 +60,7 @@ body, html {
   /* Effetto parallax durante lo scroll */
   .mountain, .mountain-2, .mountain-3 {
     will-change: transform;
+    pointer-events: none;
   }
 
   /* Animazione di scroll */

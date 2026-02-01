@@ -4,6 +4,7 @@
     "body-parser": "^2.2.0",
     "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-xml-bodyparser": "^0.4.1",
@@ -24,6 +25,10 @@
   "license": "ISC",
   "description": "",
   "scripts": {
+    "dev": "nodemon server.js",
     "start": "node server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }

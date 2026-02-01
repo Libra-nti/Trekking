@@ -39,7 +39,7 @@
   </head>
   <body class="d-flex flex-column min-vh-100" style="background-color: rgb(255, 255, 255);">
     <h1 name="descrizione-sito" class="visually-hidden">Raccolgo e documento i miei trekking e le mie attività in motagna che vanno dall'alpinismo fino all'arrampicata. Qui troverete una vasta gamma di esperienze ben dettagliate, utile per tutti gli appassionati di montagna come me.</h1>
-    <nav class="navbar navbar-light bg-light" style="z-index: 1;">
+    <nav class="navbar navbar-light bg-light" style="z-index: 1; margin-bottom: 10px;">
       <div class="container-fluid">
         <a class="navbar-brand">
           <h2>Trekking&Co.</h2>
@@ -50,7 +50,6 @@
         <button class="btn btn-dark" aria-label="filtra" onclick="show()">Filtra</button>
       </div>
     </nav>
-    <p>
     <div class="mountain"></div>
     <div class="mountain-2"></div>
     <div class="mountain-3"></div>
@@ -94,22 +93,29 @@
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-              <path d="M16 3v4" />
-              <path d="M8 3v4" />
-              <path d="M4 11h16" />
-              <path d="M7 14h.013" />
-              <path d="M10.01 14h.005" />
-              <path d="M13.01 14h.005" />
-              <path d="M16.015 14h.005" />
-              <path d="M13.015 17h.005" />
-              <path d="M7.01 17h.005" />
-              <path d="M10.01 17h.005" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-directions"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21v-4" /><path d="M12 13v-4" /><path d="M12 5v-2" /><path d="M10 21h4" /><path d="M8 5v4h11l2 -2l-2 -2l-11 0" /><path d="M14 13v4h-8l-2 -2l2 -2l8 0" /></svg>
           </span>
-          <input id="date" type="date" placeholder="Data" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+          <input id="location" type="text" placeholder="Zona"  class="form-control dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <ul class="dropdown-menu" aria-labelledby="dropdownInput">
+            <li>
+              <a class="dropdown-item" href="#" onclick="zona('Alpi dell\'Adula')">Alpi dell'Adula</a>s
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" onclick="zona('Catena Gino-Camoghè-Fiorina')">Catena Gino-Camoghè-Fiorina</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" onclick="zona('Catena Rochefort-Grandes Jorasses-Leschaux')">Catena Rochefort-Grandes Jorasses-Leschaux</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" onclick="zona('Gruppo delle Grigne')">Gruppo delle Grigne</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" onclick="zona('Gruppo del Resegone')">Gruppo del Resegone</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" onclick="zona('Triangiolo Lariano')">Triangiolo Lariano</a>
+            </li>
+          </ul>
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon2">

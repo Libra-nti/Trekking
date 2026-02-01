@@ -1,3 +1,4 @@
+require("dotenv").config(); 
 const { MongoClient, ObjectId, Binary } = require("mongodb");
 const express = require("express");
 const path = require("path");
@@ -245,7 +246,7 @@ app.post("/filter", async (req, res) => {
         (data.difficulty !== "" ? trekking.difficulty === data.difficulty : true) &&
         (data.distance !== "" ? Math.abs(trekking.distance - data.distance) <= 0.5 : true) &&
         (data.elevation !== "" ? Math.abs(trekking.elevation - data.elevation) <= 100 : true) &&
-        (data.date !== "" ? trekking.date == data.date : true) &&
+        (data.location !== "" ? trekking.location === data.location : true) &&
         (data.season !== "" ? trekking.season === data.season : true) &&
         (data.tipo !== "" ? trekking.tipo === data.tipo : true)
       );
