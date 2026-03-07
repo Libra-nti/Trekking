@@ -10,7 +10,7 @@ var url = "https://viaggiditony.it"
 // ─────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {
-    map = L.map('map').setView([45.9, 9.4], 13);
+    
     mostraContenuto();
     generateStars(document.getElementById("rating").innerText);
 
@@ -78,6 +78,7 @@ async function mostraContenuto() {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+        map = L.map('map').setView([45.9, 9.4], 13);
 
         // Passiamo la stringa GPX già pulita a leaflet-gpx
         gpxLayer = new L.GPX(gpxString, {
