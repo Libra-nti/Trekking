@@ -372,7 +372,10 @@ app.get("/trekGPX/:id", async (req, res) => {
 
     const builder = new xml2js.Builder();
     const xmlOutput = builder.buildObject(trek.gpx);
+    console.log(xmlOutput);
+
     res.json(xmlOutput);
+    
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });
   }
