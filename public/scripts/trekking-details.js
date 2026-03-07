@@ -481,6 +481,23 @@ function download() {
 
 
 
+ document.addEventListener("DOMContentLoaded", () => {
+
+    map = L.map('map').setView([51.505, -0.09], 13);
+    mostraContenuto()
+    generateStars(document.getElementById("rating").innerText)
+    })
+
+     const imageModal = document.getElementById('imageModal');
+  imageModal.addEventListener('show.bs.modal', event => {
+    const triggerImg = event.relatedTarget; // immagine cliccata
+    const imgSrc = triggerImg.getAttribute('data-bs-img');
+    document.getElementById('modalImage').src = imgSrc;
+
+    document.getElementById("btn-download").addEventListener("click", download);
+  });
+
+
 function generateStars(rating) {
     const fullStar = '&#9733;';
     const halfStar = '&#9733;';

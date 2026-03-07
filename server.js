@@ -38,19 +38,20 @@ app.use(helmet({
         "https://*.tile.openstreetmap.org",
       ],
 
-      // Script: Leaflet, omnivore GPX, Chart.js (da CDN)
+      // Script: Leaflet, omnivore GPX, Chart.js, Bootstrap, Popper
       scriptSrc: [
         "'self'",
         "https://unpkg.com",
         "https://cdnjs.cloudflare.com",
+        "https://cdn.jsdelivr.net",      // Bootstrap + Popper
       ],
 
-      // Stili: Leaflet usa stili inline → serve unsafe-inline
+      // Stili: Bootstrap CSS + Leaflet (unsafe-inline per stili inline)
       styleSrc: [
         "'self'",
-        "'unsafe-inline'",
         "https://unpkg.com",
         "https://cdnjs.cloudflare.com",
+        "https://cdn.jsdelivr.net",      // Bootstrap CSS
       ],
 
       // Fetch/XHR: backend + Overpass API (mappa rifugi) + ipstack (geo IP)
