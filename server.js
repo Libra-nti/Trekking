@@ -19,14 +19,58 @@ app.set("trust proxy", true);
 // SECURITY MIDDLEWARE
 // ─────────────────────────────────────────────
 
-// 🔒 FIX #8: Helmet aggiunge automaticamente tutti gli header di sicurezza HTTP:
-//   - Content-Security-Policy
-//   - Strict-Transport-Security (HSTS)
-//   - X-Frame-Options
-//   - X-Content-Type-Options
-//   - Referrer-Policy
-//   - Permissions-Policy
-app.use(helmet());
+// 🔒 FIX #8: Helmet con CSP configurato per tutti i domini reali usati dal sito:
+//   - Cloudinary (foto trekking)
+//   - OpenStreetMap (tiles mappa Leaflet)
+//   - Overpass API (rifugi/bivacchi sulla mappa)
+//   - Leaflet + omnivore GPX + Chart.js (da CDN)
+//   - ipstack (geolocalizzazione IP)
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+
+      // Immagini: Cloudinary (foto trekking) + OpenStreetMap (tiles mappa)
+      imgSrc: [
+        "'self'",
+        "data:",
+        "https://res.cloudinary.com",
+        "https://*.tile.openstreetmap.org",
+      ],
+
+      // Script: Leaflet, omnivore GPX, Chart.js (da CDN)
+      scriptSrc: [
+        "'self'",
+        "https://unpkg.com",
+        "https://cdnjs.cloudflare.com",
+      ],
+
+      // Stili: Leaflet usa stili inline → serve unsafe-inline
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://unpkg.com",
+        "https://cdnjs.cloudflare.com",
+      ],
+
+      // Fetch/XHR: backend + Overpass API (mappa rifugi) + ipstack (geo IP)
+      connectSrc: [
+        "'self'",
+        "https://overpass-api.de",
+        "https://api.ipstack.com",
+      ],
+
+      // Font
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+
+      // Nessun embed iframe esterno rilevato
+      frameSrc: ["'none'"],
+
+      // Blocca oggetti Flash e plugin obsoleti
+      objectSrc: ["'none'"],
+    }
+  }
+}));
 
 // 🔒 FIX #5: CORS ristretto solo al dominio del sito
 app.use(cors({
