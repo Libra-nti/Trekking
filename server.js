@@ -49,7 +49,7 @@ app.use(helmet({
       // Stili: Bootstrap CSS + Leaflet (unsafe-inline per stili inline)
       styleSrc: [
         "'self'",
-        "unsafe-inline",
+        "'unsafe-inline'",
         "https://unpkg.com",
         "https://cdnjs.cloudflare.com",
         "https://cdn.jsdelivr.net",      // Bootstrap CSS
