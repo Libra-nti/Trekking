@@ -41,6 +41,7 @@ async function mostraContenuto() {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         }).then(r => r.json());
+        
         trekking = trek;
     } catch (e) {
         console.error("Errore caricamento trek:", e);
@@ -53,11 +54,13 @@ async function mostraContenuto() {
         const gpxResponse = await fetch(url + "/trekGPX/" + trek._id.toString());
         // /trekGPX restituisce JSON con la stringa XML dentro — la estraiamo e puliamo
         const gpxRaw = await gpxResponse.json();
+       
         gpxString = gpxRaw
             .replace(/\\n/g, '\n')
             .replace(/\\"/g, '"')
             .replace(/^"|"$/g, ''); // rimuove eventuali virgolette esterne
         xmlGPX = gpxString;
+         console.log(xmlGPX);
     } catch (e) {
         console.error("Errore caricamento GPX:", e);
         return;

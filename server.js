@@ -13,7 +13,7 @@ const rateLimit = require("express-rate-limit");         // 🔒 FIX #6: rate li
 const xmlBodyParser = require("express-xml-bodyparser");
 
 const app = express();
-app.set("trust proxy", true);
+
 
 // ─────────────────────────────────────────────
 // SECURITY MIDDLEWARE
