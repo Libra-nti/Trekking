@@ -36,6 +36,7 @@ app.use(helmet({
         "data:",
         "https://res.cloudinary.com",
         "https://*.tile.openstreetmap.org",
+        "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
       ],
 
       // Script: Leaflet, omnivore GPX, Chart.js, Bootstrap, Popper
