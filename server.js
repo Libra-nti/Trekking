@@ -49,6 +49,7 @@ app.use(helmet({
       // Stili: Bootstrap CSS + Leaflet (unsafe-inline per stili inline)
       styleSrc: [
         "'self'",
+        "unsafe-inline",
         "https://unpkg.com",
         "https://cdnjs.cloudflare.com",
         "https://cdn.jsdelivr.net",      // Bootstrap CSS
@@ -59,13 +60,20 @@ app.use(helmet({
         "'self'",
         "https://overpass-api.de",
         "https://api.ipstack.com",
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js.map",
+        "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js.map",
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css.map",
       ],
 
       // Font
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
 
       // Nessun embed iframe esterno rilevato
-      frameSrc: ["'none'"],
+      frameSrc: [
+        "https://www.youtube.com",
+        "https://cdn.embedly.com",
+
+      ],
 
       // Blocca oggetti Flash e plugin obsoleti
       objectSrc: ["'none'"],
