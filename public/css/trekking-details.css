@@ -93,3 +93,7 @@ a.custom-link:hover,
 a.custom-link:active {
   color: white !important;
 }
+
+.marker-no-transition {
+    transition: none !important;
+}
