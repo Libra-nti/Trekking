@@ -36,7 +36,7 @@ app.use(helmet({
         "data:",
         "https://res.cloudinary.com",
         "https://*.tile.openstreetmap.org",
-        "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+        "https://unpkg.com",
       ],
 
       // Script: Leaflet, omnivore GPX, Chart.js, Bootstrap, Popper
@@ -373,7 +373,7 @@ app.get("/trekGPX/:id", async (req, res) => {
 
     const builder = new xml2js.Builder();
     const xmlOutput = builder.buildObject(trek.gpx);
-    console.log(xmlOutput);
+    //console.log(xmlOutput);
 
     res.json(xmlOutput);
     

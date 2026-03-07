@@ -61,7 +61,7 @@ async function mostraContenuto() {
         // Salva per il download
         xmlGPX = gpxString;
 
-        console.log("GPX (primi 300 char):", gpxString.substring(0, 300));
+        //console.log("GPX (primi 300 char):", gpxString.substring(0, 300));
     } catch (e) {
         console.error("Errore pulizia GPX:", e);
         return;
@@ -111,7 +111,7 @@ async function mostraContenuto() {
     }
 
     // 5. Carosello foto
-    carosello();
+    //carosello();
 }
 
 // ─────────────────────────────────────────────
