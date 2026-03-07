@@ -63,6 +63,9 @@ app.use(helmet({
         "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js.map",
         "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js.map",
         "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css.map",
+        "https://unpkg.com",            // source maps Leaflet
+        "https://cdn.jsdelivr.net",     // source maps Bootstrap/Chart.js
+        "https://cdnjs.cloudflare.com",
       ],
 
       // Font
@@ -357,7 +360,7 @@ app.get("/lista", (req, res) => {
   res.render("lista", { items, page, totalPages });
 });
 
-app.get("/trekGPX/:id", requireAuth, async (req, res) => {
+app.get("/trekGPX/:id", async (req, res) => {
   try {
     // 🔒 FIX #3: Valida che l'id sia un ObjectId MongoDB valido
     if (!ObjectId.isValid(req.params.id)) {
