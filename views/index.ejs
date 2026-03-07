@@ -172,11 +172,7 @@
         <div class="row" id="row-1"><% treks.forEach(trek => {%> <div class="col-sm-4 col-lg-2 col-6 mb-3">
             <a href="/trekking/<%=trek.name%>" style="all: unset">
               <div class="card h-100" style="width: auto">
-                <img loading="lazy" srcset="
-  /<%=encodeURIComponent(trek.name)%>-<%=trek.date%>/copertina-400.jpg 400w,
-  /<%=encodeURIComponent(trek.name)%>-<%=trek.date%>/copertina-800.jpg 800w,
-  /<%=encodeURIComponent(trek.name)%>-<%=trek.date%>/copertina-1200.jpg 1200w
-" sizes="(min-width: 992px) 16.66vw, (min-width: 576px) 33.33vw, 50vw" fetchpriority="high" src="https://res.cloudinary.com/dieh3kepz/image/upload/<%=trek.name%>-<%=trek.date%>/copertina-400.jpg" class="card-img-top" name="<%=trek.name%>" alt="Foto copetina <%=trek.name%>">
+                <img  fetchpriority="high" src="https://res.cloudinary.com/dieh3kepz/image/upload/<%=trek.name%>-<%=trek.date%>/copertina-400.jpg" class="card-img-top" name="<%=trek.name%>" alt="Foto copetina <%=trek.name%>">
                 <div class="card-body bottom-0">
                   <h5 class="card-title"><%=trek.name%> </h5>
                   <div class="card-text">

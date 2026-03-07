@@ -76,7 +76,7 @@ app.use(helmet({
       frameSrc: [
         "https://www.youtube.com",
         "https://cdn.embedly.com",
-
+        "https://www.relieve.com",
       ],
 
       // Blocca oggetti Flash e plugin obsoleti
