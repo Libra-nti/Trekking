@@ -26,6 +26,9 @@ app.set("trust proxy", true);
 //   - Leaflet + omnivore GPX + Chart.js (da CDN)
 //   - ipstack (geolocalizzazione IP)
 app.use(helmet({
+  referrerPolicy: {
+    policy: "strict-origin-when-cross-origin"
+  },
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
