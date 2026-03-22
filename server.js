@@ -11,6 +11,7 @@ const xml2js = require("xml2js");
 const helmet = require("helmet");                        // 🔒 FIX #8: header di sicurezza HTTP
 const rateLimit = require("express-rate-limit");         // 🔒 FIX #6: rate limiting
 const xmlBodyParser = require("express-xml-bodyparser");
+const { title } = require("process");
 
 const app = express();
 app.set("trust proxy", true);
@@ -208,6 +209,15 @@ function buildTrekDocument(body, gpxParsed) {
     name: sanitizeString(body.name),
     date: body.date,
     description: sanitizeString(body.description),
+    description_small: sanitizeString(body.description_small) || null,
+    title: sanitizeString(body.title) || null,
+    duration: sanitizeString(body.duration) || null,
+    relive: sanitizeString(body.relive) || null,
+    youtube: sanitizeString(body.youtube) || null,
+    altitude: sanitizeString(body.altitude) || null,
+    expose: sanitizeString(body.expose) || null,
+    stars: parseFloat(body.stars) || 0,
+    parking: sanitizeString(body.parking) || null,
     distance: parseFloat(body.distance) || null,
     elevation: parseFloat(body.elevation) || null,
     numFoto: parseInt(body.numFoto) || 0,
