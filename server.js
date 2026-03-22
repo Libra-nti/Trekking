@@ -190,7 +190,10 @@ function validateTrekBody(body) {
   if (body.elevation !== undefined && isNaN(parseFloat(body.elevation))) errors.push("elevation non valida");
   if (body.numFoto !== undefined && isNaN(parseInt(body.numFoto))) errors.push("numFoto non valido");
 
-  const allowedDifficulty = ["Escursionismo", "Ferrata", "Alpinismo", "Multipitch"];
+  const allowedType = ["Escursionismo", "Ferrata", "Alpinismo", "Multipitch"];
+  if (body.type && !allowedType.includes(body.type)) errors.push("type non valido");
+
+  const allowedDifficulty = ["T", "E", "EE", "EEA", "EAI"];
   if (body.difficulty && !allowedDifficulty.includes(body.difficulty)) errors.push("difficulty non valida");
 
   const allowedSeason = ["Estate", "Autunno", "Inverno", "Primavera"];
