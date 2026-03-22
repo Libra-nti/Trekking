@@ -270,7 +270,16 @@ async function telegram(req) {
 // 🔒 FIX #1: Middleware riutilizzabile per autenticazione — evita duplicazione
 function requireAuth(req, res, next) {
   const authHeader = req.headers["authorization"];
-  if (!authHeader || authHeader !== process.env.token) {
+  if (!authHeader) {
+    return res.status(401).json({ message: "Accesso non autorizzato" });
+  }
+
+  // Supporta sia "Bearer <token>" che il token nudo
+  const token = authHeader.startsWith("Bearer ")
+    ? authHeader.slice(7).trim()
+    : authHeader;
+
+  if (token !== process.env.token) {
     return res.status(401).json({ message: "Accesso non autorizzato" });
   }
   next();
