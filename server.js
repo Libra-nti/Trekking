@@ -184,7 +184,7 @@ function validateTrekBody(body) {
   const errors = [];
 
   if (!body.name || typeof body.name !== "string") errors.push("name mancante o non valido");
-  if (!body.date || isNaN(Date.parse(body.date))) errors.push("date mancante o non valida");
+  if (!body.date || (isNaN(Date.parse(body.date)) || typeof body.date !== "string")) errors.push("date mancante o non valida");
   if (!body.description || typeof body.description !== "string") errors.push("description mancante");
   if (body.distance !== undefined && isNaN(parseFloat(body.distance))) errors.push("distance non valida");
   if (body.elevation !== undefined && isNaN(parseFloat(body.elevation))) errors.push("elevation non valida");
