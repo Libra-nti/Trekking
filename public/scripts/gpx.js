@@ -96,7 +96,7 @@
         formData.append('expose',           sanitize(document.getElementById('esposizione').value));
         formData.append('equipment',        JSON.stringify(equips));
         formData.append('numFoto',          parseInt(document.getElementById('foto').value) || 0);
-        formData.append('stars',            parseFloat(document.getElementById('stelle').value) || 0);
+        formData.append('stars',            sanitize(document.getElementById('stelle').value) || 0);
         formData.append('tipo',             sanitize(document.getElementById('tipologia').value));
  
         if (document.getElementById('tipologia').value.trim() === 'Multipitch') {

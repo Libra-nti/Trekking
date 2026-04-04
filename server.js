@@ -220,6 +220,7 @@ function buildTrekDocument(body, gpxParsed) {
     distance: parseFloat(body.distance) || null,
     elevation: parseFloat(body.elevation) || null,
     numFoto: parseInt(body.numFoto) || 0,
+    stars: sanitizeString(body.stars) || 0,
     difficulty: sanitizeString(body.difficulty) || null,
     season: sanitizeString(body.season) || null,
     location: sanitizeString(body.location) || null,
