@@ -29,7 +29,7 @@
     // -------------------------------------------------------
     function sanitize(str) {
       if (typeof str !== 'string') return '';
-      return str.trim().replace(/[<>"'`]/g, '');
+      return str.trim().replace(/[<>"`]/g, '');
     }
  
     function parseEquipment(raw) {
