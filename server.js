@@ -49,6 +49,7 @@ app.use(helmet({
         "https://unpkg.com",
         "https://cdnjs.cloudflare.com",
         "https://cdn.jsdelivr.net",      // Bootstrap + Popper
+        "https://pagead2.googlesyndication.com",
       ],
 
       // Stili: Bootstrap CSS + Leaflet (unsafe-inline per stili inline)
