@@ -65,6 +65,7 @@ app.use((req, res, next) => {
           "https://www.googletagservices.com",
           "https://partner.googleadservices.com",
           "https://*.googlesyndication.com",
+          "https://fundingchoicesmessages.google.com",  // ← GDPR consent AdSense
           (req, res) => `'nonce-${res.locals.nonce}'`,   // nonce per lo script AdSense
         ],
 
