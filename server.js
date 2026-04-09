@@ -8,87 +8,112 @@ const requestIp = require("request-ip");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const xml2js = require("xml2js");
-const helmet = require("helmet");                        // 🔒 FIX #8: header di sicurezza HTTP
-const rateLimit = require("express-rate-limit");         // 🔒 FIX #6: rate limiting
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 const xmlBodyParser = require("express-xml-bodyparser");
-const { title } = require("process");
+const crypto = require("crypto");                        // 🔒 per generazione nonce AdSense
 
 const app = express();
 app.set("trust proxy", true);
 
 // ─────────────────────────────────────────────
+// MIDDLEWARE: NONCE per AdSense
+// ─────────────────────────────────────────────
+
+// 🔒 Genera un nonce casuale per ogni request e lo rende disponibile
+// a Helmet (CSP) e ai template EJS tramite res.locals.nonce
+app.use((req, res, next) => {
+  res.locals.nonce = crypto.randomBytes(16).toString("base64");
+  next();
+});
+
+// ─────────────────────────────────────────────
 // SECURITY MIDDLEWARE
 // ─────────────────────────────────────────────
 
-// 🔒 FIX #8: Helmet con CSP configurato per tutti i domini reali usati dal sito:
-//   - Cloudinary (foto trekking)
-//   - OpenStreetMap (tiles mappa Leaflet)
-//   - Overpass API (rifugi/bivacchi sulla mappa)
-//   - Leaflet + omnivore GPX + Chart.js (da CDN)
-//   - ipstack (geolocalizzazione IP)
-app.use(helmet({
-  referrerPolicy: {
-    policy: "strict-origin-when-cross-origin"
-  },
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
+app.use((req, res, next) => {
+  helmet({
+    referrerPolicy: {
+      policy: "strict-origin-when-cross-origin"
+    },
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
 
-      // Immagini: Cloudinary (foto trekking) + OpenStreetMap (tiles mappa)
-      imgSrc: [
-        "'self'",
-        "data:",
-        "https://res.cloudinary.com",
-        "https://*.tile.openstreetmap.org",
-        "https://unpkg.com",
-      ],
+        // Immagini: Cloudinary + OpenStreetMap + AdSense/DoubleClick
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://res.cloudinary.com",
+          "https://*.tile.openstreetmap.org",
+          "https://unpkg.com",
+          "https://pagead2.googlesyndication.com",
+          "https://googleads.g.doubleclick.net",
+          "https://*.googlesyndication.com",
+          "https://*.google.com",
+        ],
 
-      // Script: Leaflet, omnivore GPX, Chart.js, Bootstrap, Popper
-      scriptSrc: [
-        "'self'",
-        "https://unpkg.com",
-        "https://cdnjs.cloudflare.com",
-        "https://cdn.jsdelivr.net",      // Bootstrap + Popper
-        "https://pagead2.googlesyndication.com",
-      ],
+        // Script: CDN + AdSense (con nonce per script inline iniettati da AdSense)
+        scriptSrc: [
+          "'self'",
+          "https://unpkg.com",
+          "https://cdnjs.cloudflare.com",
+          "https://cdn.jsdelivr.net",
+          "https://pagead2.googlesyndication.com",
+          "https://adservice.google.com",
+          "https://adservice.google.it",
+          "https://www.googletagservices.com",
+          "https://partner.googleadservices.com",
+          "https://*.googlesyndication.com",
+          (req, res) => `'nonce-${res.locals.nonce}'`,   // nonce per lo script AdSense
+        ],
 
-      // Stili: Bootstrap CSS + Leaflet (unsafe-inline per stili inline)
-      styleSrc: [
-        "'self'",
-        "'unsafe-inline'",
-        "https://unpkg.com",
-        "https://cdnjs.cloudflare.com",
-        "https://cdn.jsdelivr.net",      // Bootstrap CSS
-      ],
+        // Stili
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://unpkg.com",
+          "https://cdnjs.cloudflare.com",
+          "https://cdn.jsdelivr.net",
+        ],
 
-      // Fetch/XHR: backend + Overpass API (mappa rifugi) + ipstack (geo IP)
-      connectSrc: [
-        "'self'",
-        "https://overpass-api.de",
-        "https://api.ipstack.com",
-        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js.map",
-        "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js.map",
-        "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css.map",
-        "https://unpkg.com",            // source maps Leaflet
-        "https://cdn.jsdelivr.net",     // source maps Bootstrap/Chart.js
-        "https://cdnjs.cloudflare.com",
-      ],
+        // Fetch/XHR: backend + API esterne + AdSense
+        connectSrc: [
+          "'self'",
+          "https://overpass-api.de",
+          "https://api.ipstack.com",
+          "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js.map",
+          "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js.map",
+          "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css.map",
+          "https://unpkg.com",
+          "https://cdn.jsdelivr.net",
+          "https://cdnjs.cloudflare.com",
+          "https://pagead2.googlesyndication.com",
+          "https://adservice.google.com",
+          "https://adservice.google.it",
+          "https://*.googlesyndication.com",
+        ],
 
-      // Font
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        // Font
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
 
-      // Nessun embed iframe esterno rilevato
-      frameSrc: [
-        "https://www.youtube.com",
-        "https://cdn.embedly.com",
-        "https://www.relieve.com",
-      ],
+        // Frame: YouTube + Relive/Embedly + AdSense/DoubleClick
+        frameSrc: [
+          "https://www.youtube.com",
+          "https://cdn.embedly.com",
+          "https://www.relive.com",                      // fix: era "relieve.com"
+          "https://googleads.g.doubleclick.net",
+          "https://tpc.googlesyndication.com",
+          "https://*.googlesyndication.com",
+          "https://*.fls.doubleclick.net",
+        ],
 
-      // Blocca oggetti Flash e plugin obsoleti
-      objectSrc: ["'none'"],
+        // Blocca oggetti Flash e plugin obsoleti
+        objectSrc: ["'none'"],
+      }
     }
-  }
-}));
+  })(req, res, next);
+});
 
 // 🔒 FIX #5: CORS ristretto solo al dominio del sito
 app.use(cors({
@@ -134,10 +159,9 @@ app.use(xmlBodyParser({
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // ridotto da 100MB a 10MB
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowed = ["application/gpx+xml", "application/xml", "text/xml"];
-    // Accetta anche se il mimetype non è riconosciuto ma l'estensione è .gpx
     const ext = path.extname(file.originalname).toLowerCase();
     if (allowed.includes(file.mimetype) || ext === ".gpx") {
       cb(null, true);
@@ -174,14 +198,11 @@ connectDB();
 // HELPER: VALIDAZIONE INPUT
 // ─────────────────────────────────────────────
 
-// 🔒 FIX #3: Sanitizza i parametri stringa in ingresso (blocca caratteri pericolosi)
 function sanitizeString(input) {
   if (typeof input !== "string") return null;
-  // Rimuove caratteri che non hanno senso in un nome di trekking
-  return input.replace(/[<>{}$|]/g, "").trim().slice(0, 200);
+  return input.replace(/[<>{}$|]/g, "").replace(/\.\./g, "").trim().slice(0, 200);
 }
 
-// 🔒 FIX #2: Schema di validazione per un nuovo trekking
 function validateTrekBody(body) {
   const errors = [];
 
@@ -204,7 +225,6 @@ function validateTrekBody(body) {
   return errors;
 }
 
-// 🔒 FIX #2: Costruisce un oggetto "pulito" da inserire nel DB (nessun campo extra da req.body)
 function buildTrekDocument(body, gpxParsed) {
   return {
     name: sanitizeString(body.name),
@@ -213,7 +233,7 @@ function buildTrekDocument(body, gpxParsed) {
     description_small: sanitizeString(body.description_small) || null,
     title: sanitizeString(body.title) || null,
     duration: sanitizeString(body.duration) || null,
-    relive: sanitizeString(body.relive) || null,
+    relive: sanitizeString(body.relive) || null,      // salva solo l'ID Relive, non l'embed HTML
     youtube: sanitizeString(body.youtube) || null,
     altitude: sanitizeString(body.altitude) || null,
     expose: sanitizeString(body.expose) || null,
@@ -236,8 +256,6 @@ function buildTrekDocument(body, gpxParsed) {
 // HELPER: NOTIFICA TELEGRAM
 // ─────────────────────────────────────────────
 
-// 🔒 FIX #10 (GDPR): Il tracking IP è mantenuto ma limitato solo all'uso interno.
-// Assicurati di avere una Privacy Policy sul sito che lo menzioni.
 async function telegram(req) {
   try {
     const ip = req.clientIp || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -264,7 +282,6 @@ async function telegram(req) {
 🔗 *Referer:* ${referer}
     `;
 
-    // Escludi l'IP del server stesso
     if (ip !== "128.140.8.200") {
       await axios.post(`https://api.telegram.org/bot${process.env.telegram_token}/sendMessage`, {
         chat_id: process.env.chat_id,
@@ -281,14 +298,12 @@ async function telegram(req) {
 // MIDDLEWARE: AUTENTICAZIONE TOKEN
 // ─────────────────────────────────────────────
 
-// 🔒 FIX #1: Middleware riutilizzabile per autenticazione — evita duplicazione
 function requireAuth(req, res, next) {
   const authHeader = req.headers["authorization"];
   if (!authHeader) {
     return res.status(401).json({ message: "Accesso non autorizzato" });
   }
 
-  // Supporta sia "Bearer <token>" che il token nudo
   const token = authHeader.startsWith("Bearer ")
     ? authHeader.slice(7).trim()
     : authHeader;
@@ -303,10 +318,8 @@ function requireAuth(req, res, next) {
 // ROTTE
 // ─────────────────────────────────────────────
 
-// 🔒 FIX #1 + #2 + #9: Upload GPX con auth, validazione schema e tipo file
 app.post("/saveGPX2", strictLimiter, requireAuth, upload.single("gpxFile"), async (req, res) => {
   try {
-    // 🔒 FIX #2: Valida i campi prima di toccare il DB
     const errors = validateTrekBody(req.body);
     if (errors.length > 0) {
       return res.status(400).json({ error: "Dati non validi", details: errors });
@@ -327,7 +340,6 @@ app.post("/saveGPX2", strictLimiter, requireAuth, upload.single("gpxFile"), asyn
           return res.status(400).json({ error: "equipment deve essere un array JSON valido" });
         }
 
-        // 🔒 FIX #2: Inserisci solo campi esplicitamente consentiti (non req.body diretto!)
         const doc = buildTrekDocument({ ...req.body, equipment }, result);
         await collection.insertOne(doc);
         res.json({ message: "File GPX salvato con successo" });
@@ -342,12 +354,10 @@ app.post("/saveGPX2", strictLimiter, requireAuth, upload.single("gpxFile"), asyn
   }
 });
 
-// 🔒 FIX #4: /all ora richiede autenticazione — non è più pubblico
 app.get("/all", requireAuth, async (req, res) => {
   try {
     const trekkings = await db.collection("treks").find(
       {},
-      // Proiezione: escludi il campo GPX grezzo (pesante e non serve esternamente)
       { projection: { gpx: 0 } }
     ).toArray();
     res.json(trekkings);
@@ -363,13 +373,13 @@ app.get("", async (req, res) => {
     const perPage = 12;
     const totalItems = await db.collection("treks").countDocuments();
 
-    // 🔒 FIX #11 (performance): Ordina direttamente in MongoDB invece di bubble sort in JS
     const treks = await db.collection("treks")
       .find({}, { projection: { gpx: 0 } })
       .sort({ date: -1 })
       .toArray();
 
     const totalPages = Math.ceil(totalItems / perPage);
+    // nonce è già in res.locals, EJS lo eredita automaticamente
     res.render("index", { treks, page, totalPages });
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });
@@ -389,7 +399,6 @@ app.get("/lista", (req, res) => {
 
 app.get("/trekGPX/:id", async (req, res) => {
   try {
-    // 🔒 FIX #3: Valida che l'id sia un ObjectId MongoDB valido
     if (!ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ error: "ID non valido" });
     }
@@ -399,10 +408,7 @@ app.get("/trekGPX/:id", async (req, res) => {
 
     const builder = new xml2js.Builder();
     const xmlOutput = builder.buildObject(trek.gpx);
-    //console.log(xmlOutput);
-
     res.json(xmlOutput);
-    
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });
   }
@@ -410,7 +416,6 @@ app.get("/trekGPX/:id", async (req, res) => {
 
 app.get("/trekID/:nome", async (req, res) => {
   try {
-    // 🔒 FIX #3: Sanitizza il parametro nome prima di usarlo in query
     const nome = sanitizeString(req.params.nome);
     if (!nome) return res.status(400).json({ error: "Nome non valido" });
 
@@ -427,7 +432,6 @@ app.get("/trekID/:nome", async (req, res) => {
 
 app.get("/trekking/:nome", async (req, res) => {
   try {
-    // 🔒 FIX #3: Sanitizza il parametro nome
     const nome = sanitizeString(req.params.nome);
     if (!nome) return res.status(400).json({ error: "Nome non valido" });
 
@@ -436,6 +440,7 @@ app.get("/trekking/:nome", async (req, res) => {
 
     const builder = new xml2js.Builder();
     trek.gpx = builder.buildObject(trek.gpx);
+    // nonce è già in res.locals, non serve passarlo esplicitamente
     res.render("trekking/trekking-details", trek);
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });
@@ -466,12 +471,10 @@ app.get("/sitemap.xml", async (req, res) => {
   }
 });
 
-// 🔒 FIX #7: /filter ora interroga il DB direttamente — niente chiamata HTTP interna a se stesso
 app.post("/filter", async (req, res) => {
   try {
     const data = req.body;
 
-    // 🔒 FIX #3: Sanitizza tutti i parametri del filtro
     const difficulty = sanitizeString(data.difficulty) || "";
     const location   = sanitizeString(data.location) || "";
     const season     = sanitizeString(data.season) || "";
@@ -479,7 +482,6 @@ app.post("/filter", async (req, res) => {
     const distance   = parseFloat(data.distance) || null;
     const elevation  = parseFloat(data.elevation) || null;
 
-    // Costruisci la query MongoDB direttamente
     const query = {};
     if (difficulty) query.difficulty = difficulty;
     if (location)   query.location = location;
@@ -490,7 +492,6 @@ app.post("/filter", async (req, res) => {
       .find(query, { projection: { gpx: 0 } })
       .toArray();
 
-    // Filtra distanza ed elevazione in JS (range approssimativo)
     const filtrati = trekkingList.filter(t => {
       const distOk = distance !== null ? Math.abs(t.distance - distance) <= 0.5 : true;
       const elevOk = elevation !== null ? Math.abs(t.elevation - elevation) <= 100 : true;
