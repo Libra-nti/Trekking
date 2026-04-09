@@ -92,6 +92,8 @@ app.use((req, res, next) => {
           "https://adservice.google.com",
           "https://adservice.google.it",
           "https://*.googlesyndication.com",
+          "https://fundingchoicesmessages.google.com",  // ← GDPR consent AdSense
+  "https://*.google.com", 
         ],
 
         // Font
@@ -106,6 +108,7 @@ app.use((req, res, next) => {
           "https://tpc.googlesyndication.com",
           "https://*.googlesyndication.com",
           "https://*.fls.doubleclick.net",
+          "https://fundingchoicesmessages.google.com",  
         ],
 
         // Blocca oggetti Flash e plugin obsoleti
