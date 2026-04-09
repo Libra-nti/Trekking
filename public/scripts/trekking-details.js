@@ -90,7 +90,10 @@ async function mostraContenuto() {
             marker_options: {
                 startIconUrl: null,
                 endIconUrl:   null,
-                shadowUrl:    null
+                shadowUrl:    null,
+                wptIconUrls: {
+      '': '/loghi/pin-icon-wpt.png' // waypoint generico
+    }
             }
         });
 
