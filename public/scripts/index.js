@@ -174,7 +174,7 @@ function tipo(tipo) {
   };
 
   if (tipo === "Ferrata") {
-    [["EEA - F", "EEA - F"], ["EEA - PD", "EEA - PD"], ["EEA - D", "EEA - D"]]
+    [["EEA - F", "EEA - F"], ["EEA - PD", "EEA - PD"],["EEA - AD", "EEA - AD"], ["EEA - D", "EEA - D"], ["EEA - TD", "EEA - TD"],]
       .forEach(([label, val]) => makeItem(label, val));
 
   } else if (tipo === "Escursionismo") {
