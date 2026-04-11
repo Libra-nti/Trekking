@@ -97,8 +97,6 @@ document.addEventListener('click', function (e) {
   document.getElementById("formFilter").addEventListener("submit", async function (e) {
     e.preventDefault();
     const data = {
-      elevation: document.getElementById("elevation").value,
-      distance: document.getElementById("distance").value,
       location: document.getElementById("location").value,
       tipo: document.getElementById("tipo").value,
       difficulty: document.getElementById("difficulty").value,
