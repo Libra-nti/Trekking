@@ -9,7 +9,36 @@ document.addEventListener("DOMContentLoaded", function () {
   // ─────────────────────────────────────────────
   // FIX: Event listeners al posto degli onclick inline
   // ─────────────────────────────────────────────
+// inizializzazione — esegui una volta al caricamento pagina
+const tooltipEl = document.getElementById('tooltipDifficultyWrapper');
+new bootstrap.Tooltip(tooltipEl);
+const difficultyInput = document.getElementById('difficulty');
+const ulDifficulty = document.getElementById('ulDifficulty');
+let dropdownInstance = null;
 
+// apri/chiudi il dropdown al click sull'input quando è abilitato
+difficultyInput.addEventListener('click', function () {
+  if (this.classList.contains('input-disabled')) return;
+  if (!dropdownInstance) {
+    dropdownInstance = new bootstrap.Dropdown(ulDifficulty, {
+      reference: difficultyInput
+    });
+  }
+  dropdownInstance.toggle();
+});
+
+ulDifficulty.addEventListener('click', function (e) {
+   dropdownInstance.hide();
+  
+});
+
+
+// chiudi cliccando fuori
+document.addEventListener('click', function (e) {
+  if (!difficultyInput.contains(e.target) && !ulDifficulty.contains(e.target)) {
+    if (dropdownInstance) dropdownInstance.hide();
+  }
+});
   // onclick="show()" sul bottone Filtra
   document.getElementById("formS")
     .querySelector("button[aria-label='filtra']")
@@ -73,7 +102,11 @@ document.addEventListener("DOMContentLoaded", function () {
       location: document.getElementById("location").value,
       tipo: document.getElementById("tipo").value,
       difficulty: document.getElementById("difficulty").value,
-      season: document.getElementById("season").value
+      season: document.getElementById("season").value,
+      minDistance: document.getElementById("minDistance").value,
+      maxDistance: document.getElementById("maxDistance").value,
+      minElevation: document.getElementById("minElevation").value,
+      maxElevation: document.getElementById("maxElevation").value,
     };
     const res = await fetch("/filter", {
       method: "POST",
@@ -152,7 +185,18 @@ function zona(zona) {
 }
 
 function tipo(tipo) {
-  document.getElementById("difficulty").removeAttribute("disabled");
+const wrapper = document.getElementById('tooltipDifficultyWrapper');
+  const tooltipInstance = bootstrap.Tooltip.getInstance(wrapper);
+  if (tooltipInstance) tooltipInstance.dispose();
+  wrapper.removeAttribute('data-bs-toggle');
+  wrapper.removeAttribute('title');
+
+  const input = document.getElementById('difficulty');
+  input.classList.remove('input-disabled');
+  input.classList.add('white');
+
+  // resetta dropdown
+  dropdownInstance = null;
   document.getElementById("difficulty").value = "";
   document.getElementById("tipo").value = tipo;
 
@@ -208,6 +252,8 @@ function tipo(tipo) {
   } else {
     document.getElementById("divDifficulty").style.display = "none";
   }
+
+  
 }
 
 function difficulty(difficoltà) {

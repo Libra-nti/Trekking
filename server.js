@@ -480,12 +480,14 @@ app.post("/filter", async (req, res) => {
   try {
     const data = req.body;
 
-    const difficulty = sanitizeString(data.difficulty) || "";
-    const location   = sanitizeString(data.location) || "";
-    const season     = sanitizeString(data.season) || "";
-    const tipo       = sanitizeString(data.tipo) || "";
-    const distance   = parseFloat(data.distance) || null;
-    const elevation  = parseFloat(data.elevation) || null;
+    const difficulty  = sanitizeString(data.difficulty) || "";
+    const location    = sanitizeString(data.location) || "";
+    const season      = sanitizeString(data.season) || "";
+    const tipo        = sanitizeString(data.tipo) || "";
+    const minDistance = parseFloat(data.minDistance) || null;
+    const maxDistance = parseFloat(data.maxDistance) || null;
+    const minElevation = parseFloat(data.minElevation) || null;
+    const maxElevation = parseFloat(data.maxElevation) || null;
 
     const query = {};
     if (difficulty) query.difficulty = difficulty;
@@ -498,8 +500,14 @@ app.post("/filter", async (req, res) => {
       .toArray();
 
     const filtrati = trekkingList.filter(t => {
-      const distOk = distance !== null ? Math.abs(t.distance - distance) <= 0.5 : true;
-      const elevOk = elevation !== null ? Math.abs(t.elevation - elevation) <= 100 : true;
+      const distOk = (
+        (minDistance === null || t.distance >= minDistance) &&
+        (maxDistance === null || t.distance <= maxDistance)
+      );
+      const elevOk = (
+        (minElevation === null || t.elevation >= minElevation) &&
+        (maxElevation === null || t.elevation <= maxElevation)
+      );
       return distOk && elevOk;
     });
 

@@ -83,6 +83,21 @@ body, html {
   }
 
 
+  .input-group .form-control.input-disabled {
+  background-color: #E9ECEF;
+  opacity: 1;
+  cursor: not-allowed;
+  pointer-events: none; /* blocca solo l'input, non il wrapper */
+  border-top-left-radius: 0;
+border-bottom-left-radius: 0;
+}
+
+.input-group .form-control.white{
+  border-top-left-radius: 0;
+border-bottom-left-radius: 0;
+background-color: white;
+}
+
   .comic-bubble {
     position: relative;
     display: inline-block;

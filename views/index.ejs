@@ -58,7 +58,7 @@
     <div class="mountain-3"></div>
     <div id="filtri" class="container" style="display: none;">
       <form id="formFilter">
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 flex-nowrap" >
           <span class="input-group-text" id="basic-addon1">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-ruler-measure-2">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -73,10 +73,15 @@
               <path d="M21 21h-4" />
             </svg>
           </span>
-          <input id="elevation" type="text" class="form-control" placeholder="Dislivello" aria-describedby="basic-addon1">
-          <span class="input-group-text">mt</span>
+          <div class="input-group-text flex-grow-1">
+    da &nbsp;<input type="text" class="form-control " id="minElevation" placeholder="Min. Dislivello" >
+  </div>
+  <div class="input-group-text flex-grow-1">
+    a &nbsp;<input type="text" class="form-control" id="maxElevation" placeholder="Max. Dislivello" >
+  </div>
+  <span class="input-group-text">mt</span>
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 flex-nowrap">
           <span class="input-group-text" id="basic-addon2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-ruler-measure">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -91,7 +96,12 @@
               <path d="M21 3v4" />
             </svg>
           </span>
-          <input id="distance" type="text" class="form-control" placeholder="Distanza" aria-describedby="basic-addon2">
+          <div class="input-group-text flex-grow-1">
+            da &nbsp;<input type="text" class="form-control" id="minDistance" placeholder="Min. Distanza">
+          </div>
+          <div class="input-group-text flex-grow-1">
+            a &nbsp;<input type="text" class="form-control" id="maxDistance" placeholder="Max. Distanza">
+          </div>
           <span class="input-group-text">km</span>
         </div>
         <div class="input-group mb-3">
@@ -99,8 +109,9 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-directions"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21v-4" /><path d="M12 13v-4" /><path d="M12 5v-2" /><path d="M10 21h4" /><path d="M8 5v4h11l2 -2l-2 -2l-11 0" /><path d="M14 13v4h-8l-2 -2l2 -2l8 0" /></svg>
           </span>
           <!-- FIX: rimossi tutti gli onclick="zona(...)" dai dropdown -->
-          <input id="location" type="text" placeholder="Zona" class="form-control dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <ul class="dropdown-menu" aria-labelledby="dropdownInput">
+          <input id="location" type="text" placeholder="Zona" readonly class="form-control dropdown-toggle white" data-bs-toggle="dropdown" aria-expanded="false">
+          
+          <ul class="dropdown-menu" aria-labelledby="dropdownInput" >
             <li><a class="dropdown-item" href="#">Alpi dell'Adula</a></li>
             <li><a class="dropdown-item" href="#">Catena Gino-Camoghè-Fiorina</a></li>
             <li><a class="dropdown-item" href="#">Catena Rochefort-Grandes Jorasses-Leschaux</a></li>
@@ -121,8 +132,8 @@
             </svg>
           </span>
           <!-- FIX: rimossi tutti gli onclick="tipo(...)" dai dropdown -->
-          <input id="tipo" type="text" class="form-control dropdown-toggle" placeholder="Tipologia" data-bs-toggle="dropdown" aria-expanded="false">
-          <ul class="dropdown-menu" aria-labelledby="dropdownInput">
+          <input id="tipo" type="text" readonly class="form-control dropdown-toggle white" placeholder="Tipologia" data-bs-toggle="dropdown" aria-expanded="false">
+          <ul class="dropdown-menu" aria-labelledby="dropdownInput" >
             <li><a class="dropdown-item" href="#">Escursionismo</a></li>
             <li><a class="dropdown-item" href="#">Ferrata</a></li>
             <li><a class="dropdown-item" href="#">Alpinismo</a></li>
@@ -138,9 +149,25 @@
               <path d="M12 16h.01" />
             </svg>
           </span>
-          <input id="difficulty" type="text" class="form-control dropdown-toggle" disabled placeholder="Difficoltà" data-bs-toggle="dropdown" aria-expanded="false">
-          <ul id="ulDifficulty" class="dropdown-menu" aria-labelledby="dropdownInput"></ul>
-        </div>
+  
+  <!-- wrapper che cattura gli eventi al posto dell'input disabilitato -->
+ <span
+  class="flex-grow-1 position-relative"
+  id="tooltipDifficultyWrapper"
+  data-bs-toggle="tooltip"
+  data-bs-placement="top"
+  data-bs-trigger="hover focus click"
+  title="Seleziona prima una Tipologia">
+  <input
+    id="difficulty"
+    type="text"
+    class="form-control input-disabled"
+    placeholder="Difficoltà"
+    readonly>
+    
+</span>
+<ul id="ulDifficulty" class="dropdown-menu" aria-labelledby="dropdownInput"></ul>
+</div>
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-temperature-sun">
@@ -156,7 +183,7 @@
             </svg>
           </span>
           <!-- FIX: rimossi tutti gli onclick="season(...)" dai dropdown -->
-          <input id="season" type="text" class="form-control dropdown-toggle" placeholder="Stagione" data-bs-toggle="dropdown" aria-expanded="false">
+          <input id="season" type="text" readonly class="form-control dropdown-toggle white" placeholder="Stagione" data-bs-toggle="dropdown" aria-expanded="false">
           <ul class="dropdown-menu" aria-labelledby="dropdownInput">
             <li><a class="dropdown-item" href="#">Estate</a></li>
             <li><a class="dropdown-item" href="#">Autunno</a></li>
