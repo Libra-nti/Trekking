@@ -165,3 +165,22 @@ background-color: rgb(255, 255, 255);
     font-size: 0.75rem;
     display: none;
 }
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 0.75rem;
+}
+
+.search-form {
+    position: relative;
+}
+
+.search-bar {
+    border-radius: 50px;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+}
