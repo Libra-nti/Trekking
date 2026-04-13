@@ -128,14 +128,7 @@ app.use(cors({
 }));
 
 // 🔒 FIX #6: Rate limiting globale — max 100 richieste ogni 15 minuti per IP
-const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { error: "Troppe richieste, riprova tra poco." }
-});
-app.use(globalLimiter);
+
 
 // 🔒 FIX #6: Rate limiting più stretto per gli endpoint sensibili
 const strictLimiter = rateLimit({

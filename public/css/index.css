@@ -180,7 +180,7 @@ background-color: rgb(255, 255, 255);
 }
 
 .search-bar {
-    border-radius: 50px;
+    border-radius: 10px;
     padding: 5px 20px;
     border: 1px solid #ccc;
     color: #3f3f3f;
@@ -193,4 +193,15 @@ input[type="search"]::-webkit-search-cancel-button {
 input[type="search"]:focus {
   outline: none;
   box-shadow: none; /* rimuove anche quello di Bootstrap */
+}
+
+#filtri{
+  padding-top: 20px; 
+  background-color: rgb(90, 149, 197, 0.6); 
+  border-radius: 10px;
+  width: 90%;
+}
+
+#button-filter{
+  border-radius: 7px;
 }

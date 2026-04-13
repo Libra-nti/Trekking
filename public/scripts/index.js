@@ -4,7 +4,17 @@ var url = "https://viaggiditony.it"
 var src = []
 var pages
 
+const altezzaNavbar = document.querySelector('.navbar').offsetHeight;
+
+
 document.addEventListener("DOMContentLoaded", function () {
+
+ 
+document.getElementById('filtri').style.marginTop = altezzaNavbar + 40 + 'px';
+document.getElementById('content').style.marginTop = altezzaNavbar + 20 + 'px';
+
+
+
   const images = document.querySelectorAll("img.lazy-progressive");
 
   const observer = new IntersectionObserver(
@@ -366,3 +376,5 @@ const grades = [
   "8a", "8a+", "8b", "8b+", "8c", "8c+",
   "9a", "9a+", "9b", "9b+", "9c"
 ];
+
+

@@ -40,10 +40,10 @@
   </head>
   <body class="d-flex flex-column min-vh-100" style="background-color: rgb(255, 255, 255);">
     <h1 name="descrizione-sito" class="visually-hidden">Raccolgo e documento i miei trekking e le mie attività in motagna che vanno dall'alpinismo fino all'arrampicata. Qui troverete una vasta gamma di esperienze ben dettagliate, utile per tutti gli appassionati di montagna come me.</h1>
-    <nav class="navbar navbar-light bg-light fixed-top" style="z-index: 1; margin-bottom: 10px;">
+    <nav class="navbar navbar-light bg-light fixed-top" style="z-index: 2; margin-bottom: 10px;">
       <div class="container-fluid">
         <a class="navbar-brand">
-          <h2>Trekking&Co.</h2>
+          <h2 style="margin-left: 10px;">Trekking&Co.</h2>
         </a>
         <!-- FIX: rimosso onkeydown="filterTrekking()" -->
         <form class="d-flex search-form" id="formS" >
@@ -55,14 +55,14 @@
           </div>
         </form>
         <!-- FIX: rimosso onclick="show()" -->
-        <button class="btn btn-dark" aria-label="filtra">Filtra</button>
+        <button  id="button-filter" class="btn btn-dark" aria-label="filtra">Filtra</button>
       </div>
     </nav>
     <div class="mountain"></div>
     <div class="mountain-2"></div>
     <div class="mountain-3"></div>
-    <div id="filtri" class="container" style="display: none; padding-top: 90px;">
-      <form id="formFilter">
+    <div id="filtri" class="container " style="display: none;">
+      <form id="formFilter" style="padding: 10px;">
         <div class="input-group mb-3 flex-nowrap" >
           <span class="input-group-text" id="basic-addon1">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-ruler-measure-2">
@@ -79,10 +79,10 @@
             </svg>
           </span>
           <div class="input-group-text flex-grow-1">
-    da &nbsp;<input type="number" min="0" class="form-control " id="minElevation" placeholder="Min. Dislivello" >
+    da &nbsp;<input type="number" min="0" class="form-control " id="minElevation" placeholder="Dislivello Minimo" title="Dislivello Minimo" >
   </div>
   <div class="input-group-text flex-grow-1">
-    a &nbsp;<input type="number" min="0" class="form-control" id="maxElevation" placeholder="Max. Dislivello" >
+    a &nbsp;<input type="number" min="0" class="form-control" id="maxElevation" placeholder="Dislivello Massimo" title="Dislivello Massimo" >
   </div>
   <span class="input-group-text">mt</span>
         </div>
@@ -102,10 +102,10 @@
             </svg>
           </span>
           <div class="input-group-text flex-grow-1">
-            da &nbsp;<input type="number" min="0" class="form-control" id="minDistance" placeholder="Min. Distanza">
+            da &nbsp;<input type="number" min="0" step="0.1" class="form-control" id="minDistance" placeholder="Distanza Minima" title="Distanza Minima">
           </div>
           <div class="input-group-text flex-grow-1">
-            a &nbsp;<input type="number" min="0" class="form-control" id="maxDistance" placeholder="Max. Distanza">
+            a &nbsp;<input type="number" min="0" step="0.1" class="form-control" id="maxDistance" placeholder="Distanza Massima" title="Distanza Massima">
           </div>
           <span class="input-group-text">km</span>
         </div>
@@ -215,12 +215,13 @@
           <button type="button" id="buttonSeason" >✕</button>
         </div>
 </div>
-        <div class="input-group mb-2">
-          <button type="submit" class="btn btn-link" aria-label="Applica filtri">Applica</button>
+        <div class="mb-2 d-flex justify-content-between" >
+          <button type="submit" class="btn btn-light" aria-label="Applica filtri" style="z-index: 1;">Applica</button>
+          <!--<button type="submit" class="btn btn-danger" aria-label="Applica filtri">Rimuovi</button> -->
         </div>
       </form>
     </div>
-    <div id="content" style="padding-top: 90px;">
+    <div id="content" >
       <div id="trekking-list" class="container">
         <div class="row" id="row-1"><% treks.forEach((trek, index) => {%> <div class="col-sm-4 col-lg-2 col-6 mb-3">
             <a href="/trekking/<%=trek.name%>" style="all: unset">
