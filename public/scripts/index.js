@@ -5,6 +5,35 @@ var src = []
 var pages
 
 document.addEventListener("DOMContentLoaded", function () {
+  const images = document.querySelectorAll("img.lazy-progressive");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const img = entry.target;
+        const hires = new Image();
+
+        hires.onload = () => {
+          img.src = img.dataset.src;
+          img.srcset = img.dataset.srcset || "";
+          img.sizes = img.dataset.sizes || "";
+          img.style.filter = "none";
+        };
+
+        hires.src = img.dataset.src;
+        observer.unobserve(img);
+      });
+    },
+    { rootMargin: "200px" }
+  );
+
+  images.forEach((img) => {
+    img.style.filter = "blur(8px)";
+    img.style.transition = "filter 0.4s ease";
+    observer.observe(img);
+  });
 
   // ─────────────────────────────────────────────
   // FIX: Event listeners al posto degli onclick inline
