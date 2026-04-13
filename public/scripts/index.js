@@ -25,12 +25,16 @@ difficultyInput.addEventListener('click', function () {
     });
   }
   dropdownInstance.toggle();
+  
 });
 
 ulDifficulty.addEventListener('click', function (e) {
    dropdownInstance.hide();
   
 });
+
+
+
 
 
 // chiudi cliccando fuori
@@ -87,6 +91,27 @@ document.addEventListener('click', function (e) {
         season(text);
       } else if (placeholder === "Difficoltà") {
         difficulty(text);
+      }
+      const button = inputGroup?.querySelector("button");
+      console.log(button);
+      if (button) {
+        button.style.display = "block";
+        button.addEventListener("click", function () {
+          input.value = "";
+          if (placeholder === "Tipologia") {
+            difficultyInput.value = "";
+            document.getElementById('buttonDifficulty').style.display = "none";
+            difficultyInput.classList.remove('white');
+            difficultyInput.classList.add('input-disabled');
+            const wrapper = document.getElementById('tooltipDifficultyWrapper');
+            wrapper.setAttribute('data-bs-toggle', 'tooltip');
+            wrapper.setAttribute('title', 'Seleziona prima una tipologia');
+            new bootstrap.Tooltip(wrapper);
+            const tooltipInstance = bootstrap.Tooltip.getInstance(wrapper);
+            if (tooltipInstance) tooltipInstance.enable();
+          }
+          button.style.display = "none";
+        });
       }
     });
   });

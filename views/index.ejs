@@ -74,10 +74,10 @@
             </svg>
           </span>
           <div class="input-group-text flex-grow-1">
-    da &nbsp;<input type="text" class="form-control " id="minElevation" placeholder="Min. Dislivello" >
+    da &nbsp;<input type="number" min="0" class="form-control " id="minElevation" placeholder="Min. Dislivello" >
   </div>
   <div class="input-group-text flex-grow-1">
-    a &nbsp;<input type="text" class="form-control" id="maxElevation" placeholder="Max. Dislivello" >
+    a &nbsp;<input type="number" min="0" class="form-control" id="maxElevation" placeholder="Max. Dislivello" >
   </div>
   <span class="input-group-text">mt</span>
         </div>
@@ -97,20 +97,27 @@
             </svg>
           </span>
           <div class="input-group-text flex-grow-1">
-            da &nbsp;<input type="text" class="form-control" id="minDistance" placeholder="Min. Distanza">
+            da &nbsp;<input type="number" min="0" class="form-control" id="minDistance" placeholder="Min. Distanza">
           </div>
           <div class="input-group-text flex-grow-1">
-            a &nbsp;<input type="text" class="form-control" id="maxDistance" placeholder="Max. Distanza">
+            a &nbsp;<input type="number" min="0" class="form-control" id="maxDistance" placeholder="Max. Distanza">
           </div>
           <span class="input-group-text">km</span>
         </div>
+        <div class="wrapper">
         <div class="input-group mb-3">
+          
           <span class="input-group-text" id="basic-addon2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-directions"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21v-4" /><path d="M12 13v-4" /><path d="M12 5v-2" /><path d="M10 21h4" /><path d="M8 5v4h11l2 -2l-2 -2l-11 0" /><path d="M14 13v4h-8l-2 -2l2 -2l8 0" /></svg>
           </span>
           <!-- FIX: rimossi tutti gli onclick="zona(...)" dai dropdown -->
-          <input id="location" type="text" placeholder="Zona" readonly class="form-control dropdown-toggle white" data-bs-toggle="dropdown" aria-expanded="false">
-          
+           
+             </span>
+
+    <input id="location" type="text" placeholder="Zona" readonly 
+           class="form-control dropdown-toggle white" 
+           data-bs-toggle="dropdown" 
+           aria-expanded="false">
           <ul class="dropdown-menu" aria-labelledby="dropdownInput" >
             <li><a class="dropdown-item" href="#">Alpi dell'Adula</a></li>
             <li><a class="dropdown-item" href="#">Catena Gino-Camoghè-Fiorina</a></li>
@@ -120,7 +127,11 @@
             <li><a class="dropdown-item" href="#">Gruppo del Resegone</a></li>
             <li><a class="dropdown-item" href="#">Triangolo Lariano</a></li>
           </ul>
-        </div>
+      <button type="button" id="buttonLocation" >✕</button>
+
+  </div>
+</div>
+<div class="wrapper">
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-walk">
@@ -139,7 +150,10 @@
             <li><a class="dropdown-item" href="#">Alpinismo</a></li>
             <li><a class="dropdown-item" href="#">Multipitch</a></li>
           </ul>
+          <button type="button" id="buttonTipo" >✕</button>    
         </div>
+        </div>
+        <div class="wrapper">
         <div class="input-group mb-3" id="divDifficulty">
           <span class="input-group-text" id="basic-addon2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle">
@@ -167,7 +181,10 @@
     
 </span>
 <ul id="ulDifficulty" class="dropdown-menu" aria-labelledby="dropdownInput"></ul>
+<button type="button" id="buttonDifficulty" style="display: none;">✕</button>
 </div>
+        </div>
+<div class="wrapper">
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-temperature-sun">
@@ -190,7 +207,9 @@
             <li><a class="dropdown-item" href="#">Inverno</a></li>
             <li><a class="dropdown-item" href="#">Primavera</a></li>
           </ul>
+          <button type="button" id="buttonSeason" >✕</button>
         </div>
+</div>
         <div class="input-group mb-2">
           <button type="submit" class="btn btn-link" aria-label="Applica filtri">Applica</button>
         </div>
