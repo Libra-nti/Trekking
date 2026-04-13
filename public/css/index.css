@@ -184,3 +184,7 @@ background-color: rgb(255, 255, 255);
     padding: 5px 20px;
     border: 1px solid #ccc;
 }
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
