@@ -183,8 +183,14 @@ background-color: rgb(255, 255, 255);
     border-radius: 50px;
     padding: 5px 20px;
     border: 1px solid #ccc;
+    color: #3f3f3f;
 }
 
 input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
+}
+
+input[type="search"]:focus {
+  outline: none;
+  box-shadow: none; /* rimuove anche quello di Bootstrap */
 }
