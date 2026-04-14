@@ -100,9 +100,9 @@ document.addEventListener('click', function (e) {
     }
   });
 
-  // onclick="filterTrekking()" sulla barra di ricerca (keydown)
+  // onclick="filterTrekking()" sulla barra di ricerca (keyup)
   document.getElementById("search")
-    ?.addEventListener("keydown", function () {
+    ?.addEventListener("keyup", function () {
       filterTrekking();
     });
 
