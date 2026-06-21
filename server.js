@@ -380,6 +380,9 @@ app.get("/all", requireAuth, async (req, res) => {
       {},
       { projection: { gpx: 0 } }
     ).toArray();
+    trekkings.forEach(t => {
+  t.encodeName = encodeURIComponent(t.name);
+});
     res.json(trekkings);
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });
