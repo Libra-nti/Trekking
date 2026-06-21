@@ -303,7 +303,7 @@ async function telegram(req) {
 // MIDDLEWARE: AUTENTICAZIONE TOKEN
 // ─────────────────────────────────────────────
 
-function requireAuth(req, res, next) {
+function  requireAuth(req, res, next) {
   const authHeader = req.headers["authorization"];
   if (!authHeader) {
     return res.status(401).json({ message: "Accesso non autorizzato" });
@@ -440,18 +440,26 @@ app.get("/trekking/:nome", async (req, res) => {
     const nome = sanitizeString(req.params.nome);
     if (!nome) return res.status(400).json({ error: "Nome non valido" });
 
-    const trek = await db.collection("treks").findOne({ name: nome });
-    if (!trek) return res.status(404).json({ error: "Non trovato" });
+    // 1. Cerca prima per slug (nuovo formato URL, caso normale)
+    let trek = await db.collection("treks").findOne({ slug: nome });
+
+    // 2. Se non trovato per slug, prova per "name" (vecchio formato URL)
+    if (!trek) {
+      const oldTrek = await db.collection("treks").findOne({ name: nome });
+      if (oldTrek && oldTrek.slug) {
+        // Redirect permanente: trasferisce il ranking SEO al nuovo URL
+        return res.redirect(301, `/trekking/${oldTrek.slug}`);
+      }
+      return res.status(404).json({ error: "Non trovato" });
+    }
 
     const builder = new xml2js.Builder();
     trek.gpx = builder.buildObject(trek.gpx);
-    // nonce è già in res.locals, non serve passarlo esplicitamente
     res.render("trekking/trekking-details", trek);
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });
   }
 });
-
 app.get("/sitemap.xml", async (req, res) => {
   try {
     const trekkings = await db.collection("treks")

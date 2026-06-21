@@ -184,7 +184,7 @@ document.addEventListener('click', function (e) {
     const row = document.getElementById("row-1");
     filtrati.forEach(trekking => {
       const card = `<div class="col-sm-4 col-lg-2 col-6 mb-3" style="display: block">
-        <a href="/trekking/${trekking.name}" style="all: unset">
+        <a href="/trekking/${trekking.slug}" style="all: unset">
           <div class="card h-100" style="width: auto">
             <img loading="lazy" srcset="
               /${trekking.name}-${trekking.date}/copertina-400.jpg 400w,
@@ -192,7 +192,7 @@ document.addEventListener('click', function (e) {
               /${trekking.name}-${trekking.date}/copertina-1200.jpg 1200w
             " sizes="(min-width: 992px) 16.66vw, (min-width: 576px) 33.33vw, 50vw"
             fetchpriority="high"
-            src="https://res.cloudinary.com/dieh3kepz/image/upload/${trekking.name}-${trekking.date}/copertina-400.jpg"
+            src="https://res.cloudinary.com/dieh3kepz/image/upload/${trekking.slug}/copertina-400.jpg"
             class="card-img-top" name="${trekking.name}" alt="Foto copertina ${trekking.name}">
             <div class="card-body bottom-0">
               <h5 class="card-title">${trekking.name}</h5>

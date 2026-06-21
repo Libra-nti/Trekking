@@ -31,6 +31,17 @@
       if (typeof str !== 'string') return '';
       return str.trim().replace(/[<>"`]/g, '');
     }
+
+    function slugify(text) {
+  return text
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // rimuove accenti (à, è, ò...)
+    .replace(/[│┃|]/g, ' ')                            // sostituisce separatori speciali con spazio
+    .replace(/[^a-z0-9\s-]/g, '')                       // rimuove tutto il resto (punteggiatura, ecc.)
+    .trim()
+    .replace(/\s+/g, '-')                               // spazi -> trattini
+    .replace(/-+/g, '-');                               // trattini multipli -> singolo
+}
  
     function parseEquipment(raw) {
       return raw
@@ -98,7 +109,7 @@
         formData.append('numFoto',          parseInt(document.getElementById('foto').value) || 0);
         formData.append('stars',            sanitize(document.getElementById('stelle').value) || 0);
         formData.append('tipo',             sanitize(document.getElementById('tipologia').value));
- 
+        formData.append('slug',             slugify((document.getElementById('nome').value)));
         if (document.getElementById('tipologia').value.trim() === 'Multipitch') {
           formData.append('approach', sanitize(document.getElementById('avvicinamento').value));
         }

@@ -316,7 +316,7 @@ function carosello() {
         if (i === 1) button.classList.add("active");
 
         const image = document.createElement("img");
-        image.src   = `https://res.cloudinary.com/dieh3kepz/image/upload/${trekking.name}-${trekking.date}/${i}.jpg`;
+        image.src   = `https://res.cloudinary.com/dieh3kepz/image/upload/${trekking.slug}/${i}.jpg`;
         image.className = "d-block";
         image.alt   = `Foto n° ${i} del trekking ${trekking.name}`;
 
