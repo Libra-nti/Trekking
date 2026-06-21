@@ -400,7 +400,9 @@ app.get("", async (req, res) => {
 
     const totalPages = Math.ceil(totalItems / perPage);
     // nonce è già in res.locals, EJS lo eredita automaticamente
-    treks.encodeName = treks.map(t => encodeURIComponent(t.name)); // aggiungi encodeName per ogni trek
+    treks.forEach(t => {
+  t.encodeName = encodeURIComponent(t.name);
+});
     res.render("index", { treks, page, totalPages });
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });
