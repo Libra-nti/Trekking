@@ -183,6 +183,7 @@ document.addEventListener('click', function (e) {
     });
     const row = document.getElementById("row-1");
     filtrati.forEach(trekking => {
+      trekking.encodeName = encodeURIComponent(trekking.name);
       const card = `<div class="col-sm-4 col-lg-2 col-6 mb-3" style="display: block">
         <a href="/trekking/${trekking.slug}" style="all: unset">
           <div class="card h-100" style="width: auto">
