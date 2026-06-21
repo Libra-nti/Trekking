@@ -208,6 +208,21 @@ function sanitizeString(input) {
   return input.replace(/[<>{}$|]/g, "").replace(/\.\./g, "").trim().slice(0, 200);
 }
 
+function makeUrlFriendly(url) {
+  try {
+    const urlObj = new URL(url);
+    // Codifica ogni segmento del path singolarmente, lasciando intatti gli slash
+    urlObj.pathname = urlObj.pathname
+      .split('/')
+      .map(segment => encodeURIComponent(decodeURIComponent(segment)))
+      .join('/');
+    return urlObj.toString();
+  } catch (e) {
+    // Se non è un URL assoluto valido, fallback: codifica l'intera stringa
+    return encodeURI(url);
+  }
+}
+
 function validateTrekBody(body) {
   const errors = [];
 
@@ -455,6 +470,7 @@ app.get("/trekking/:nome", async (req, res) => {
 
     const builder = new xml2js.Builder();
     trek.gpx = builder.buildObject(trek.gpx);
+    trek.encodeName = encodeURIComponent(trek.name);
     res.render("trekking/trekking-details", trek);
   } catch (e) {
     res.status(500).json({ error: "Errore interno" });

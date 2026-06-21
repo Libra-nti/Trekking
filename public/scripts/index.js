@@ -187,12 +187,12 @@ document.addEventListener('click', function (e) {
         <a href="/trekking/${trekking.slug}" style="all: unset">
           <div class="card h-100" style="width: auto">
             <img loading="lazy" srcset="
-              /${trekking.name}-${trekking.date}/copertina-400.jpg 400w,
-              /${trekking.name}-${trekking.date}/copertina-800.jpg 800w,
-              /${trekking.name}-${trekking.date}/copertina-1200.jpg 1200w
+              /${trekking.encodeName}-${trekking.date}/copertina-400.jpg 400w,
+              /${trekking.encodeName}-${trekking.date}/copertina-800.jpg 800w,
+              /${trekking.encodeName}-${trekking.date}/copertina-1200.jpg 1200w
             " sizes="(min-width: 992px) 16.66vw, (min-width: 576px) 33.33vw, 50vw"
             fetchpriority="high"
-            src="https://res.cloudinary.com/dieh3kepz/image/upload/${trekking.slug}/copertina-400.jpg"
+            src="https://res.cloudinary.com/dieh3kepz/image/upload/${trekking.encodeName}-${trekking.date}/copertina-400.jpg"
             class="card-img-top" name="${trekking.name}" alt="Foto copertina ${trekking.name}">
             <div class="card-body bottom-0">
               <h5 class="card-title">${trekking.name}</h5>

@@ -230,11 +230,11 @@
         <%# Prima card: carica subito ad alta risoluzione, niente lazy %>
         <img
           fetchpriority="high"
-          src="https://res.cloudinary.com/dieh3kepz/image/upload/w_400/<%=trek.slug%>/copertina-400.jpg"
+          src="https://res.cloudinary.com/dieh3kepz/image/upload/w_400/<%=trek.encodeName%>-<%=trek.date%>/copertina-400.jpg"
           srcset="
-            https://res.cloudinary.com/dieh3kepz/image/upload/w_200/<%=trek.slug%>/copertina-400.jpg 200w,
-            https://res.cloudinary.com/dieh3kepz/image/upload/w_400/<%=trek.slug%>/copertina-400.jpg 400w,
-            https://res.cloudinary.com/dieh3kepz/image/upload/w_800/<%=trek.slug%>/copertina-400.jpg 800w
+            https://res.cloudinary.com/dieh3kepz/image/upload/w_200/<%=trek.encodeName%>-<%=trek.date%>/copertina-400.jpg 200w,
+            https://res.cloudinary.com/dieh3kepz/image/upload/w_400/<%=trek.encodeName%>-<%=trek.date%>/copertina-400.jpg 400w,
+            https://res.cloudinary.com/dieh3kepz/image/upload/w_800/<%=trek.encodeName%>-<%=trek.date%>/copertina-400.jpg 800w
           "
           sizes="(max-width: 576px) 50vw, (max-width: 992px) 33vw, 16vw"
           class="card-img-top"
@@ -244,12 +244,12 @@
         <%# Tutte le altre: placeholder sfocato + lazy load progressivo %>
         <img
           class="card-img-top lazy-progressive"
-          src="https://res.cloudinary.com/dieh3kepz/image/upload/w_20,e_blur:200/<%=trek.slug%>/copertina-400.jpg"
-          data-src="https://res.cloudinary.com/dieh3kepz/image/upload/w_400/<%=trek.slug%>/copertina-400.jpg"
+          src="https://res.cloudinary.com/dieh3kepz/image/upload/w_20,e_blur:200/<%=trek.encodeName%>-<%=trek.date%>/copertina-400.jpg"
+          data-src="https://res.cloudinary.com/dieh3kepz/image/upload/w_400/<%=trek.encodeName%>-<%=trek.date%>/copertina-400.jpg"
           data-srcset="
-            https://res.cloudinary.com/dieh3kepz/image/upload/w_200/<%=trek.slug%>/copertina-400.jpg 200w,
-            https://res.cloudinary.com/dieh3kepz/image/upload/w_400/<%=trek.slug%>/copertina-400.jpg 400w,
-            https://res.cloudinary.com/dieh3kepz/image/upload/w_800/<%=trek.slug%>/copertina-400.jpg 800w
+            https://res.cloudinary.com/dieh3kepz/image/upload/w_200/<%=trek.encodeName%>-<%=trek.date%>/copertina-400.jpg 200w,
+            https://res.cloudinary.com/dieh3kepz/image/upload/w_400/<%=trek.encodeName%>-<%=trek.date%>/copertina-400.jpg 400w,
+            https://res.cloudinary.com/dieh3kepz/image/upload/w_800/<%=trek.encodeName%>-<%=trek.date%>/copertina-400.jpg 800w
           "
           data-sizes="(max-width: 576px) 50vw, (max-width: 992px) 33vw, 16vw"
           alt="Foto copertina-400 <%=trek.name%>"
