@@ -485,11 +485,10 @@ app.get("/trekking/:nome", async (req, res) => {
 app.get("/sitemap.xml", async (req, res) => {
   try {
     const trekkings = await db.collection("treks")
-      .find({}, { projection: { name: 1 } })
+      .find({}, { projection: { slug: 1 } })
       .toArray();
 
-    const urls = ["/", ...trekkings.map(t => `/trekking/${(t.slug)}`)];
-
+    const urls = ["/", ...trekkings.map(t => `/trekking/${t.slug}`)];
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   ${urls.map(u => `
