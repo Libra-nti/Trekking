@@ -488,7 +488,7 @@ app.get("/sitemap.xml", async (req, res) => {
       .find({}, { projection: { name: 1 } })
       .toArray();
 
-    const urls = ["/", ...trekkings.map(t => `/trekking/${encodeURIComponent(t.name)}`)];
+    const urls = ["/", ...trekkings.map(t => `/trekking/${(t.slug)}`)];
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
